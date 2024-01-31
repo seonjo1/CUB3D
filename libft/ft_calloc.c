@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: michang <michang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/01/31 18:22:17 by seonjo           ###   ########.fr       */
+/*   Created: 2023/03/15 18:45:35 by michang           #+#    #+#             */
+/*   Updated: 2023/03/15 18:45:36 by michang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#include "libft.h"
+
+void	*ft_calloc(size_t count, size_t size)
 {
-	return (0);
+	void	*new;
+
+	new = malloc(count * size);
+	if (!new)
+		return (0);
+	ft_memset(new, 0, count * size);
+	return (new);
 }

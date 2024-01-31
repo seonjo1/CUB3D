@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: michang <michang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/01/31 18:22:17 by seonjo           ###   ########.fr       */
+/*   Created: 2023/03/21 21:26:57 by michang           #+#    #+#             */
+/*   Updated: 2023/03/21 21:26:59 by michang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#include "libft.h"
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	return (0);
+	t_list	*tmp;
+
+	tmp = *lst;
+	while (*lst)
+	{
+		(*del)((*lst)->content);
+		tmp = (*lst)->next;
+		free(*lst);
+		*lst = tmp;
+	}
 }

@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: michang <michang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/01/31 18:22:17 by seonjo           ###   ########.fr       */
+/*   Created: 2023/03/20 17:19:02 by michang           #+#    #+#             */
+/*   Updated: 2023/03/20 17:19:02 by michang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#include "libft.h"
+
+t_list	*ft_lstnew(void *content)
 {
-	return (0);
+	t_list	*new;
+
+	new = ft_calloc(1, sizeof(t_list));
+	if (!new)
+		return (0);
+	new->content = content;
+	return (new);
 }

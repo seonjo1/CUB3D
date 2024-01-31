@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: michang <michang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/01/31 18:22:17 by seonjo           ###   ########.fr       */
+/*   Created: 2023/03/20 17:27:31 by michang           #+#    #+#             */
+/*   Updated: 2023/03/20 17:27:32 by michang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#include "libft.h"
+
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	return (0);
+	if (!new)
+		return ;
+	new->next = *lst;
+	*lst = new;
 }
