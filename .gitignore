@@ -4,8 +4,7 @@ test.c
 a.out
 .vscode
 *.a
-a
-b
-k
+*.dylib
 bonus
 cub3d
+a
