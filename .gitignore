@@ -8,3 +8,5 @@ a.out
 bonus
 cub3d
 a
+*.swiftdoc
+*.swiftmodule
