@@ -12,8 +12,10 @@
 
 CC			:= cc
 WFLAG		:= -Wall -Wextra -Werror
-MLX			:= -L. -lmlx -framework OpenGL -framework AppKit -lz
+LIBMLX		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 LIBFT		:= -Llibft -lft
+MLX			:= ./libmlx.dylib
+FT			:= ./libft/libft.a
 
 DIR			:= ./
 BASE		:= main
@@ -29,28 +31,37 @@ NAME		:= cub3d
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
-	@make lib
-	$(CC) -I$(dir $<) $(MLX) $(LIBFT) $^ -o $@
+$(NAME): $(OBJ) $(MLX) $(FT)
+	$(CC) $(LIBMLX) $(LIBFT) $< -o $@
+
+$(MLX) :
+	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi
+
+$(FT) :
+	@if [ ! -f $(FT) ]; then make -j -C ./libft; fi
 
 # bonus : $(BON_OBJ)
 # 	@make lib
+# 	@make mlx
 # 	$(CC) -I$(dir $<) $(LIBFT) $(READLINE) $^ -o $(BON_NAME)
 # 	@touch bonus
 
 %.o : %.c
 	$(CC) $(WFLAG) -I$(dir $<) -c $< -o $@
 
-lib :
-	@make re -j -C ./libft
-
 clean :
-	make clean -C ./libft
+	@make clean -C ./libft
+	@make clean -C ./minilibx
 	rm -f $(OBJ) $(BON_OBJ) bonus
 
 fclean : clean
-	rm -f $(NAME) $(BON_NAME) ./libft/libft.a
+	@make fclean -C ./libft
+	@make fclean -C ./minilibx
+	rm -f $(NAME) $(BON_NAME)
 
-re : clean all
+re : fclean all
 
-.PHONY : all clean fclean re lib
+t : all clean
+	./$(NAME)
+
+.PHONY : all clean fclean re t

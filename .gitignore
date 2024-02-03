@@ -4,9 +4,9 @@ test.c
 a.out
 .vscode
 *.a
-minishell
-a
-b
-k
-minishell_tester
+*.dylib
 bonus
+cub3d
+a
+*.swiftdoc
+*.swiftmodule
