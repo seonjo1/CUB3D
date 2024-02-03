@@ -4,9 +4,8 @@ test.c
 a.out
 .vscode
 *.a
-minishell
 a
 b
 k
-minishell_tester
 bonus
+cub3d
