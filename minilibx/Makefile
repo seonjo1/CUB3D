@@ -11,7 +11,7 @@ C_SRC= mlx_xpm.c mlx_png.c mlx_string_put.c
 C_OBJ=$(C_SRC:.c=.o)
 CFLAGS=-O3
 
-NAME=../libmlx.dylib
+NAME= libmlx.dylib
 
 INC=-I.
 #OPTI=-Ounchecked
@@ -20,8 +20,7 @@ all: $(NAME)
 
 $(NAME): $(MODULE_OBJ) $(OBJ) $(C_OBJ)
 	swiftc $(OPTI) $(INC) -o $(NAME) -emit-library $(OBJ) $(C_OBJ) -lz
-
-
+	mv $(NAME) ../$(NAME)
 
 %.o: %.swift
 	swiftc $(OPTI) $(INC) -parse-as-library -c $< -o $@
@@ -30,5 +29,9 @@ $(NAME): $(MODULE_OBJ) $(OBJ) $(C_OBJ)
 	swiftc $(OPTI) $(INC) -parse-as-library -c $< -o $@ -emit-module -module-name $(patsubst %.swift,%,$<) -module-link-name $(patsubst %.swift,%,$<)
 
 clean:
-	rm -f $(NAME) $(OBJ) $(MODULE_OBJ) $(C_OBJ) *.swiftdoc *~
+	rm -f $(OBJ) $(MODULE_OBJ) $(C_OBJ) *.swiftdoc *~
 
+fclean: clean
+	rm -f ../$(NAME)
+
+re : clean all
