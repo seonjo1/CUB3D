@@ -11,3 +11,6 @@ a
 *.swiftdoc
 *.swiftmodule
 test_map
+./minilibx/mlx_image.swiftsourceinfo
+./minilibx/mlx_init.swiftsourceinfo
+./minilibx/mlx_window.swiftsourceinfo
