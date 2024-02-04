@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:24 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 16:37:03 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/04 17:27:26 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,8 @@
 
 # include "../cub3d.h"
 # include "../gnl/get_next_line.h"
+# include "../libft/libft.h"
+
+int	*map_parse(int argc, char **argv);
 
 #endif
