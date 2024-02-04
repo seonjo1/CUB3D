@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:01 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 19:35:50 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/04 20:43:46 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	parse_check_arg(int argc, char **argv)
 {
 	int	len;
 
-	if (argc < 1)
+	if (argc < 2)
 		parse_error("too few arguments");
-	else if (argc > 1)
+	else if (argc > 2)
 		parse_error("too many arguments");
 	len = ft_strlen(argv[1]);
 	if (len < 4 || ft_strncmp(argv[1] + (len - 4), ".cub", 5) != 0)
 		parse_error("invalid extension");
 }
 
-int	parse_is_valid_char(int c)
+int	parse_is_valid_char(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || \
 		c == 'S' || c == 'W' || c == 'E' || c == ' ')
@@ -39,18 +39,24 @@ int	parse_is_valid_char(int c)
 	return (0);
 }
 
-int	parse_sizing_line(t_map *map, char *line)
+int	parse_close(int fd)
 {
-	int		i;
-	int		is_valid_line;
+	close(fd);
+	return (1);
+}
+
+int	parse_sizing_line(t_map *map, char *line, int fd)
+{
+	int	i;
+	int	is_valid_line;
 
 	if (line == NULL)
 		return (0);
 	i = 0;
 	is_valid_line = 0;
-	while (line[i] != '\0')
+	while (line[i] != '\0' && line[i] != '\n')
 	{
-		if (!parse_is_valid_char(line[i]))
+		if (!parse_is_valid_char(line[i]) && parse_close(fd))
 			parse_error("invalid map");
 		else if (line[i] != ' ')
 			is_valid_line = 1;
@@ -68,6 +74,27 @@ int	parse_sizing_line(t_map *map, char *line)
 	return (1);
 }
 
+int	parse_check_multiple_map(char *line, int fd)
+{
+	int	i;
+
+	if (line == NULL)
+		return (0);
+	i = 0;
+	while (line[i] != '\0' && line[i] != '\n')
+	{
+		if (line[i] != ' ')
+		{
+			free(line);
+			parse_close(fd);
+			parse_error("invalid map");
+		}
+		i++;
+	}
+	free(line);
+	return (1);
+}
+
 void	parse_get_map_size(t_map *map, char *file)
 {
 	int		fd;
@@ -75,30 +102,34 @@ void	parse_get_map_size(t_map *map, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		parse_error("unable to open file");
-	while (parse_sizing_line(map, gnl(fd)))
+	while (parse_sizing_line(map, gnl(fd), fd))
 		;
+	while (parse_check_multiple_map(gnl(fd), fd))
+		;
+	close(fd);
 }
 
-void	parse_make_map(t_map *map, char *file)
-{
-	int		fd;
-	char	*line;
+// void	parse_make_map(t_map *map, char *file)
+// {
+// 	int		fd;
+// 	char	*line;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		parse_error("unable to open file");
-	while (1)
-	{
-		line = gnl(fd);
-		if (line == NULL)
-			break ;
-	}
-}
+// 	fd = open(file, O_RDONLY);
+// 	if (fd == -1)
+// 		parse_error("unable to open file");
+// 	while (1)
+// 	{
+// 		line = gnl(fd);
+// 		if (line == NULL)
+// 			break ;
+// 	}
+// }
 
 void	parse_map(t_map *map, int argc, char **argv)
 {	
 	ft_memset(map, 0, sizeof(t_map));
 	parse_check_arg(argc, argv);
 	parse_get_map_size(map, argv[1]);
-	parse_make_map(map, argv[1]);
+	printf("row : %d, col : %d\n", map->row, map->col);
+	// parse_make_map(map, argv[1]);
 }
