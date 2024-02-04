@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 17:41:58 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/04 18:08:50 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	int		*map;
+	t_map	map;
 
-	map = parse_map(argc, argv);
+	parse_map(&map, argc, argv);
 	printf("here");
 	printf("here");
 	data.mlx = mlx_init();
