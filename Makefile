@@ -6,7 +6,7 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/02/04 16:29:40 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/04 20:24:14 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ MLX			:= ./libmlx.dylib
 FT			:= ./libft/libft.a
 
 DIR			:= ./
-BASE		:=	main
-				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils
+BASE		:=	main \
+				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
+				parse/parse
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3d
@@ -33,7 +34,7 @@ NAME		:= cub3d
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
-	$(CC) $(LIBMLX) $(LIBFT) $< -o $@
+	$(CC) $(LIBMLX) $(LIBFT) $^ -o $@
 
 $(MLX) :
 	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi
