@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:01 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 17:42:52 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/04 19:35:50 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,74 @@ void	parse_check_arg(int argc, char **argv)
 		parse_error("invalid extension");
 }
 
-int	*parse_get_map(char *file)
+int	parse_is_valid_char(int c)
 {
-	int	fd;
-
-	fd = 
+	if (c == '0' || c == '1' || c == 'N' || \
+		c == 'S' || c == 'W' || c == 'E' || c == ' ')
+		return (1);
+	return (0);
 }
 
-int	*parse_map(int argc, char **argv)
+int	parse_sizing_line(t_map *map, char *line)
+{
+	int		i;
+	int		is_valid_line;
+
+	if (line == NULL)
+		return (0);
+	i = 0;
+	is_valid_line = 0;
+	while (line[i] != '\0')
+	{
+		if (!parse_is_valid_char(line[i]))
+			parse_error("invalid map");
+		else if (line[i] != ' ')
+			is_valid_line = 1;
+		i++;
+	}
+	free(line);
+	if (!is_valid_line && map->row != 0)
+		return (0);
+	else if (is_valid_line)
+	{
+		if (map->col < i)
+			map->col = i;
+		map->row++;
+	}
+	return (1);
+}
+
+void	parse_get_map_size(t_map *map, char *file)
+{
+	int		fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		parse_error("unable to open file");
+	while (parse_sizing_line(map, gnl(fd)))
+		;
+}
+
+void	parse_make_map(t_map *map, char *file)
+{
+	int		fd;
+	char	*line;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		parse_error("unable to open file");
+	while (1)
+	{
+		line = gnl(fd);
+		if (line == NULL)
+			break ;
+	}
+}
+
+void	parse_map(t_map *map, int argc, char **argv)
 {	
+	ft_memset(map, 0, sizeof(t_map));
 	parse_check_arg(argc, argv);
-	return (parse_get_map(argv[1]));
+	parse_get_map_size(map, argv[1]);
+	parse_make_map(map, argv[1]);
 }
