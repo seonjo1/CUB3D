@@ -6,13 +6,14 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:24 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 18:10:18 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/04 20:17:44 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
+# include <stdio.h>
 # include <fcntl.h>
 # include "../gnl/get_next_line.h"
 # include "../libft/libft.h"
