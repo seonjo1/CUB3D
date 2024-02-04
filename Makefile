@@ -6,7 +6,7 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/02/04 20:24:14 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/04 21:01:41 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ FT			:= ./libft/libft.a
 DIR			:= ./
 BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
-				parse/parse
+				parse/parse \
+				libft_s/libft_s
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3d
