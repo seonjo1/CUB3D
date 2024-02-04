@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:01 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 20:43:46 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/04 21:10:12 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,55 @@ void	parse_get_map_size(t_map *map, char *file)
 	close(fd);
 }
 
-// void	parse_make_map(t_map *map, char *file)
-// {
-// 	int		fd;
-// 	char	*line;
+int	parse_fill_map(t_map *map, char *line, int *col)
+{
+	int	i;
+	int	is_valid_line;
 
-// 	fd = open(file, O_RDONLY);
-// 	if (fd == -1)
-// 		parse_error("unable to open file");
-// 	while (1)
+	if (line == NULL)
+		return (0);
+	i = 0;
+	is_valid_line = 0;
+	while (line[i] != '\0' && line[i] != '\n')
+	{
+		if (line[i] != ' ')
+			is_valid_line = 1;
+		map->data[*col * map->col + i] = line[i];
+		i++;
+	}
+	while (i < map->col)
+		map->data[*col * map->col + i++] = ' ';
+	free(line);
+	if (!is_valid_line && (*col))
+		return (0);
+	else if (is_valid_line)
+		(*col)++;
+	return (1);
+}
+
+void	parse_make_map(t_map *map, char *file)
+{
+	int	fd;
+	int	col;
+
+	map->data = ft_calloc_s(map->row * map->col, sizeof(int));
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		parse_error("unable to open file");
+	col = 0;
+	while (parse_fill_map(map, gnl(fd), &col))
+		;
+	parse_close(fd);
+}
+
+// void	print_map(t_map *map)
+// {
+// 	for (int i = 0; i < map->row; i++)
 // 	{
-// 		line = gnl(fd);
-// 		if (line == NULL)
-// 			break ;
-// 	}
+// 		for(int j = 0; j < map->col; j++)
+// 			printf("%c ", map->data[map->col * i + j]);
+// 		printf("\n");
+// 	}	
 // }
 
 void	parse_map(t_map *map, int argc, char **argv)
@@ -131,5 +166,7 @@ void	parse_map(t_map *map, int argc, char **argv)
 	parse_check_arg(argc, argv);
 	parse_get_map_size(map, argv[1]);
 	printf("row : %d, col : %d\n", map->row, map->col);
-	// parse_make_map(map, argv[1]);
+	parse_make_map(map, argv[1]);
+	// print_map(map);
+	// parse_check_map(map);
 }
