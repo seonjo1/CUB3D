@@ -6,7 +6,7 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/01/31 18:28:03 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/04 16:29:40 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ MLX			:= ./libmlx.dylib
 FT			:= ./libft/libft.a
 
 DIR			:= ./
-BASE		:= main
+BASE		:=	main
+				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3d
