@@ -18,6 +18,61 @@ void	utils_draw_point(t_data *data, int x, int y)
 		*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = 0xFFFFFF;
 }
 
+void	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir)
+{
+	t_intvec2	map;
+	t_vec2		side_dist;
+	t_vec2		delta_dist;
+	double		perpwall_dist;
+
+	map.x = (int)(player->pos.x);
+	map.y = (int)(player->pos.y);
+	delta_dist.x = abs(1 / ray_dir.x);
+	delta_dist.y = abs(1 / ray_dir.y);
+
+	t_intvec2	step;
+	int hit = 0;
+	int side;
+	if (ray_dir.x < 0)
+	{
+		step.x = -1;
+		side_dist.x = (player->pos.x - map.x) * delta_dist.x;
+	}
+	else
+	{
+		step.x = 1;
+		side_dist.x = (map.x + 1.0 - player->pos.x) * delta_dist.x;
+	}
+	if (ray_dir.y < 0)
+	{
+		step.y = -1;
+		side_dist.y = (player->pos.y - map.y) * delta_dist.y;
+	}
+	else
+	{
+		step.y = 1;
+		side_dist.y = (map.y + 1.0 - player->pos.y) * delta_dist.y;
+	}
+	while (hit == 0)
+	{
+		if (side_dist.x < side_dist.y)
+		{
+			side_dist.x += delta_dist.x;
+			map.x += step.x;
+			side = 0;
+		}
+		else
+		{
+			side_dist.y += delta_dist.y;
+			map.y += step.y;
+			side = 1;
+		}
+		//Check if ray has hit a wall
+		if (data->map.data[map.x][map.y] > 0)
+			hit = 1;
+	} 
+}
+
 void	ray_casting(t_data *data, t_player	*player)
 {
 	int		x;
