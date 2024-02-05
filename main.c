@@ -12,13 +12,34 @@
 
 #include "parse/parse.h"
 
-void	utils_draw_point(t_data *data, int x, int y)
+void	draw_point(t_data *data, int x, int y)
 {
 	if ((x >= 0 && y >= 0) && (WIN_HEIGHT > y && WIN_WIDTH > x))
 		*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = 0xFFFFFF;
 }
 
-void	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir)
+void	draw_vertical_line(t_data *data, int x, double perpwall_dist)
+{
+	int	y_start;
+	int	y_end;
+	int	line_height;
+	
+	line_height = (int)(WALL_HEIGHT / perpwall_dist);
+	y_start = -1 * line_height / 2 + WALL_HEIGHT / 2;
+	if (y_start < 0)
+		y_start = 0;
+	y_end = line_height / 2 + WALL_HEIGHT / 2;
+	if (y_end >= WALL_HEIGHT)
+		y_end = WALL_HEIGHT - 1;
+	printf("x:%d, perp:%f, y_start:%d, y_end:%d\n", x, perpwall_dist, y_start, y_end);
+	while (y_start <= y_end)
+	{
+		draw_point(data, x, y_start);
+		y_start++;
+	}
+}
+
+double	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir)
 {
 	t_intvec2	map;
 	t_vec2		side_dist;
@@ -27,8 +48,8 @@ void	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir)
 
 	map.x = (int)(player->pos.x);
 	map.y = (int)(player->pos.y);
-	delta_dist.x = abs(1 / ray_dir.x);
-	delta_dist.y = abs(1 / ray_dir.y);
+	delta_dist.x = fabs(1 / ray_dir.x);
+	delta_dist.y = fabs(1 / ray_dir.y);
 
 	t_intvec2	step;
 	int hit = 0;
@@ -67,10 +88,14 @@ void	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir)
 			map.y += step.y;
 			side = 1;
 		}
-		//Check if ray has hit a wall
 		if (data->map.data[map.x][map.y] > 0)
 			hit = 1;
-	} 
+	}
+	if (side == 0)
+		perpwall_dist = (map.x - player->pos.x + (1 - step.x) / 2) / ray_dir.x;
+	else
+		perpwall_dist = (map.y - player->pos.y + (1 - step.y) / 2) / ray_dir.y;
+	return (perpwall_dist);
 }
 
 void	ray_casting(t_data *data, t_player	*player)
@@ -85,14 +110,13 @@ void	ray_casting(t_data *data, t_player	*player)
 		camera.x = 2 * x / (double)WIN_WIDTH - 1;
 		ray_dir.x = player->dir.x + player->plane.x * camera.x;
 		ray_dir.y = player->dir.y + player->plane.y * camera.x;
-		
+		draw_vertical_line(data, x, ray_dda(data, player, ray_dir));
 		x++;
 	}
 }
 
 int	main_loop(t_data *data)
 {
-	static int x = 0, y = 0;
 	data->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!data->img)
 		exit (1);
@@ -101,7 +125,7 @@ int	main_loop(t_data *data)
 	if (!data->addr)
 		exit(1);
 	usleep(1000);
-	utils_draw_point(data, x++, y++);
+	ray_casting(data, &(data->player));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	mlx_destroy_image(data->mlx, data->img);
 	return (0);
