@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "parse/parse.h"
 
 int	main(int argc, char **argv)
 {
