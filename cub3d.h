@@ -21,6 +21,12 @@
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 
+typedef struct s_map {
+	char	**data;
+	int		row;
+	int		col;
+}	t_map;
+
 typedef struct s_data {
 	void	*mlx;
 	void	*mlx_win;
@@ -29,13 +35,8 @@ typedef struct s_data {
 	int		bpp;
 	int		line_length;
 	int		endian;
+	t_map	map;
 }	t_data;
-
-typedef struct s_map {
-	char	**data;
-	int		row;
-	int		col;
-}	t_map;
 
 typedef struct s_vec2 {
 	double	x;
