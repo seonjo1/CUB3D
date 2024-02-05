@@ -12,17 +12,7 @@
 
 #ifndef PARSE_H
 # define PARSE_H
-
-# include <stdio.h>
-# include <fcntl.h>
-# include "../gnl/get_next_line.h"
-# include "../libft_s/libft_s.h"
-
-typedef struct s_map {
-	char	*data;
-	int		row;
-	int		col;
-}	t_map;
+# include "../cub3d.h"
 
 void	parse_map(t_map *map, int argc, char **argv);
 void	parse_check_map(t_map *map);
