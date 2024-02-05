@@ -91,6 +91,7 @@ double	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir)
 		if (data->map.data[map.x][map.y] > 0)
 			hit = 1;
 	}
+	printf("x:%d, y:%d\n", map.x, map.y);
 	if (side == 0)
 		perpwall_dist = (map.x - player->pos.x + (1 - step.x) / 2) / ray_dir.x;
 	else
@@ -124,8 +125,8 @@ int	main_loop(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	usleep(1000);
 	ray_casting(data, &(data->player));
+	usleep(100000000);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	mlx_destroy_image(data->mlx, data->img);
 	return (0);
