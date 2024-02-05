@@ -6,28 +6,18 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/01/31 18:22:17 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/04 18:08:50 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-# include "minilibx/mlx.h"
+#include "cub3d.h"
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
-
-typedef struct s_data {
-	void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
-	int		endian;
-}	t_data;
-
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_data	data;
+	t_map	map;
 
+	parse_map(&map, argc, argv);
 	printf("here");
 	printf("here");
 	data.mlx = mlx_init();
