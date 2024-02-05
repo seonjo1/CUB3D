@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			:= cc
-WFLAG		:= -Wall -Wextra -Werror
+WFLAG		:= -Wall -Wextra -Werror -fsanitize=address -g3
 MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
@@ -36,7 +36,7 @@ NAME		:= cub3d
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
-	$(CC) $(MLXFLAG) $(FTFLAG) $^ -o $@
+	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $^ -o $@
 
 $(MLX) :
 	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi
@@ -65,7 +65,10 @@ fclean : clean
 
 re : fclean all
 
-t : all clean
+t1 : all clean
+	./$(NAME) ./test_map.cub
+
+t2 : all clean
 	./$(NAME) ./test_map.cub
 
 .PHONY : all clean fclean re t
