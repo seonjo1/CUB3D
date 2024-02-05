@@ -18,6 +18,23 @@ void	utils_draw_point(t_data *data, int x, int y)
 		*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = 0xFFFFFF;
 }
 
+void	ray_casting(t_data *data, t_player	*player)
+{
+	int		x;
+	t_vec2	camera;
+	t_vec2	ray_dir;
+
+	x = 0;
+	while (x < WIN_WIDTH)
+	{
+		camera.x = 2 * x / (double)WIN_WIDTH - 1;
+		ray_dir.x = player->dir.x + player->plane.x * camera.x;
+		ray_dir.y = player->dir.y + player->plane.y * camera.x;
+		
+		x++;
+	}
+}
+
 int	main_loop(t_data *data)
 {
 	static int x = 0, y = 0;
@@ -28,7 +45,7 @@ int	main_loop(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	usleep(100000);
+	usleep(1000);
 	utils_draw_point(data, x++, y++);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	mlx_destroy_image(data->mlx, data->img);
@@ -48,12 +65,11 @@ void	main_init(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data		data;
-	t_map		map;
-	t_player	player;
 
 	main_init(&data);
-	parse_map(&map, &player, argc, argv);
-	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n", player.pos.x, player.pos.y, player.dir.x, player.dir.y);
+	parse_map(&(data.map), &(data.player), argc, argv);
+	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n",\
+		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
 	// // mlx_hook(data.mlx_win, 2, 0, &keypress_event, &data);
 	// // mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
 	mlx_loop_hook(data.mlx, &main_loop, &data);
