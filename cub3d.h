@@ -21,6 +21,7 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
+# define WALL_HEIGHT 100
 
 typedef struct s_vec2 {
 	double	x;
