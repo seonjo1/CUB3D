@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:06:29 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 14:06:53 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/05 20:01:04 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ void	parse_check_start_point(t_map *map, t_player *player)
 		parse_error("invalid map");
 }
 
-static void parse_dfs(t_map *map, char *check, int i, int j)
+static void	parse_dfs(t_map *map, char **check, int i, int j)
 {
-	if (check[map->col * i + j])
+	if (check[i][j])
 		return ;
-	check[map->col * i + j] = 1;
-	if (map->data[map->col * i + j] == ' ')
+	check[i][j] = 1;
+	if (map->data[i][j] == ' ')
 		parse_error("invalid map");
-	if (map->data[map->col * i + j] == '1')
+	if (map->data[i][j] == '1')
 		return ;
-	if (i == 0 || i == map->row || j == 0 || j == map->col)
+	if (i == 0 || i == map->row - 1 || j == 0 || j == map->col - 1)
 		parse_error("invalid map");
 	parse_dfs(map, check, i - 1, j);
 	parse_dfs(map, check, i + 1, j);
@@ -74,22 +74,26 @@ void	parse_check_wall(t_map *map)
 	int		i;
 	int		j;
 	int		flag;
-	char	*check;
+	char	**check;
 
-	check = ft_calloc_s(map->row * map->col, sizeof(char));
-	flag = 0;
+	check = ft_calloc_s(map->row, sizeof(char *));
 	i = 0;
 	while (i < map->row)
+		check[i++] = ft_calloc_s(map->col, sizeof(char));
+	flag = 0;
+	i = -1;
+	while (++i < map->row)
 	{
-		j = 0;
-		while (j < map->col)
+		j = -1;
+		while (++j < map->col)
 		{
-			if (map->data[map->col * i + j] == '0' || \
-				parse_is_start_point(map->data[map->col * i + j]))
+			if (map->data[i][j] == '0' || \
+				parse_is_start_point(map->data[i][j]))
 				parse_dfs(map, check, i, j);
-			j++;
 		}
-		i++;
 	}
+	i = 0;
+	while (i < map->row)
+		free(check[i++]);
 	free(check);
 }
