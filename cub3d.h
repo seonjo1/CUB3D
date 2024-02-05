@@ -13,7 +13,9 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <stdio.h>
-# include "parse/parse.h"
+# include <fcntl.h>
+# include "gnl/get_next_line.h"
+# include "libft_s/libft_s.h"
 # include "minilibx/mlx.h"
 
 # define WIN_WIDTH 1920
@@ -26,5 +28,11 @@ typedef struct s_data {
 	char	*addr;
 	int		endian;
 }	t_data;
+
+typedef struct s_map {
+	char	*data;
+	int		row;
+	int		col;
+}	t_map;
 
 #endif
