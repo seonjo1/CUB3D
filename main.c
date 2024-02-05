@@ -14,16 +14,18 @@
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
-	t_map	map;
+	// t_data		data;
+	t_map		map;
+	t_player	player;
 
-	parse_map(&map, argc, argv);
-	data.mlx = mlx_init();
-	data.mlx_win = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
-	// data.img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	// data.addr = mlx_get_data_addr(data.img, &(data.map.bpp),
-	// 		&(data.map.line_length), &(data.endian));
-	// mlx_hook(data.mlx_win, 2, 0, &keypress_event, &data);
-	// mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
-	mlx_loop(data.mlx);
+	parse_map(&map, &player, argc, argv);
+	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n", player.pos.x, player.pos.y, player.dir.x, player.dir.y);
+	// data.mlx = mlx_init();
+	// data.mlx_win = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
+	// // data.img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
+	// // data.addr = mlx_get_data_addr(data.img, &(data.map.bpp),
+	// // 		&(data.map.line_length), &(data.endian));
+	// // mlx_hook(data.mlx_win, 2, 0, &keypress_event, &data);
+	// // mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
+	// mlx_loop(data.mlx);
 }

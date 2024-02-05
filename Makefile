@@ -66,6 +66,6 @@ fclean : clean
 re : fclean all
 
 t : all clean
-	./$(NAME)
+	./$(NAME) ./test_map.cub
 
 .PHONY : all clean fclean re t
