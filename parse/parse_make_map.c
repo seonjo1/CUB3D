@@ -46,7 +46,7 @@ void	parse_make_map(t_map *map, char *file)
 
 	map->data = ft_calloc_s(map->row, sizeof(char *));
 	i = 0;
-	while (i < map->col)
+	while (i < map->row)
 		map->data[i++] = ft_calloc_s(map->col, sizeof(char));
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
