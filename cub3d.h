@@ -26,6 +26,8 @@ typedef struct s_data {
 	void	*mlx_win;
 	void	*img;
 	char	*addr;
+	int		bpp;
+	int		line_length;
 	int		endian;
 }	t_data;
 
