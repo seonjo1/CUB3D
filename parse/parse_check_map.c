@@ -12,14 +12,41 @@
 
 #include "parse.h"
 
-int	parse_is_start_point(char c)
+static int	parse_init_player(char c, int x, int y, t_player *player)
+{
+	player->pos.x = x;
+	player->pos.y = y;
+	if (c == 'W')
+	{
+		player->dir.x = -1;
+		player->dir.y = 0;
+	}
+	else if (c == 'N')
+	{
+		player->dir.x = 0;
+		player->dir.y = -1;
+	}
+	else if (c == 'S')
+	{
+		player->dir.x = 0;
+		player->dir.y = 1;
+	}
+	else if (c == 'E')
+	{
+		player->dir.x = 1;
+		player->dir.y = 0;
+	}
+	return (1);
+}
+
+static int	parse_is_start_point(char c)
 {
 	if (c == 'W' || c == 'N' || c == 'S' || c == 'E')
 		return (1);
 	return (0);
 }
 
-void	parse_check_start_point(t_map *map)
+void	parse_check_start_point(t_map *map, t_player *player)
 {
 	int	i;
 	int	j;
@@ -33,21 +60,16 @@ void	parse_check_start_point(t_map *map)
 		while (j < map->col)
 		{
 			if (parse_is_start_point(map->data[map->col * i + j]))
-			{
-				if (flag)
-					parse_error("invalid map");
-				else
-					flag = 1;
-			}
+				flag += parse_init_player(map->data[map->col * i + j], i, j, player);
 			j++;
 		}
 		i++;
 	}
-	if (!flag)
+	if (flag != 1)
 		parse_error("invalid map");
 }
 
-void parse_dfs(t_map *map, char *check, int i, int j)
+static void parse_dfs(t_map *map, char *check, int i, int j)
 {
 	if (check[map->col * i + j])
 		return ;
@@ -87,10 +109,4 @@ void	parse_check_wall(t_map *map)
 		i++;
 	}
 	free(check);
-}
-
-void	parse_check_map(t_map *map)
-{
-	parse_check_start_point(map);
-	parse_check_wall(map);
 }
