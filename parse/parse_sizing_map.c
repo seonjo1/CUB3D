@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:10:41 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 14:10:53 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/05 15:30:51 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,6 @@ void	parse_sizing_map(t_map *map, char *file)
 	while (parse_check_multiple_map(gnl(fd), fd))
 		;
 	close(fd);
+	if (map->row == 0)
+		parse_error("invalid map");
 }
