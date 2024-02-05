@@ -25,11 +25,12 @@ void	parse_check_arg(int argc, char **argv)
 		parse_error("invalid extension");
 }
 
-void	parse_map(t_map *map, int argc, char **argv)
+void	parse_map(t_map *map, t_player *player, int argc, char **argv)
 {	
 	ft_memset(map, 0, sizeof(t_map));
 	parse_check_arg(argc, argv);
 	parse_sizing_map(map, argv[1]);
 	parse_make_map(map, argv[1]);
-	parse_check_map(map);
+	parse_check_start_point(map, player);
+	parse_check_wall(map);
 }
