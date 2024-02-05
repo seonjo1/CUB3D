@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 17:41:46 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/05 19:00:21 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ typedef struct s_data {
 }	t_data;
 
 typedef struct s_map {
-	char	*data;
+	char	**data;
 	int		row;
 	int		col;
 }	t_map;
 
 typedef struct s_vec2 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 }	t_vec2;
 
 typedef struct s_player {
-	t_vec2 pos;
-	t_vec2 dir;
-	t_vec2 plane;
+	t_vec2	pos;
+	t_vec2	dir;
+	t_vec2	plane;
 }	t_player;
 
 #endif
