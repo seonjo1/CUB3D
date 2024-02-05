@@ -6,11 +6,11 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:12:00 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 14:12:22 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/05 15:34:39 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.c"
+#include "parse.h"
 
 int	parse_fill_map(t_map *map, char *line, int *col)
 {
