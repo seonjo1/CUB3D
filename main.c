@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "parse/parse.h"
 
 int	main(int argc, char **argv)
 {
@@ -18,8 +18,6 @@ int	main(int argc, char **argv)
 	t_map	map;
 
 	parse_map(&map, argc, argv);
-	printf("here");
-	printf("here");
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	// data.img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
