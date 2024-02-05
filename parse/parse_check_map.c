@@ -43,7 +43,7 @@ void	parse_check_start_point(t_map *map, t_player *player)
 		j = 0;
 		while (j < map->col)
 		{
-			flag += parse_init_player(map->data[map->col * i + j], i, j, player);
+			flag += parse_init_player(map->data[i][j], i, j, player);
 			j++;
 		}
 		i++;
