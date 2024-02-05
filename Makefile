@@ -12,30 +12,31 @@
 
 CC			:= cc
 WFLAG		:= -Wall -Wextra -Werror
-LIBMLX		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
-LIBFT		:= -Llibft -lft
+MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
+FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
 FT			:= ./libft/libft.a
 
 DIR			:= ./
 BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
-				parse/parse \
+				parse/parse parse/parse_check_map parse/parse_make_map \
+				parse/parse_sizing_map parse/parse_utils \
 				libft_s/libft_s
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3d
 
-# BON_DIR		:= ./bon/
-# BON_BASE	:= 
-# BON_SRC		:= $(addprefix $(BON_DIR), $(addsuffix _bonus.c, $(BON_BASE)))
-# BON_OBJ		:= $(addprefix $(BON_DIR), $(addsuffix _bonus.o, $(BON_BASE)))
+# BON_DIR	:= ./bon/
+# BON_BASE	:= $(BASE)
+# BON_SRC	:= $(addprefix $(BON_DIR), $(addsuffix _bonus.c, $(BON_BASE)))
+# BON_OBJ	:= $(addprefix $(BON_DIR), $(addsuffix _bonus.o, $(BON_BASE)))
 # BON_NAME	:= minishell
 
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
-	$(CC) $(LIBMLX) $(LIBFT) $^ -o $@
+	$(CC) $(MLXFLAG) $(FTFLAG) $^ -o $@
 
 $(MLX) :
 	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi
@@ -58,8 +59,8 @@ clean :
 	rm -f $(OBJ) $(BON_OBJ) bonus
 
 fclean : clean
-	@make fclean -C ./libft
-	@make fclean -C ./minilibx
+	# @make fclean -C ./libft
+	# @make fclean -C ./minilibx
 	rm -f $(NAME) $(BON_NAME)
 
 re : fclean all
