@@ -12,38 +12,22 @@
 
 #include "parse.h"
 
-static int	parse_init_player(char c, int x, int y, t_player *player)
-{
-	player->pos.x = x;
-	player->pos.y = y;
-	if (c == 'W')
-	{
-		player->dir.x = -1;
-		player->dir.y = 0;
-	}
-	else if (c == 'N')
-	{
-		player->dir.x = 0;
-		player->dir.y = -1;
-	}
-	else if (c == 'S')
-	{
-		player->dir.x = 0;
-		player->dir.y = 1;
-	}
-	else if (c == 'E')
-	{
-		player->dir.x = 1;
-		player->dir.y = 0;
-	}
-	return (1);
-}
-
 static int	parse_is_start_point(char c)
 {
 	if (c == 'W' || c == 'N' || c == 'S' || c == 'E')
 		return (1);
 	return (0);
+}
+
+static int	parse_init_player(char c, int x, int y, t_player *player)
+{
+	if (!parse_is_start_point(c))
+		return (0);
+	player->pos.x = x;
+	player->pos.y = y;
+	player->dir.x = (c == 'E') - (c == 'W');
+	player->dir.y = (c == 'S') - (c == 'N');
+	return (1);
 }
 
 void	parse_check_start_point(t_map *map, t_player *player)
@@ -59,8 +43,7 @@ void	parse_check_start_point(t_map *map, t_player *player)
 		j = 0;
 		while (j < map->col)
 		{
-			if (parse_is_start_point(map->data[map->col * i + j]))
-				flag += parse_init_player(map->data[map->col * i + j], i, j, player);
+			flag += parse_init_player(map->data[map->col * i + j], i, j, player);
 			j++;
 		}
 		i++;
