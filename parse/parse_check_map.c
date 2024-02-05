@@ -27,6 +27,8 @@ static int	parse_init_player(char c, int x, int y, t_player *player)
 	player->pos.y = y;
 	player->dir.x = (c == 'E') - (c == 'W');
 	player->dir.y = (c == 'S') - (c == 'N');
+	player->plane.x = 0;
+	player->plane.y = 0.66;
 	return (1);
 }
 
