@@ -12,21 +12,16 @@
 
 #include "parse.h"
 
-static int	parse_is_start_point(char c)
+static int	parse_init_player(char **data, int x, int y, t_player *player)
 {
-	if (c == 'W' || c == 'N' || c == 'S' || c == 'E')
-		return (1);
-	return (0);
-}
-
-static int	parse_init_player(char c, int x, int y, t_player *player)
-{
-	if (!parse_is_start_point(c))
+	if (!(data[x][y] == 'W' || data[x][y] == 'N'
+		|| data[x][y] == 'S' || data[x][y] == 'E'))
 		return (0);
 	player->pos.x = x;
 	player->pos.y = y;
-	player->dir.x = (c == 'E') - (c == 'W');
-	player->dir.y = (c == 'S') - (c == 'N');
+	player->dir.x = (data[x][y] == 'E') - (data[x][y] == 'W');
+	player->dir.y = (data[x][y] == 'S') - (data[x][y] == 'N');
+	data[x][y] = '0';
 	player->plane.x = 0;
 	player->plane.y = 0.66;
 	return (1);
@@ -45,7 +40,7 @@ void	parse_check_start_point(t_map *map, t_player *player)
 		j = 0;
 		while (j < map->col)
 		{
-			flag += parse_init_player(map->data[i][j], i, j, player);
+			flag += parse_init_player(map->data, i, j, player);
 			j++;
 		}
 		i++;
@@ -89,8 +84,7 @@ void	parse_check_wall(t_map *map)
 		j = -1;
 		while (++j < map->col)
 		{
-			if (map->data[i][j] == '0' || \
-				parse_is_start_point(map->data[i][j]))
+			if (map->data[i][j] == '0')
 				parse_dfs(map, check, i, j);
 		}
 	}
