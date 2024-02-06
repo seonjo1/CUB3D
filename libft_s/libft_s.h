@@ -12,9 +12,11 @@
 
 #ifndef LIBFT_S_H
 # define LIBFT_S_H
-
-# include "../libft/libft.h"
+# include "../cub3d.h"
 
 void	*ft_calloc_s(size_t count, size_t size);
+t_vec2	vec2_creat(double x, double y);
+t_vec2	vec2_add(t_vec2 a, t_vec2 b);
+t_vec2	vec2_scala_mul(t_vec2 a, double b);
 
 #endif
