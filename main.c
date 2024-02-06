@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/06 20:08:54 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/06 21:01:02 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ double	veclen(t_vec2 vec)
 
 void	shoot_ray(t_data *data, t_vec2 ray, int window_x)
 {
+	int		side;
+	int		hit;
 	t_vec2	map;
 	t_vec2	dis;
 	t_vec2	inc;
@@ -62,6 +64,37 @@ void	shoot_ray(t_data *data, t_vec2 ray, int window_x)
 		step.y = 1;
 		map.y++;
 		dis.y = inc.y * (map.y - data->player.pos.y);
+	}
+	hit = 0;
+	side = 0;
+	while (!hit)
+	{
+		if (dis.x < dis.y)
+		{
+			side = 0;
+			dis.x += inc.x;
+			map.x += step.x;
+		}
+		else
+		{
+			side = 1;
+			dis.y += inc.y;
+			map.y += step.y;
+		}
+		if (data->map.data[(int)map.x][(int)map.y] == 1)
+			hit = 1;
+	}
+	double dist;
+	double delta;
+	if (side)
+	{
+		delta = sqrt(pow(dis.y, 2) - pow((map.y - data->player.pos.y), 2));
+		dist = abs_c(data->player.dir.x * delta + data->player.dir.y * (map.y - data->player.pos.y));
+	}
+	else
+	{
+		delta = sqrt(pow(dis.x, 2) - pow((map.x - data->player.pos.x), 2));
+		dist = abs_c(data->player.dir.x * (map.x - data->player.pos.x) + data->player.dir.y * delta);
 	}
 }
 
