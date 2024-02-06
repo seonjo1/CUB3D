@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 21:13:07 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/06 19:48:29 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "gnl/get_next_line.h"
 # include "libft_s/libft_s.h"
 # include "minilibx/mlx.h"
+# include "math.h"
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
