@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 19:00:21 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/05 21:13:07 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
-
-typedef struct s_data {
-	void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_length;
-	int		endian;
-}	t_data;
 
 typedef struct s_map {
 	char	**data;
@@ -47,5 +37,17 @@ typedef struct s_player {
 	t_vec2	dir;
 	t_vec2	plane;
 }	t_player;
+
+typedef struct s_data {
+	t_map		map;
+	t_player	player;
+	void		*mlx;
+	void		*mlx_win;
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			line_length;
+	int			endian;
+}	t_data;
 
 #endif
