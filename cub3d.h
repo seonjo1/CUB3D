@@ -16,12 +16,23 @@
 # include <fcntl.h>
 # include <math.h>
 # include "gnl/get_next_line.h"
-# include "libft_s/libft_s.h"
+# include "libft/libft.h"
 # include "minilibx/mlx.h"
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
-# define WALL_HEIGHT 100
+# define WALL_HEIGHT 1080
+
+typedef enum s_keycode {
+	KEY_A = 123,
+	KEY_W = 126,
+	KEY_D = 124,
+	KEY_S = 125,
+	KEY_LEFT = 0,
+	KEY_UP = 13,
+	KEY_RIGHT = 2,
+	KEY_DOWN = 1
+}	t_keycode;
 
 typedef struct s_vec2 {
 	double	x;
@@ -37,6 +48,7 @@ typedef struct s_player {
 	t_vec2	pos;
 	t_vec2	dir;
 	t_vec2	plane;
+	double	speed;
 }	t_player;
 
 typedef struct s_map {
@@ -56,6 +68,5 @@ typedef struct s_data {
 	t_map		map;
 	t_player	player;
 }	t_data;
-
 
 #endif
