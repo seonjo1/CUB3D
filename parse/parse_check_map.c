@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:06:29 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 20:01:04 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/06 16:38:41 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int	parse_init_player(char c, int x, int y, t_player *player)
 	player->pos.y = y;
 	player->dir.x = (c == 'E') - (c == 'W');
 	player->dir.y = (c == 'S') - (c == 'N');
-	return (1);
+	player->plane.x = 0.65 * ((c == 'N') - (c == 'S'));
+	player->plane.y = 0.65 * ((c == 'E') - (c == 'W'));
 }
 
 void	parse_check_start_point(t_map *map, t_player *player)
