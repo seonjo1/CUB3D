@@ -139,26 +139,39 @@ int	main_loop(t_data *data)
 	return (0);
 }
 
-int	keypress_event(int keycode, t_player *player)
+int	event_keypress(int keycode, t_player *player)
 {
+	const double	rot_speed = 0.05;
+	double			old_dir_x;
+	double			old_plane_x;
+
 	// printf("keycode:%d\n", keycode);
 	if (keycode == 53)
 		exit(0);
-	// else if (keycode == KEY_A || keycode == KEY_LEFT)
 	else if (keycode == KEY_W || keycode == KEY_UP)
 		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed));
 	else if (keycode == KEY_S || keycode == KEY_DOWN)
 		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed * -1));
-	// else if (keycode == 0 || keycode == 1 || keycode == 2 || keycode == 13
-	// 	|| keycode == 15 || keycode == 3 || keycode == 17 || keycode == 5
-	// 	|| keycode == 16 || keycode == 4)
-	// 	set_rotate_or_move(keycode, &(data->map));
-	// else if (keycode == 12 || keycode == 14 || keycode == 6 || keycode == 7)
-	// 	set_scale(keycode, &(data->map));
-	// else if (keycode >= 18 && keycode <= 21)
-	// 	change_view(keycode, &(data->map));
-	// else
-	// 	return (0);
+	if (keycode == KEY_A || keycode == KEY_LEFT)
+	{
+		old_dir_x = player->dir.x;
+		player->dir.x = player->dir.x * cos(-rot_speed) - player->dir.y * sin(-rot_speed);
+		player->dir.y = old_dir_x * sin(-rot_speed) + player->dir.y * cos(-rot_speed);
+		old_plane_x = player->plane.x;
+		player->plane.x = player->plane.x * cos(-rot_speed) - player->plane.y * sin(-rot_speed);
+		player->plane.y = old_plane_x * sin(-rot_speed) + player->plane.y * cos(-rot_speed);
+	}
+	else if (keycode == KEY_D || keycode == KEY_RIGHT)
+	{
+		old_dir_x = player->dir.x;
+		player->dir.x = player->dir.x * cos(rot_speed) - player->dir.y * sin(rot_speed);
+		player->dir.y = old_dir_x * sin(rot_speed) + player->dir.y * cos(rot_speed);
+		old_plane_x = player->plane.x;
+		player->plane.x = player->plane.x * cos(rot_speed) - player->plane.y * sin(rot_speed);
+		player->plane.y = old_plane_x * sin(rot_speed) + player->plane.y * cos(rot_speed);
+	}
+	printf("player: dir(%.3f, %.3f), plane(%.3f, %.3f), pos(%.3f, %.3f)\n",\
+		player->dir.x, player->dir.y, player->plane.x, player->plane.y, player->pos.x, player->pos.y);
 	return (0);
 }
 
@@ -181,7 +194,7 @@ int	main(int argc, char **argv)
 	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n",\
 		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
 	// // mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
-	mlx_hook(data.mlx_win, 2, 0, &keypress_event, &(data.player));
 	mlx_loop_hook(data.mlx, &main_loop, &data);
+	mlx_hook(data.mlx_win, 2, 0, &event_keypress, &(data.player));
 	mlx_loop(data.mlx);
 }
