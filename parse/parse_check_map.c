@@ -22,10 +22,10 @@ static int	parse_init_player(char **data, int x, int y, t_player *player)
 	player->pos.y = y;
 	player->dir.x = (data[x][y] == 'E') - (data[x][y] == 'W');
 	player->dir.y = (data[x][y] == 'S') - (data[x][y] == 'N');
-	data[x][y] = '0';
-	player->plane.x = (data[x][y] == 'E') - (data[x][y] == 'W') * 0.66;
-	player->plane.y = (data[x][y] == 'S') - (data[x][y] == 'N') * 0.66;
+	player->plane.x = 0.65 * ((data[x][y] == 'N') - (data[x][y] == 'S'));
+	player->plane.y = 0.65 * ((data[x][y] == 'E') - (data[x][y] == 'W'));
 	player->speed = 0.05;
+	data[x][y] = '0';
 	return (1);
 }
 
