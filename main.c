@@ -170,8 +170,8 @@ int	event_keypress(int keycode, t_player *player)
 		player->plane.x = player->plane.x * cos(rot_speed) - player->plane.y * sin(rot_speed);
 		player->plane.y = old_plane_x * sin(rot_speed) + player->plane.y * cos(rot_speed);
 	}
-	printf("player: dir(%.3f, %.3f), plane(%.3f, %.3f), pos(%.3f, %.3f)\n",\
-		player->dir.x, player->dir.y, player->plane.x, player->plane.y, player->pos.x, player->pos.y);
+	// printf("player: dir(%.3f, %.3f), plane(%.3f, %.3f), pos(%.3f, %.3f)\n",\
+	// 	player->dir.x, player->dir.y, player->plane.x, player->plane.y, player->pos.x, player->pos.y);
 	return (0);
 }
 
