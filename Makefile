@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			:= cc
-WFLAG		:= -Wall -Wextra -Werror -fsanitize=address -g3
+# WFLAG		:= -Wall -Wextra -Werror -fsanitize=address -g3
 MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
@@ -22,7 +22,7 @@ BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
 				parse/parse parse/parse_check_map parse/parse_make_map \
 				parse/parse_sizing_map parse/parse_utils \
-				libft_s/libft_s
+				libft_s/libft_s libft_s/vec2_utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3d
