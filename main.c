@@ -11,18 +11,19 @@
 /* ************************************************************************** */
 
 #include "parse/parse.h"
+#include "libft_s/libft_s.h"
 
-void	draw_point(t_data *data, int x, int y)
+void	draw_point(t_data *data, int x, int y, int color)
 {
 	if ((x >= 0 && y >= 0) && (WIN_HEIGHT > y && WIN_WIDTH > x))
-		*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = 0xFFFFFF;
+		*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = color;
 }
 
-void	draw_vertical_line(t_data *data, int x, double perpwall_dist)
+void	draw_vertical_line(t_data *data, int now_x, double perpwall_dist, int color)
 {
-	int	y_start;
-	int	y_end;
-	int	line_height;
+	int		y_start;
+	int		y_end;
+	int		line_height;
 	
 	line_height = (int)(WALL_HEIGHT / perpwall_dist);
 	y_start = -1 * line_height / 2 + WALL_HEIGHT / 2;
@@ -31,15 +32,22 @@ void	draw_vertical_line(t_data *data, int x, double perpwall_dist)
 	y_end = line_height / 2 + WALL_HEIGHT / 2;
 	if (y_end >= WALL_HEIGHT)
 		y_end = WALL_HEIGHT - 1;
-	printf("x:%d, perp:%f, y_start:%d, y_end:%d\n", x, perpwall_dist, y_start, y_end);
+	// printf("x:%d, perp:%f, y_start:%d, y_end:%d\n", x, perpwall_dist, y_start, y_end);
 	while (y_start <= y_end)
 	{
-		draw_point(data, x, y_start);
+		draw_point(data, now_x, y_start, color);
 		y_start++;
 	}
 }
 
-double	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir)
+int	draw_get_color(int side)
+{
+	if (side == 1)
+		return (0x00808080);
+	return (0x00666666);
+}
+
+void	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir, int now_x)
 {
 	t_intvec2	map;
 	t_vec2		side_dist;
@@ -88,31 +96,29 @@ double	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir)
 			map.y += step.y;
 			side = 1;
 		}
-		if (data->map.data[map.x][map.y] > 0)
+		if (data->map.data[map.x][map.y] != '0')
 			hit = 1;
 	}
-	printf("x:%d, y:%d\n", map.x, map.y);
 	if (side == 0)
 		perpwall_dist = (map.x - player->pos.x + (1 - step.x) / 2) / ray_dir.x;
 	else
 		perpwall_dist = (map.y - player->pos.y + (1 - step.y) / 2) / ray_dir.y;
-	return (perpwall_dist);
+	draw_vertical_line(data, now_x, perpwall_dist, draw_get_color(side));
 }
 
 void	ray_casting(t_data *data, t_player	*player)
 {
-	int		x;
+	int		now_x;
 	t_vec2	camera;
 	t_vec2	ray_dir;
 
-	x = 0;
-	while (x < WIN_WIDTH)
+	now_x = 0;
+	while (now_x < WIN_WIDTH)
 	{
-		camera.x = 2 * x / (double)WIN_WIDTH - 1;
-		ray_dir.x = player->dir.x + player->plane.x * camera.x;
-		ray_dir.y = player->dir.y + player->plane.y * camera.x;
-		draw_vertical_line(data, x, ray_dda(data, player, ray_dir));
-		x++;
+		camera = vec2_creat(2 * now_x / (double)WIN_WIDTH - 1, 0);
+		ray_dir = vec2_add(player->dir, vec2_scala_mul(player->plane, camera.x));
+		ray_dda(data, player, ray_dir, now_x);
+		now_x++;
 	}
 }
 
@@ -125,10 +131,34 @@ int	main_loop(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
+	// draw_point(data, 100, 100);
 	ray_casting(data, &(data->player));
-	usleep(100000000);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+	// usleep(100000000);
 	mlx_destroy_image(data->mlx, data->img);
+	return (0);
+}
+
+int	keypress_event(int keycode, t_player *player)
+{
+	// printf("keycode:%d\n", keycode);
+	if (keycode == 53)
+		exit(0);
+	// else if (keycode == KEY_A || keycode == KEY_LEFT)
+	else if (keycode == KEY_W || keycode == KEY_UP)
+		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed));
+	else if (keycode == KEY_S || keycode == KEY_DOWN)
+		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed * -1));
+	// else if (keycode == 0 || keycode == 1 || keycode == 2 || keycode == 13
+	// 	|| keycode == 15 || keycode == 3 || keycode == 17 || keycode == 5
+	// 	|| keycode == 16 || keycode == 4)
+	// 	set_rotate_or_move(keycode, &(data->map));
+	// else if (keycode == 12 || keycode == 14 || keycode == 6 || keycode == 7)
+	// 	set_scale(keycode, &(data->map));
+	// else if (keycode >= 18 && keycode <= 21)
+	// 	change_view(keycode, &(data->map));
+	// else
+	// 	return (0);
 	return (0);
 }
 
@@ -150,8 +180,8 @@ int	main(int argc, char **argv)
 	parse_map(&(data.map), &(data.player), argc, argv);
 	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n",\
 		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
-	// // mlx_hook(data.mlx_win, 2, 0, &keypress_event, &data);
 	// // mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
+	mlx_hook(data.mlx_win, 2, 0, &keypress_event, &(data.player));
 	mlx_loop_hook(data.mlx, &main_loop, &data);
 	mlx_loop(data.mlx);
 }
