@@ -61,7 +61,6 @@ void	play_movement_update(t_player *player)
 		else if (kb & (1 << KB_RIGHT))
 			player->move.y = 1;
 	}
-	play_state_update(player);
 }
 
 void	play_dir_update(t_player *player)
@@ -109,6 +108,7 @@ void	play_motion(t_player *player)
 void	play_update(t_data *data)
 {
 	play_movement_update(&(data->player));
+	play_state_update(&(data->player));
 	play_dir_update(&(data->player));
 	play_motion(&(data->player));
 }
