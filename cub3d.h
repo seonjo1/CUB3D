@@ -34,6 +34,18 @@ typedef enum s_keycode {
 	KEY_DOWN = 1
 }	t_keycode;
 
+typedef enum s_keybinds {
+	forward = 1 << 1,
+	backward = 1 << 2,
+	left = 1 << 3,
+	right = 1 << 4,
+	rotate_left = 1 << 5,
+	rotate_right = 1 << 6,
+	rotate_up = 1 << 7,
+	rotate_down = 1 << 8,
+	jump = 1 << 9,
+}	t_keybinds;
+
 typedef struct s_vec2 {
 	double	x;
 	double	y;
@@ -49,6 +61,7 @@ typedef struct s_player {
 	t_vec2	dir;
 	t_vec2	plane;
 	double	speed;
+	int		keybinds;
 }	t_player;
 
 typedef struct s_map {
