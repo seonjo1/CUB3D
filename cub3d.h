@@ -64,6 +64,8 @@ typedef struct s_player {
 	t_vec2	dir;
 	t_vec2	plane;
 	t_vec2	move;
+	t_vec2	motion;
+	t_vec2	motion_dir;
 	double	speed;
 	int		keybinds;
 }	t_player;
