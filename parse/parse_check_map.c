@@ -13,19 +13,20 @@
 #include "parse.h"
 #include "../libft_s/libft_s.h"
 
-static int	parse_init_player(char **data, int x, int y, t_player *player)
+static int	parse_init_player(char **data, int y, int x, t_player *player)
 {
-	if (!(data[x][y] == 'W' || data[x][y] == 'N'
-		|| data[x][y] == 'S' || data[x][y] == 'E'))
+	printf("y:%d x:%d\n", y, x);
+	if (!(data[y][x] == 'W' || data[y][x] == 'N'
+		|| data[y][x] == 'S' || data[y][x] == 'E'))
 		return (0);
 	player->pos.x = x;
 	player->pos.y = y;
-	player->dir.x = (data[x][y] == 'E') - (data[x][y] == 'W');
-	player->dir.y = (data[x][y] == 'S') - (data[x][y] == 'N');
-	player->plane.x = 0.65 * ((data[x][y] == 'N') - (data[x][y] == 'S'));
-	player->plane.y = 0.65 * ((data[x][y] == 'E') - (data[x][y] == 'W'));
+	player->dir.x = (data[y][x] == 'E') - (data[y][x] == 'W');
+	player->dir.y = (data[y][x] == 'S') - (data[y][x] == 'N');
+	player->plane.x = 0.65 * ((data[y][x] == 'N') - (data[y][x] == 'S'));
+	player->plane.y = 0.65 * ((data[y][x] == 'E') - (data[y][x] == 'W'));
 	player->speed = 0.05;
-	data[x][y] = '0';
+	data[y][x] = '0';
 	return (1);
 }
 
@@ -36,16 +37,12 @@ void	parse_check_start_point(t_map *map, t_player *player)
 	int	flag;
 
 	flag = 0;
-	i = 0;
-	while (i < map->row)
+	i = -1;
+	while (++i < map->row)
 	{
-		j = 0;
-		while (j < map->col)
-		{
+		j = -1;
+		while (++j < map->col)
 			flag += parse_init_player(map->data, i, j, player);
-			j++;
-		}
-		i++;
 	}
 	if (flag != 1)
 		parse_error("invalid map");
