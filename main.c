@@ -12,6 +12,7 @@
 
 #include "parse/parse.h"
 #include "libft_s/libft_s.h"
+#include "play/play.h"
 
 void	draw_point(t_data *data, int x, int y, int color)
 {
@@ -122,102 +123,6 @@ void	ray_casting(t_data *data, t_player	*player)
 	}
 }
 
-void	play_state_update(t_player *player)
-{
-	int	kb;
-
-	kb = player->keybinds;
-	if (!(player->move.x || player->move.y))
-		player->state = PLS_IDLE;
-	else if (kb & (1 << KB_SHITF))
-		player->state = PLS_RUN;
-	else if (!(kb & (1 << KB_SHITF)))
-		player->state = PLS_WALK;
-}
-
-void	play_movement_update(t_player *player)
-{
-	int	kb;
-
-	kb = player->keybinds;
-	player->move.x = 0;
-	if (!(kb & (1 << KB_FORWARD) && kb & (1 << KB_BACKWARD)))
-	{
-		if (kb & (1 << KB_FORWARD))
-			player->move.x = 1;
-		else if (kb & (1 << KB_BACKWARD))
-			player->move.x = -1;
-	}
-	player->move.y = 0;
-	if (!(kb & (1 << KB_LEFT) && kb & (1 << KB_RIGHT)))
-	{
-		if (kb & (1 << KB_LEFT))
-			player->move.y = -1;
-		else if (kb & (1 << KB_RIGHT))
-			player->move.y = 1;
-	}
-	play_state_update(player);
-	if (player->state == PLS_WALK)
-	{
-		vec2_normalize(&(player->move), 0.0085);
-		player->pos.z = cos(player->time / (double)20.0) * 12.5;
-		player->time += 4;
-	}
-	else if (player->state == PLS_RUN)
-	{
-		vec2_normalize(&(player->move), 0.0085 * 1.5);
-		player->pos.z = cos(player->time / (double)20.0) * 15;
-		player->time += 6;
-	}
-	else
-	{
-		player->pos.z = cos(player->time / (double)20.0) * 8;
-		player->time += 1;
-	}
-}
-
-void	play_dir_update(t_player *player)
-{
-	int	kb;
-
-	kb = player->keybinds;
-	if (!(kb & (1 << KB_ROTATE_LEFT)) && kb & (1 << KB_ROTATE_RIGHT))
-		player->motion_dir.y = 0.02;
-	else if (!(kb & (1 << KB_ROTATE_RIGHT)) && kb & (1 << KB_ROTATE_LEFT))
-		player->motion_dir.y = -0.02;
-	else
-		player->motion_dir.y *= 0.795;
-	// printf("kb:%d, motion_diry:%.2f\n", kb, player->motion_dir.y);
-}
-
-void	play_motion(t_player *player)
-{
-	t_vec2	old_move;
-	t_vec2	old_dir;
-	t_vec2	old_plane;
-
-	old_move = player->move;
-	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
-	player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
-	player->motion = vec2_scala_mul(player->motion, 0.85);
-	player->pos.x += player->motion.x;
-	player->pos.y += player->motion.y;
-	// player->pos = vec2_add(player->pos, player->motion);
-	old_dir = player->dir;
-	player->dir.x = old_dir.x * cos(player->motion_dir.y) - old_dir.y * sin(player->motion_dir.y);
-	player->dir.y = old_dir.x * sin(player->motion_dir.y) + old_dir.y * cos(player->motion_dir.y);
-	old_plane = player->plane;
-	player->plane.x = old_plane.x * cos(player->motion_dir.y) - old_plane.y * sin(player->motion_dir.y);
-	player->plane.y = old_plane.x * sin(player->motion_dir.y) + old_plane.y * cos(player->motion_dir.y);
-	// printf("dirx:%.2f diry:%.2f\n", player->dir.x, player->dir.y);
-	// handle_keys(player, vars->bonus);
-	// player->motion_yaw *= 0.914;
-	// player->motion_pitch *= 0.82;
-	
-	// update_render(player, vars, vars->bonus);
-	// player->yaw += player->motion_yaw;
-}
-
 int	main_loop(t_data *data)
 {
 	data->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
@@ -227,9 +132,7 @@ int	main_loop(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	play_movement_update(&(data->player));
-	play_dir_update(&(data->player));
-	play_motion(&(data->player));
+	play_update(data);
 	ray_casting(data, &(data->player));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	// usleep(100000000);
@@ -295,7 +198,7 @@ void	event_keybinds_set(int *kb, int keycode, char pressed)
 
 int	event_keypress(int keycode, t_player *player)
 {
-	printf("keycode:%d\n", keycode);
+	// printf("keycode:%d\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(0);
 	else
