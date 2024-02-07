@@ -26,10 +26,10 @@ void	draw_vertical_line(t_data *data, int now_x, double perpwall_dist, int color
 	int		line_height;
 	
 	line_height = (int)(WALL_HEIGHT / perpwall_dist);
-	y_start = -1 * line_height / 2 + WALL_HEIGHT / 2;
+	y_start = -1 * line_height / 2 + WALL_HEIGHT / 2 + data->player.pos.z;
 	if (y_start < 0)
 		y_start = 0;
-	y_end = line_height / 2 + WALL_HEIGHT / 2;
+	y_end = line_height / 2 + WALL_HEIGHT / 2 + data->player.pos.z;
 	if (y_end >= WALL_HEIGHT)
 		y_end = WALL_HEIGHT - 1;
 	// printf("x:%d, perp:%f, y_start:%d, y_end:%d\n", x, perpwall_dist, y_start, y_end);
@@ -122,6 +122,19 @@ void	ray_casting(t_data *data, t_player	*player)
 	}
 }
 
+void	play_state_update(t_player *player)
+{
+	int	kb;
+
+	kb = player->keybinds;
+	if (!(player->move.x || player->move.y))
+		player->state = PLS_IDLE;
+	else if (kb & (1 << KB_SHITF))
+		player->state = PLS_RUN;
+	else if (!(kb & (1 << KB_SHITF)))
+		player->state = PLS_WALK;
+}
+
 void	play_movement_update(t_player *player)
 {
 	int	kb;
@@ -143,7 +156,24 @@ void	play_movement_update(t_player *player)
 		else if (kb & (1 << KB_RIGHT))
 			player->move.y = 1;
 	}
-	vec2_normalize(&(player->move), 0.0085);
+	play_state_update(player);
+	if (player->state == PLS_WALK)
+	{
+		vec2_normalize(&(player->move), 0.0085);
+		player->pos.z = cos(player->time / (double)20.0) * 12.5;
+		player->time += 4;
+	}
+	else if (player->state == PLS_RUN)
+	{
+		vec2_normalize(&(player->move), 0.0085 * 1.5);
+		player->pos.z = cos(player->time / (double)20.0) * 15;
+		player->time += 6;
+	}
+	else
+	{
+		player->pos.z = cos(player->time / (double)20.0) * 8;
+		player->time += 1;
+	}
 }
 
 void	play_dir_update(t_player *player)
@@ -152,11 +182,11 @@ void	play_dir_update(t_player *player)
 
 	kb = player->keybinds;
 	if (!(kb & (1 << KB_ROTATE_LEFT)) && kb & (1 << KB_ROTATE_RIGHT))
-		player->motion_dir.y = 0.021;
+		player->motion_dir.y = 0.02;
 	else if (!(kb & (1 << KB_ROTATE_RIGHT)) && kb & (1 << KB_ROTATE_LEFT))
 		player->motion_dir.y = -0.02;
 	else
-		player->motion_dir.y *= 0.895;
+		player->motion_dir.y *= 0.795;
 	// printf("kb:%d, motion_diry:%.2f\n", kb, player->motion_dir.y);
 }
 
@@ -170,7 +200,9 @@ void	play_motion(t_player *player)
 	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
 	player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
 	player->motion = vec2_scala_mul(player->motion, 0.85);
-	player->pos = vec2_add(player->pos, player->motion);
+	player->pos.x += player->motion.x;
+	player->pos.y += player->motion.y;
+	// player->pos = vec2_add(player->pos, player->motion);
 	old_dir = player->dir;
 	player->dir.x = old_dir.x * cos(player->motion_dir.y) - old_dir.y * sin(player->motion_dir.y);
 	player->dir.y = old_dir.x * sin(player->motion_dir.y) + old_dir.y * cos(player->motion_dir.y);
@@ -256,12 +288,14 @@ void	event_keybinds_set(int *kb, int keycode, char pressed)
 		(*kb) = (*kb & ~(1 << KB_ROTATE_LEFT)) | (pressed << KB_ROTATE_LEFT);
 	else if (keycode == KEY_RIGHT)
 		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (pressed << KB_ROTATE_RIGHT);
+	else if (keycode == KEY_SHIFT)
+		(*kb) = (*kb & ~(1 << KB_SHITF)) | (pressed << KB_SHITF);
 	// printf("keybinds:%d\n", *kb);
 }
 
 int	event_keypress(int keycode, t_player *player)
 {
-	// printf("keycode:%d\n", keycode);
+	printf("keycode:%d\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(0);
 	else
