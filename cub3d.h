@@ -19,31 +19,34 @@
 # include "libft/libft.h"
 # include "minilibx/mlx.h"
 
+# define TRUE 1
+# define FALSE 0
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define WALL_HEIGHT 1080
 
 typedef enum s_keycode {
-	KEY_A = 123,
-	KEY_W = 126,
-	KEY_D = 124,
-	KEY_S = 125,
-	KEY_LEFT = 0,
-	KEY_UP = 13,
-	KEY_RIGHT = 2,
-	KEY_DOWN = 1
+	KEY_LEFT = 123,
+	KEY_UP = 126,
+	KEY_RIGHT = 124,
+	KEY_DOWN = 125,
+	KEY_A = 0,
+	KEY_W = 13,
+	KEY_D = 2,
+	KEY_S = 1,
+	KEY_ESC = 53
 }	t_keycode;
 
 typedef enum s_keybinds {
-	forward = 1 << 1,
-	backward = 1 << 2,
-	left = 1 << 3,
-	right = 1 << 4,
-	rotate_left = 1 << 5,
-	rotate_right = 1 << 6,
-	rotate_up = 1 << 7,
-	rotate_down = 1 << 8,
-	jump = 1 << 9,
+	KB_FORWARD,
+	KB_BACKWARD,
+	KB_LEFT,
+	KB_RIGHT,
+	KB_ROTATE_LEFT,
+	KB_ROTATE_RIGHT,
+	KB_ROTATE_UP,
+	KB_ROTATE_DOWN,
+	KB_JUMP
 }	t_keybinds;
 
 typedef struct s_vec2 {
@@ -60,6 +63,7 @@ typedef struct s_player {
 	t_vec2	pos;
 	t_vec2	dir;
 	t_vec2	plane;
+	t_vec2	move;
 	double	speed;
 	int		keybinds;
 }	t_player;
