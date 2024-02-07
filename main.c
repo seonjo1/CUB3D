@@ -122,6 +122,45 @@ void	ray_casting(t_data *data, t_player	*player)
 	}
 }
 
+void	play_move_update(t_player *player)
+{
+	int	kb;
+
+	kb = player->keybinds;
+	player->move.x = 0;
+	if (!(kb & (1 << KB_FORWARD) && kb & (1 << KB_BACKWARD)))
+	{
+		if (kb & (1 << KB_FORWARD))
+			player->move.x = 1;
+		else if (kb & (1 << KB_BACKWARD))
+			player->move.x = -1;
+	}
+	player->move.y = 0;
+	if (!(kb & (1 << KB_LEFT) && kb & (1 << KB_RIGHT)))
+	{
+		if (kb & (1 << KB_LEFT))
+			player->move.y = -1;
+		else if (kb & (1 << KB_RIGHT))
+			player->move.y = 1;
+	}
+	vec2_normalize(&(player->move), 0.0085);
+}
+
+void	play_motion(t_player *player)
+{
+	t_vec2	old_move;
+
+	old_move = player->move;
+	player->pos.x += old_move.x * player->dir.x - old_move.y * player->dir.y;
+	player->pos.y += old_move.y * player->dir.x + old_move.x * player->dir.y;
+	// handle_keys(player, vars->bonus);
+	// player->motion_yaw *= 0.914;
+	// player->motion_pitch *= 0.82;
+	
+	// update_render(player, vars, vars->bonus);
+	// player->yaw += player->motion_yaw;
+}
+
 int	main_loop(t_data *data)
 {
 	data->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
@@ -131,47 +170,78 @@ int	main_loop(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	// draw_point(data, 100, 100);
+	play_move_update(&(data->player));
+	play_motion(&(data->player));
 	ray_casting(data, &(data->player));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	// usleep(100000000);
 	mlx_destroy_image(data->mlx, data->img);
+	mlx_do_sync(data->mlx);
 	return (0);
+}
+
+// int	event_keypress(int keycode, t_player *player)
+// {
+// 	const double	rot_speed = 0.05;
+// 	double			old_dir_x;
+// 	double			old_plane_x;
+
+// 	// printf("keycode:%d\n", keycode);
+// 	if (keycode == 53)
+// 		exit(0);
+// 	else if (keycode == KEY_W || keycode == KEY_UP)
+// 		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed));
+// 	else if (keycode == KEY_S || keycode == KEY_DOWN)
+// 		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed * -1));
+// 	if (keycode == KEY_A || keycode == KEY_LEFT)
+// 	{
+// 		old_dir_x = player->dir.x;
+// 		player->dir.x = player->dir.x * cos(-rot_speed) - player->dir.y * sin(-rot_speed);
+// 		player->dir.y = old_dir_x * sin(-rot_speed) + player->dir.y * cos(-rot_speed);
+// 		old_plane_x = player->plane.x;
+// 		player->plane.x = player->plane.x * cos(-rot_speed) - player->plane.y * sin(-rot_speed);
+// 		player->plane.y = old_plane_x * sin(-rot_speed) + player->plane.y * cos(-rot_speed);
+// 	}
+// 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
+// 	{
+// 		old_dir_x = player->dir.x;
+// 		player->dir.x = player->dir.x * cos(rot_speed) - player->dir.y * sin(rot_speed);
+// 		player->dir.y = old_dir_x * sin(rot_speed) + player->dir.y * cos(rot_speed);
+// 		old_plane_x = player->plane.x;
+// 		player->plane.x = player->plane.x * cos(rot_speed) - player->plane.y * sin(rot_speed);
+// 		player->plane.y = old_plane_x * sin(rot_speed) + player->plane.y * cos(rot_speed);
+// 	}
+// 	// printf("player: dir(%.3f, %.3f), plane(%.3f, %.3f), pos(%.3f, %.3f)\n",\
+// 	// 	player->dir.x, player->dir.y, player->plane.x, player->plane.y, player->pos.x, player->pos.y);
+// 	return (0);
+// }
+
+void	event_keybinds_set(int *kb, int keycode, char pressed)
+{
+	if (keycode == KEY_W)
+		(*kb) = (*kb & ~(1 << KB_FORWARD)) | (pressed << KB_FORWARD);
+	else if (keycode == KEY_S)
+		(*kb) = (*kb & ~(1 << KB_BACKWARD)) | (pressed << KB_BACKWARD);
+	else if (keycode == KEY_A)
+		(*kb) = (*kb & ~(1 << KB_LEFT)) | (pressed << KB_LEFT);
+	else if (keycode == KEY_D)
+		(*kb) = (*kb & ~(1 << KB_RIGHT)) | (pressed << KB_RIGHT);
+	// printf("keybinds:%d\n", *kb);
 }
 
 int	event_keypress(int keycode, t_player *player)
 {
-	const double	rot_speed = 0.05;
-	double			old_dir_x;
-	double			old_plane_x;
-
 	// printf("keycode:%d\n", keycode);
-	if (keycode == 53)
+	if (keycode == KEY_ESC)
 		exit(0);
-	else if (keycode == KEY_W || keycode == KEY_UP)
-		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed));
-	else if (keycode == KEY_S || keycode == KEY_DOWN)
-		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed * -1));
-	if (keycode == KEY_A || keycode == KEY_LEFT)
-	{
-		old_dir_x = player->dir.x;
-		player->dir.x = player->dir.x * cos(-rot_speed) - player->dir.y * sin(-rot_speed);
-		player->dir.y = old_dir_x * sin(-rot_speed) + player->dir.y * cos(-rot_speed);
-		old_plane_x = player->plane.x;
-		player->plane.x = player->plane.x * cos(-rot_speed) - player->plane.y * sin(-rot_speed);
-		player->plane.y = old_plane_x * sin(-rot_speed) + player->plane.y * cos(-rot_speed);
-	}
-	else if (keycode == KEY_D || keycode == KEY_RIGHT)
-	{
-		old_dir_x = player->dir.x;
-		player->dir.x = player->dir.x * cos(rot_speed) - player->dir.y * sin(rot_speed);
-		player->dir.y = old_dir_x * sin(rot_speed) + player->dir.y * cos(rot_speed);
-		old_plane_x = player->plane.x;
-		player->plane.x = player->plane.x * cos(rot_speed) - player->plane.y * sin(rot_speed);
-		player->plane.y = old_plane_x * sin(rot_speed) + player->plane.y * cos(rot_speed);
-	}
-	// printf("player: dir(%.3f, %.3f), plane(%.3f, %.3f), pos(%.3f, %.3f)\n",\
-	// 	player->dir.x, player->dir.y, player->plane.x, player->plane.y, player->pos.x, player->pos.y);
+	else
+		event_keybinds_set(&(player->keybinds), keycode, TRUE);
+	return (0);
+}
+
+int	event_keyrelease(int keycode, t_player *player)
+{
+	event_keybinds_set(&(player->keybinds), keycode, FALSE);
 	return (0);
 }
 
@@ -183,6 +253,7 @@ void	main_init(t_data *data)
 	data->mlx_win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	if (!data->mlx_win)
 		exit(1);
+	ft_bzero(&(data->player), sizeof(t_player));
 }
 
 int	main(int argc, char **argv)
@@ -196,5 +267,6 @@ int	main(int argc, char **argv)
 	// // mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
 	mlx_loop_hook(data.mlx, &main_loop, &data);
 	mlx_hook(data.mlx_win, 2, 0, &event_keypress, &(data.player));
+	mlx_hook(data.mlx_win, 3, 0, &event_keyrelease, &(data.player));
 	mlx_loop(data.mlx);
 }
