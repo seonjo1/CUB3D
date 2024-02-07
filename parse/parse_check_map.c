@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:06:29 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/06 21:29:06 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/07 16:39:54 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	parse_is_start_point(char c)
 	return (0);
 }
 
-static int	parse_init_player(char c, int y, int x, t_player *player)
+static int	parse_init_player(char *c, int x, int y, t_player *player)
 {
 	if (!parse_is_start_point(c))
 		return (0);
@@ -29,6 +29,7 @@ static int	parse_init_player(char c, int y, int x, t_player *player)
 	player->dir.y = (c == 'S') - (c == 'N');
 	player->plane.x = 0.65 * ((c == 'N') - (c == 'S'));
 	player->plane.y = 0.65 * ((c == 'E') - (c == 'W'));
+	*c = '0';
 	return (1);
 }
 
@@ -45,7 +46,7 @@ void	parse_check_start_point(t_map *map, t_player *player)
 		j = 0;
 		while (j < map->col)
 		{
-			flag += parse_init_player(map->data[i][j], i, j, player);
+			flag += parse_init_player(&(map->data[i][j]), j, i, player);
 			j++;
 		}
 		i++;
