@@ -96,7 +96,7 @@ void	ray_dda(t_data *data, t_player *player, t_vec2 ray_dir, int now_x)
 			map.y += step.y;
 			side = 1;
 		}
-		if (data->map.data[map.x][map.y] != '0')
+		if (data->map.data[map.y][map.x] != '0')
 			hit = 1;
 	}
 	if (side == 0)
@@ -122,7 +122,7 @@ void	ray_casting(t_data *data, t_player	*player)
 	}
 }
 
-void	play_move_update(t_player *player)
+void	play_movement_update(t_player *player)
 {
 	int	kb;
 
@@ -146,13 +146,38 @@ void	play_move_update(t_player *player)
 	vec2_normalize(&(player->move), 0.0085);
 }
 
+void	play_dir_update(t_player *player)
+{
+	int	kb;
+
+	kb = player->keybinds;
+	if (!(kb & (1 << KB_ROTATE_LEFT)) && kb & (1 << KB_ROTATE_RIGHT))
+		player->motion_dir.y = 0.021;
+	else if (!(kb & (1 << KB_ROTATE_RIGHT)) && kb & (1 << KB_ROTATE_LEFT))
+		player->motion_dir.y = -0.02;
+	else
+		player->motion_dir.y *= 0.895;
+	// printf("kb:%d, motion_diry:%.2f\n", kb, player->motion_dir.y);
+}
+
 void	play_motion(t_player *player)
 {
 	t_vec2	old_move;
+	t_vec2	old_dir;
+	t_vec2	old_plane;
 
 	old_move = player->move;
-	player->pos.x += old_move.x * player->dir.x - old_move.y * player->dir.y;
-	player->pos.y += old_move.y * player->dir.x + old_move.x * player->dir.y;
+	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
+	player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
+	player->motion = vec2_scala_mul(player->motion, 0.85);
+	player->pos = vec2_add(player->pos, player->motion);
+	old_dir = player->dir;
+	player->dir.x = old_dir.x * cos(player->motion_dir.y) - old_dir.y * sin(player->motion_dir.y);
+	player->dir.y = old_dir.x * sin(player->motion_dir.y) + old_dir.y * cos(player->motion_dir.y);
+	old_plane = player->plane;
+	player->plane.x = old_plane.x * cos(player->motion_dir.y) - old_plane.y * sin(player->motion_dir.y);
+	player->plane.y = old_plane.x * sin(player->motion_dir.y) + old_plane.y * cos(player->motion_dir.y);
+	// printf("dirx:%.2f diry:%.2f\n", player->dir.x, player->dir.y);
 	// handle_keys(player, vars->bonus);
 	// player->motion_yaw *= 0.914;
 	// player->motion_pitch *= 0.82;
@@ -170,7 +195,8 @@ int	main_loop(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	play_move_update(&(data->player));
+	play_movement_update(&(data->player));
+	play_dir_update(&(data->player));
 	play_motion(&(data->player));
 	ray_casting(data, &(data->player));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
@@ -226,6 +252,10 @@ void	event_keybinds_set(int *kb, int keycode, char pressed)
 		(*kb) = (*kb & ~(1 << KB_LEFT)) | (pressed << KB_LEFT);
 	else if (keycode == KEY_D)
 		(*kb) = (*kb & ~(1 << KB_RIGHT)) | (pressed << KB_RIGHT);
+	else if (keycode == KEY_LEFT)
+		(*kb) = (*kb & ~(1 << KB_ROTATE_LEFT)) | (pressed << KB_ROTATE_LEFT);
+	else if (keycode == KEY_RIGHT)
+		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (pressed << KB_ROTATE_RIGHT);
 	// printf("keybinds:%d\n", *kb);
 }
 
