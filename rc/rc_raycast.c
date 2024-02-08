@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 15:17:33 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:18:38 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	rc_init_dis_and_step(t_data *data, t_rc_data *rc_data, t_vec2 ray)
 	else
 	{
 		rc_data->step.x = 1;
-		rc_data->dis.x = (rc_data->map.x + 1 - data->player.pos.x) * rc_data->inc.x;
+		rc_data->dis.x = (rc_data->map.x + 1 - data->player.pos.x) \
+			* rc_data->inc.x;
 	}
 	if (ray.y < 0)
 	{
@@ -53,7 +54,8 @@ void	rc_init_dis_and_step(t_data *data, t_rc_data *rc_data, t_vec2 ray)
 	else
 	{
 		rc_data->step.y = 1;
-		rc_data->dis.y = (rc_data->map.y + 1 - data->player.pos.y) * rc_data->inc.y;
+		rc_data->dis.y = (rc_data->map.y + 1 - data->player.pos.y) \
+			* rc_data->inc.y;
 	}
 }
 
