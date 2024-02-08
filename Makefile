@@ -27,7 +27,7 @@ BASE		:=	main \
 				libft_s/libft_s libft_s/vec2_utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
-NAME		:= cub3d
+NAME		:= cub3D
 
 # BON_DIR	:= ./bon/
 # BON_BASE	:= $(BASE)
