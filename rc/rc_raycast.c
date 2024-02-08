@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 14:04:15 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 14:09:31 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ double	double_abs(double n)
 	return (n);
 }
 
-void	shoot_ray(t_data *data, t_vec2 ray, int x)
+void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 {
 	int		hit;
 	int		side;
@@ -30,7 +30,6 @@ void	shoot_ray(t_data *data, t_vec2 ray, int x)
 
 	map.x = (int)data->player.pos.x;
 	map.y = (int)data->player.pos.y;
-
 	if (ray.x == 0)
 		inc.x = INFINITY;
 	else
@@ -39,7 +38,6 @@ void	shoot_ray(t_data *data, t_vec2 ray, int x)
 		inc.y = INFINITY;
 	else
 		inc.y = double_abs(1 / ray.y);
-	hit = 0;
 	if (ray.x < 0)
 	{
 		step.x = -1;
@@ -60,6 +58,7 @@ void	shoot_ray(t_data *data, t_vec2 ray, int x)
 		step.y = 1;
 		dis.y = (map.y + 1 - data->player.pos.y) * inc.y;
 	}
+	hit = 0;
 	while (!hit)
 	{
 		if (dis.x < dis.y)
@@ -115,7 +114,7 @@ void	rc_raycast(t_data *data)
 		camera_x = 2 * x / (double) WIN_WIDTH - 1;
 		ray.x = data->player.dir.x + data->player.plane.x * camera_x;
 		ray.y = data->player.dir.y + data->player.plane.y * camera_x;
-		shoot_ray(data, ray, x);
+		rc_draw_col(data, ray, x);
 		x++;
 	}
 }
