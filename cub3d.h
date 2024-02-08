@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 20:34:44 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 20:36:19 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ typedef enum s_keybinds {
 }	t_keybinds;
 
 typedef enum s_texture {
-	NO = 1,
-	SO = 2,
-	WE = 4,
-	EA = 8,
-	F = 16,
-	C = 32
+	TX_NO = 1,
+	TX_SO = 2,
+	TX_WE = 4,
+	TX_EA = 8,
+	TX_F = 16,
+	TX_C = 32,
+	TX_END = 63
 }	t_texture;
 
 
