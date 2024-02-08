@@ -20,10 +20,13 @@ static int	parse_init_player(char **data, int y, int x, t_player *player)
 		return (0);
 	player->pos.x = x;
 	player->pos.y = y;
-	player->dir.x = (data[y][x] == 'E') - (data[y][x] == 'W');
-	player->dir.y = (data[y][x] == 'S') - (data[y][x] == 'N');
-	player->plane.x = 0.66 * ((data[y][x] == 'N') - (data[y][x] == 'S'));
-	player->plane.y = 0.66 * ((data[y][x] == 'E') - (data[y][x] == 'W'));
+	if (data[y][x] == 'S')
+		player->euler_dir.y = 90;
+	else if (data[y][x] == 'W')
+		player->euler_dir.y = 180;
+	else if (data[y][x] == 'N')
+		player->euler_dir.y = 270;
+	player->euler_dir.y *= 3.141592 / 180.0;
 	player->speed = 0.05;
 	data[y][x] = '0';
 	return (1);
