@@ -88,7 +88,8 @@ void	play_state_update(t_player *player)
 	if (!(player->move.x || player->move.y))
 	{
 		player->state |= (1 << PLS_IDLE);
-		player->pos.z = sin(player->time / (double)25.0) * 8;
+		if (!(player->state & (1 << PLS_JUMP)))
+			player->pos.z = sin(player->time / (double)25.0) * 20;
 		player->time += 1;
 		play_fov_update(player, FOV_BASE);
 	}
@@ -96,21 +97,26 @@ void	play_state_update(t_player *player)
 	{
 		player->state |= (1 << PLS_WALK);
 		vec2_normalize(&(player->move), 0.0085);
-		player->pos.z = sin(player->time / (double)25.0) * 12.5;
-		player->time += 5;
+		if (!(player->state & (1 << PLS_JUMP)))
+		{
+			player->pos.z = sin(player->time / (double)25.0) * 30;
+			player->time += 5;
+		}
 		play_fov_update(player, FOV_BASE);
 	}
 	else if (kb & (1 << KB_SHITF))
 	{
 		player->state |= (1 << PLS_RUN);
 		vec2_normalize(&(player->move), 0.0085 * 1.5);
-		player->pos.z = sin(player->time / (double)25.0) * 15;
-		player->time += 7;
+		if (!(player->state & (1 << PLS_JUMP)))
+		{
+			player->pos.z = sin(player->time / (double)25.0) * 50;
+			player->time += 7;
+		}
 		play_fov_update(player, FOV_BASE * 1.1);
 	}
 	if (kb & (1 << KB_JUMP) && !(player->state & (1 << PLS_JUMP)))
 	{
-		printf("here\n");
 		player->state = (player->state & ~(1 << PLS_JUMP)) | (1 << PLS_JUMP);
 		player->motion.z = 50;
 	}
@@ -131,13 +137,10 @@ void	play_motion(t_player *player)
 	if (player->state & (1 << PLS_JUMP))
 	{
 		player->pos.z += player->motion.z;
-		player->motion.z -= 1;
-		if (player->pos.z < 15.1)
-		{
+		player->motion.z -= 2.5;
+		if (player->motion.z < -50)
 			player->state = player->state & ~(1 << PLS_JUMP);
-			player->pos.z = 15;
-		}
-		printf("%.3f, %.3f\n", player->pos.z, player->motion.z);
+		// printf("%.3f, %.3f\n", player->pos.z, player->motion.z);
 	}
 }
 
