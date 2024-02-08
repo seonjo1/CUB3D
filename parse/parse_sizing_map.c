@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:10:41 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 20:13:23 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 20:15:28 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,37 @@ int	parse_check_multiple_map(char *line, int fd)
 	return (1);
 }
 
+int	parse_count_element(char *line, int fd)
+{
+	int	i;
+
+	if (!line && parse_close(fd))
+		parse_error("invalid map file");
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' || line[i] != '\n')
+		{
+			free(line);
+			return (1);
+		}
+		i++;
+	}
+	free(line);
+	return (0);
+}
+
 void	parse_sizing_map(t_map *map, char *file)
 {
-	int		fd;
+	int	fd;
+	int	element;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		parse_error("unable to open file");
+	element = 0;
+	while (element < 6)
+		element += parse_count_element(gnl(fd), fd);
 	while (parse_sizing_line(map, gnl(fd), fd))
 		;
 	while (parse_check_multiple_map(gnl(fd), fd))
