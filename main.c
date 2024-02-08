@@ -41,6 +41,23 @@ void	draw_vertical_line(t_data *data, int now_x, double perpwall_dist, int color
 	}
 }
 
+void	draw_aim(t_data *data)
+{
+	t_intvec2	aim;
+	int			i;
+
+	aim.x = WIN_WIDTH / 2 - 20;
+	aim.y = WIN_HEIGHT / 2;
+	i = -1;
+	while (++i < 40)
+		draw_point(data, aim.x + i, aim.y, 0xFF00FF);
+	aim.x = WIN_WIDTH / 2;
+	aim.y = WIN_HEIGHT / 2 - 20;
+	i = -1;
+	while (++i < 40)
+		draw_point(data, aim.x, aim.y + i, 0xFF00FF);
+}
+
 int	draw_get_color(int side)
 {
 	if (side == 1)
@@ -134,6 +151,7 @@ int	main_loop(t_data *data)
 		exit(1);
 	play_update(data);
 	ray_casting(data, &(data->player));
+	draw_aim(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	// usleep(100000000);
 	mlx_destroy_image(data->mlx, data->img);
@@ -177,6 +195,15 @@ int	main_loop(t_data *data)
 // 	return (0);
 // }
 
+void	event_mouse_cursor(int *kb)
+{
+	(*kb) ^= (1 << KB_1);
+	if (*kb & (1 << KB_1))
+		mlx_mouse_hide();
+	else
+		mlx_mouse_show();
+}
+
 void	event_keybinds_set(int *kb, int keycode, char pressed)
 {
 	if (keycode == KEY_W)
@@ -193,6 +220,8 @@ void	event_keybinds_set(int *kb, int keycode, char pressed)
 		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (pressed << KB_ROTATE_RIGHT);
 	else if (keycode == KEY_SHIFT)
 		(*kb) = (*kb & ~(1 << KB_SHITF)) | (pressed << KB_SHITF);
+	else if (keycode == KEY_1 && pressed == TRUE)
+		event_mouse_cursor(kb);
 	// printf("keybinds:%d\n", *kb);
 }
 
