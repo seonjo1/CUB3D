@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 15:59:36 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 20:34:44 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ typedef enum s_keybinds {
 	KB_JUMP,
 	KB_1
 }	t_keybinds;
+
+typedef enum s_texture {
+	NO = 1,
+	SO = 2,
+	WE = 4,
+	EA = 8,
+	F = 16,
+	C = 32
+}	t_texture;
+
 
 typedef enum s_player_state {
 	PLS_IDLE,
