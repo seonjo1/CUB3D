@@ -26,8 +26,8 @@ static int	parse_init_player(char **data, int y, int x, t_player *player)
 		player->euler_dir.y = 180;
 	else if (data[y][x] == 'N')
 		player->euler_dir.y = 270;
+	player->fov = FOV_BASE;
 	player->euler_dir.y *= 3.141592 / 180.0;
-	player->speed = 0.05;
 	data[y][x] = '0';
 	return (1);
 }
