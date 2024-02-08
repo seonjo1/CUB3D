@@ -21,23 +21,23 @@ static void	evnt_mouse_cursor(int *kb)
 		mlx_mouse_show();
 }
 
-static void	evnt_keybinds_set(int *kb, int keycode, char pressed)
+static void	evnt_keybinds_set(int *kb, int keycode, char press)
 {
 	if (keycode == KEY_W)
-		(*kb) = (*kb & ~(1 << KB_FORWARD)) | (pressed << KB_FORWARD);
+		(*kb) = (*kb & ~(1 << KB_FORWARD)) | (press << KB_FORWARD);
 	else if (keycode == KEY_S)
-		(*kb) = (*kb & ~(1 << KB_BACKWARD)) | (pressed << KB_BACKWARD);
+		(*kb) = (*kb & ~(1 << KB_BACKWARD)) | (press << KB_BACKWARD);
 	else if (keycode == KEY_A)
-		(*kb) = (*kb & ~(1 << KB_LEFT)) | (pressed << KB_LEFT);
+		(*kb) = (*kb & ~(1 << KB_LEFT)) | (press << KB_LEFT);
 	else if (keycode == KEY_D)
-		(*kb) = (*kb & ~(1 << KB_RIGHT)) | (pressed << KB_RIGHT);
+		(*kb) = (*kb & ~(1 << KB_RIGHT)) | (press << KB_RIGHT);
 	else if (keycode == KEY_LEFT)
-		(*kb) = (*kb & ~(1 << KB_ROTATE_LEFT)) | (pressed << KB_ROTATE_LEFT);
+		(*kb) = (*kb & ~(1 << KB_ROTATE_LEFT)) | (press << KB_ROTATE_LEFT);
 	else if (keycode == KEY_RIGHT)
-		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (pressed << KB_ROTATE_RIGHT);
+		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (press << KB_ROTATE_RIGHT);
 	else if (keycode == KEY_SHIFT)
-		(*kb) = (*kb & ~(1 << KB_SHITF)) | (pressed << KB_SHITF);
-	else if (keycode == KEY_1 && pressed == TRUE)
+		(*kb) = (*kb & ~(1 << KB_SHITF)) | (press << KB_SHITF);
+	else if (keycode == KEY_1 && press == TRUE)
 		evnt_mouse_cursor(kb);
 	// printf("keybinds:%d\n", *kb);
 }
