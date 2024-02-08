@@ -166,7 +166,6 @@ int	main_loop(t_data *data)
 	ray_casting(data, &(data->player));
 	draw_aim(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	// usleep(100000000);
 	mlx_destroy_image(data->mlx, data->img);
 	mlx_do_sync(data->mlx);
 	return (0);
