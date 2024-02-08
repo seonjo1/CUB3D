@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 14:49:25 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:19:44 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ typedef struct s_height {
 	int	draw_start;
 	int	draw_end;
 }	t_height;
+
+void	utils_draw_point(t_data *data, int x, int y, int color);
 
 #endif
