@@ -67,12 +67,12 @@ fclean : clean
 re : fclean all
 
 t1 : all clean
-	./$(NAME) ./test_map.cub
+	./$(NAME) ./map/test_map.cub
 
 t2 : all clean
-	./$(NAME) ./test_map2.cub
+	./$(NAME) ./map/test_map2.cub
 
 t3 : all clean
-	./$(NAME) ./test_map3.cub
+	./$(NAME) ./map/test_map3.cub
 
 .PHONY : all clean fclean re t
