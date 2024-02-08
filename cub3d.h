@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 15:31:25 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:59:36 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
+# define PI 3.14
+
+typedef enum {
+	KEY_A = 0,
+	KEY_S = 1,
+	KEY_D = 2,
+	KEY_W = 13,
+	ESC = 53
+}	e_key;
 
 typedef struct s_map {
 	char	**data;
