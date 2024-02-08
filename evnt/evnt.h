@@ -16,5 +16,6 @@
 
 int	evnt_keypress(int keycode, t_player *player);
 int	evnt_keyrelease(int keycode, t_player *player);
+int	evnt_leave(int keycode, int tmp);
 
 #endif

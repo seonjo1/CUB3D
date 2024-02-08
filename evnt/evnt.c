@@ -42,6 +42,13 @@ static void	evnt_keybinds_set(int *kb, int keycode, char pressed)
 	// printf("keybinds:%d\n", *kb);
 }
 
+int	evnt_leave(int keycode, int tmp)
+{
+	keycode = tmp;
+	exit(0);
+	return (0);
+}
+
 int	evnt_keypress(int keycode, t_player *player)
 {
 	// printf("keycode:%d\n", keycode);
