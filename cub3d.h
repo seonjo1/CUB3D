@@ -24,6 +24,7 @@
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define WALL_HEIGHT 1080
+# define FOV_BASE 1.15192
 
 typedef enum s_keycode {
 	KEY_LEFT = 123,
@@ -78,7 +79,7 @@ typedef struct s_intvec2 {
 
 typedef struct s_player {
 	t_vec3		pos;
-	double		speed;
+	double		fov;
 	t_vec2		dir;
 	t_vec2		plane;
 	t_vec2		move;
