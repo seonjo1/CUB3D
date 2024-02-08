@@ -63,7 +63,7 @@ void	play_movement_update(t_player *player)
 	}
 }
 
-void	play_dir_update(t_player *player)
+void	play_key_dir_update(t_player *player)
 {
 	int	kb;
 
@@ -77,7 +77,7 @@ void	play_dir_update(t_player *player)
 	// printf("kb:%d, motion_diry:%.2f\n", kb, player->motion_dir.y);
 }
 
-void	play_set_dir_plane(t_player *player)
+void	play_dir_plane_set(t_player *player)
 {
 	double	sn;
 	double	cs;
@@ -123,9 +123,9 @@ void	play_mouse_update(t_data *data)
 void	play_update(t_data *data)
 {
 	play_mouse_update(data);
-	play_set_dir_plane(&(data->player));
+	play_dir_plane_set(&(data->player));
+	play_key_dir_update(&(data->player));
 	play_movement_update(&(data->player));
 	play_state_update(&(data->player));
-	play_dir_update(&(data->player));
 	play_motion(&(data->player));
 }
