@@ -118,7 +118,7 @@ void	play_state_update(t_player *player)
 	if (kb & (1 << KB_JUMP) && !(player->state & (1 << PLS_JUMP)))
 	{
 		player->state = (player->state & ~(1 << PLS_JUMP)) | (1 << PLS_JUMP);
-		player->motion.z = 50;
+		player->motion.z = 45;
 	}
 }
 
@@ -138,7 +138,7 @@ void	play_motion(t_player *player)
 	{
 		player->pos.z += player->motion.z;
 		player->motion.z -= 2.5;
-		if (player->motion.z < -50)
+		if (player->motion.z < -45)
 			player->state = player->state & ~(1 << PLS_JUMP);
 		// printf("%.3f, %.3f\n", player->pos.z, player->motion.z);
 	}
