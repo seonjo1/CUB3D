@@ -6,11 +6,12 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 14:04:07 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:31:33 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse/parse.h"
+#include "rc/rc.h"
 
 void	utils_draw_point(t_data *data, int x, int y, int color)
 {
