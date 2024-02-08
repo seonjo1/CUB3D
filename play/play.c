@@ -24,7 +24,7 @@ void	play_dir_update(t_data *data)
 		mlx_mouse_get_pos(data->mlx_win, &(mouse_pos.x), &(mouse_pos.y));
 		mlx_mouse_move(data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 		if (mouse_pos.x - WIN_WIDTH / 2 != 0)
-			data->player.motion_dir.y = (mouse_pos.x - WIN_WIDTH / 2) / (double)314;
+			data->player.motion_dir.y = (mouse_pos.x - WIN_WIDTH / 2) / 314.0;
 		else
 			data->player.motion_dir.y *= 0.795;
 	}
@@ -44,7 +44,7 @@ void	play_dir_plane_set(t_player *player)
 	sn = sin(player->euler_dir.y);
 	cs = cos(player->euler_dir.y);
 	player->dir = vec2_creat(cs, sn);
-	player->plane = vec2_scala_mul(vec2_creat(-sn, cs), 0.66);
+	player->plane = vec2_scala_mul(vec2_creat(-sn, cs), tan(player->fov / 2.0));
 }
 
 void	play_movement_update(t_player *player)
@@ -70,6 +70,16 @@ void	play_movement_update(t_player *player)
 	}
 }
 
+void	play_fov_update(t_player *player, double target)
+{
+	if (player->fov + 0.03 < target)
+		player->fov += 0.015;
+	else if (player->fov - 0.03 > target)
+		player->fov -= 0.015;
+	else
+		player->fov = target;
+}
+
 void	play_state_update(t_player *player)
 {
 	int	kb;
@@ -80,6 +90,7 @@ void	play_state_update(t_player *player)
 		player->state = PLS_IDLE;
 		player->pos.z = sin(player->time / (double)25.0) * 8;
 		player->time += 1;
+		play_fov_update(player, FOV_BASE);
 	}
 	else if (!(kb & (1 << KB_SHITF)))
 	{
@@ -87,6 +98,7 @@ void	play_state_update(t_player *player)
 		vec2_normalize(&(player->move), 0.0085);
 		player->pos.z = sin(player->time / (double)25.0) * 12.5;
 		player->time += 5;
+		play_fov_update(player, FOV_BASE);
 	}
 	else if (kb & (1 << KB_SHITF))
 	{
@@ -94,6 +106,7 @@ void	play_state_update(t_player *player)
 		vec2_normalize(&(player->move), 0.0085 * 1.5);
 		player->pos.z = sin(player->time / (double)25.0) * 15;
 		player->time += 7;
+		play_fov_update(player, FOV_BASE * 1.1);
 	}
 }
 
