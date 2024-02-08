@@ -21,23 +21,23 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 	t_rc_data	rc_data;
 
 	dis = rc_get_distance(data, &rc_data, ray);
-	h.height = (int)(WIN_HEIGHT / dis);
-	h.draw_start = -h.height / 2 + WIN_HEIGHT / 2;
+	h.height = (int)(WIN_HEIGHT / dis) * FOV_BASE / data->player.fov;
+	h.draw_start = -h.height / 2 + WIN_HEIGHT / 2 + data->player.pos.z / dis;
 	if (h.draw_start < 0)
 		h.draw_start = 0;
-	h.draw_end = h.height / 2 + WIN_HEIGHT / 2;
+	h.draw_end = h.height / 2 + WIN_HEIGHT / 2 + data->player.pos.z / dis;
 	if (h.draw_end >= WIN_HEIGHT)
 		h.draw_end = WIN_HEIGHT - 1;
 	i = 0;
-	color = 0x00ff00;
+	color = 0x615f5f;
 	if (rc_data.side)
-		color = color * 0.8;
+		color = 0x777777;
 	while (i < h.draw_start)
-		utils_draw_point(data, x, i++, 0x0);
+		utils_draw_point(data, x, i++, 0x555555);
 	while (i < h.draw_end)
 		utils_draw_point(data, x, i++, color);
 	while (i < WIN_HEIGHT)
-		utils_draw_point(data, x, i++, 0x0);
+		utils_draw_point(data, x, i++, 0x494a4e);
 }
 
 void	rc_raycast(t_data *data)
