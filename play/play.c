@@ -105,8 +105,28 @@ void	play_motion(t_player *player)
 	// player->yaw += player->motion_yaw;
 }
 
+void	play_mouse_update(t_data *data)
+{
+	int			kb;
+	t_intvec2	mouse_pos;
+
+	kb = data->player.keybinds;
+	if (kb & (1 << KB_1))
+	{
+		mlx_mouse_get_pos(data->mlx_win, &(mouse_pos.x), &(mouse_pos.y));
+		mlx_mouse_move(data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+		if (mouse_pos.x - WIN_WIDTH / 2 != 0)
+		{
+			data->player.motion_dir.y = (mouse_pos.x - WIN_WIDTH / 2) / (double)314;
+		}
+		else
+			data->player.motion_dir.y *= 0.795;
+	}
+}
+
 void	play_update(t_data *data)
 {
+	play_mouse_update(data);
 	play_movement_update(&(data->player));
 	play_state_update(&(data->player));
 	play_dir_update(&(data->player));
