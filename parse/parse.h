@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:24 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 14:12:30 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 21:11:02 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ void	parse_check_wall(t_map *map);
 void	parse_error(char *msg);
 int		parse_close(int fd);
 void	parse_make_map(t_map *map, char *file);
+void	parse_texture(t_map *map, int fd);
 
 #endif
