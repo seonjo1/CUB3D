@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 13:59:49 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 14:49:25 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,19 @@ typedef struct s_data {
 	int			line_length;
 	int			endian;
 }	t_data;
+
+typedef struct s_rc_data {
+	int		side;
+	t_vec2	map;
+	t_vec2	dis;
+	t_vec2	inc;
+	t_vec2	step;
+}	t_rc_data;
+
+typedef struct s_height {
+	int	height;
+	int	draw_start;
+	int	draw_end;
+}	t_height;
 
 #endif
