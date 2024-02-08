@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 20:55:27 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 20:19:25 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 21:47:10 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*ft_calloc_s(size_t count, size_t size)
 
 char	**ft_split_s(const char *str, char c)
 {
-	void	**new;
+	char	**new;
 
 	new = ft_split(str, c);
 	if (!new)
