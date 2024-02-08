@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 20:56:03 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 21:02:50 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 20:26:33 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "../cub3d.h"
 
 void	*ft_calloc_s(size_t count, size_t size);
+char	**ft_split_s(const char *str, char c);
 t_vec2	vec2_creat(double x, double y);
 t_vec2	vec2_add(t_vec2 a, t_vec2 b);
 t_vec2	vec2_scala_mul(t_vec2 a, double b);
