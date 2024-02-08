@@ -13,6 +13,7 @@
 #include "parse/parse.h"
 #include "libft_s/libft_s.h"
 #include "play/play.h"
+#include "evnt/evnt.h"
 
 void	draw_point(t_data *data, int x, int y, int color)
 {
@@ -159,88 +160,6 @@ int	main_loop(t_data *data)
 	return (0);
 }
 
-// int	event_keypress(int keycode, t_player *player)
-// {
-// 	const double	rot_speed = 0.05;
-// 	double			old_dir_x;
-// 	double			old_plane_x;
-
-// 	// printf("keycode:%d\n", keycode);
-// 	if (keycode == 53)
-// 		exit(0);
-// 	else if (keycode == KEY_W || keycode == KEY_UP)
-// 		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed));
-// 	else if (keycode == KEY_S || keycode == KEY_DOWN)
-// 		player->pos = vec2_add(player->pos, vec2_scala_mul(player->dir, player->speed * -1));
-// 	if (keycode == KEY_A || keycode == KEY_LEFT)
-// 	{
-// 		old_dir_x = player->dir.x;
-// 		player->dir.x = player->dir.x * cos(-rot_speed) - player->dir.y * sin(-rot_speed);
-// 		player->dir.y = old_dir_x * sin(-rot_speed) + player->dir.y * cos(-rot_speed);
-// 		old_plane_x = player->plane.x;
-// 		player->plane.x = player->plane.x * cos(-rot_speed) - player->plane.y * sin(-rot_speed);
-// 		player->plane.y = old_plane_x * sin(-rot_speed) + player->plane.y * cos(-rot_speed);
-// 	}
-// 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
-// 	{
-// 		old_dir_x = player->dir.x;
-// 		player->dir.x = player->dir.x * cos(rot_speed) - player->dir.y * sin(rot_speed);
-// 		player->dir.y = old_dir_x * sin(rot_speed) + player->dir.y * cos(rot_speed);
-// 		old_plane_x = player->plane.x;
-// 		player->plane.x = player->plane.x * cos(rot_speed) - player->plane.y * sin(rot_speed);
-// 		player->plane.y = old_plane_x * sin(rot_speed) + player->plane.y * cos(rot_speed);
-// 	}
-// 	// printf("player: dir(%.3f, %.3f), plane(%.3f, %.3f), pos(%.3f, %.3f)\n",\
-// 	// 	player->dir.x, player->dir.y, player->plane.x, player->plane.y, player->pos.x, player->pos.y);
-// 	return (0);
-// }
-
-void	event_mouse_cursor(int *kb)
-{
-	(*kb) ^= (1 << KB_1);
-	if (*kb & (1 << KB_1))
-		mlx_mouse_hide();
-	else
-		mlx_mouse_show();
-}
-
-void	event_keybinds_set(int *kb, int keycode, char pressed)
-{
-	if (keycode == KEY_W)
-		(*kb) = (*kb & ~(1 << KB_FORWARD)) | (pressed << KB_FORWARD);
-	else if (keycode == KEY_S)
-		(*kb) = (*kb & ~(1 << KB_BACKWARD)) | (pressed << KB_BACKWARD);
-	else if (keycode == KEY_A)
-		(*kb) = (*kb & ~(1 << KB_LEFT)) | (pressed << KB_LEFT);
-	else if (keycode == KEY_D)
-		(*kb) = (*kb & ~(1 << KB_RIGHT)) | (pressed << KB_RIGHT);
-	else if (keycode == KEY_LEFT)
-		(*kb) = (*kb & ~(1 << KB_ROTATE_LEFT)) | (pressed << KB_ROTATE_LEFT);
-	else if (keycode == KEY_RIGHT)
-		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (pressed << KB_ROTATE_RIGHT);
-	else if (keycode == KEY_SHIFT)
-		(*kb) = (*kb & ~(1 << KB_SHITF)) | (pressed << KB_SHITF);
-	else if (keycode == KEY_1 && pressed == TRUE)
-		event_mouse_cursor(kb);
-	// printf("keybinds:%d\n", *kb);
-}
-
-int	event_keypress(int keycode, t_player *player)
-{
-	// printf("keycode:%d\n", keycode);
-	if (keycode == KEY_ESC)
-		exit(0);
-	else
-		event_keybinds_set(&(player->keybinds), keycode, TRUE);
-	return (0);
-}
-
-int	event_keyrelease(int keycode, t_player *player)
-{
-	event_keybinds_set(&(player->keybinds), keycode, FALSE);
-	return (0);
-}
-
 void	main_init(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -262,7 +181,7 @@ int	main(int argc, char **argv)
 		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
 	// // mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
 	mlx_loop_hook(data.mlx, &main_loop, &data);
-	mlx_hook(data.mlx_win, 2, 0, &event_keypress, &(data.player));
-	mlx_hook(data.mlx_win, 3, 0, &event_keyrelease, &(data.player));
+	mlx_hook(data.mlx_win, 2, 0, &evnt_keypress, &(data.player));
+	mlx_hook(data.mlx_win, 3, 0, &evnt_keyrelease, &(data.player));
 	mlx_loop(data.mlx);
 }
