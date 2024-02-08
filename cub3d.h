@@ -36,6 +36,7 @@ typedef enum s_keycode {
 	KEY_D = 2,
 	KEY_S = 1,
 	KEY_SHIFT = 257,
+	KEY_SPACE = 49,
 	KEY_1 = 18,
 	KEY_2 = 19,
 	KEY_ESC = 53
@@ -58,7 +59,8 @@ typedef enum s_keybinds {
 typedef enum s_player_state {
 	PLS_IDLE,
 	PLS_WALK,
-	PLS_RUN
+	PLS_RUN,
+	PLS_JUMP
 }	t_palyer_state;
 
 typedef struct s_vec2 {
@@ -80,12 +82,12 @@ typedef struct s_intvec2 {
 typedef struct s_player {
 	t_vec3		pos;
 	double		fov;
+	t_vec2		move;
 	t_vec2		dir;
 	t_vec2		plane;
-	t_vec2		move;
-	t_vec2		motion;
 	t_vec2		euler_dir;
 	t_vec2		motion_dir;
+	t_vec3		motion;
 	int			keybinds;
 	int			state;
 	long long	time;

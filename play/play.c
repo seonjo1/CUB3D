@@ -87,26 +87,38 @@ void	play_state_update(t_player *player)
 	kb = player->keybinds;
 	if (!(player->move.x || player->move.y))
 	{
-		player->state = PLS_IDLE;
-		player->pos.z = sin(player->time / (double)25.0) * 8;
+		player->state |= (1 << PLS_IDLE);
+		if (!(player->state & (1 << PLS_JUMP)))
+			player->pos.z = sin(player->time / (double)25.0) * 20;
 		player->time += 1;
 		play_fov_update(player, FOV_BASE);
 	}
 	else if (!(kb & (1 << KB_SHITF)))
 	{
-		player->state = PLS_WALK;
+		player->state |= (1 << PLS_WALK);
 		vec2_normalize(&(player->move), 0.0085);
-		player->pos.z = sin(player->time / (double)25.0) * 12.5;
-		player->time += 5;
+		if (!(player->state & (1 << PLS_JUMP)))
+		{
+			player->pos.z = sin(player->time / (double)25.0) * 30;
+			player->time += 5;
+		}
 		play_fov_update(player, FOV_BASE);
 	}
 	else if (kb & (1 << KB_SHITF))
 	{
-		player->state = PLS_RUN;
+		player->state |= (1 << PLS_RUN);
 		vec2_normalize(&(player->move), 0.0085 * 1.5);
-		player->pos.z = sin(player->time / (double)25.0) * 15;
-		player->time += 7;
+		if (!(player->state & (1 << PLS_JUMP)))
+		{
+			player->pos.z = sin(player->time / (double)25.0) * 50;
+			player->time += 7;
+		}
 		play_fov_update(player, FOV_BASE * 1.1);
+	}
+	if (kb & (1 << KB_JUMP) && !(player->state & (1 << PLS_JUMP)))
+	{
+		player->state = (player->state & ~(1 << PLS_JUMP)) | (1 << PLS_JUMP);
+		player->motion.z = 50;
 	}
 }
 
@@ -117,10 +129,19 @@ void	play_motion(t_player *player)
 	old_move = player->move;
 	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
 	player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
-	player->motion = vec2_scala_mul(player->motion, 0.85);
+	player->motion.x = player->motion.x * 0.85;
+	player->motion.y = player->motion.y * 0.85;
 	player->pos.x += player->motion.x;
 	player->pos.y += player->motion.y;
 	player->euler_dir.y += player->motion_dir.y;
+	if (player->state & (1 << PLS_JUMP))
+	{
+		player->pos.z += player->motion.z;
+		player->motion.z -= 2.5;
+		if (player->motion.z < -50)
+			player->state = player->state & ~(1 << PLS_JUMP);
+		// printf("%.3f, %.3f\n", player->pos.z, player->motion.z);
+	}
 }
 
 void	play_update(t_data *data)
