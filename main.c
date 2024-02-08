@@ -27,7 +27,7 @@ void	draw_vertical_line(t_data *data, int now_x, double perpwall_dist, int color
 	int		y_end;
 	int		line_height;
 	
-	line_height = (int)(WALL_HEIGHT / perpwall_dist);
+	line_height = (int)(WALL_HEIGHT / perpwall_dist) * FOV_BASE / data->player.fov;
 	y_start = -1 * line_height / 2 + WALL_HEIGHT / 2 + data->player.pos.z;
 	if (y_start < 0)
 		y_start = 0;
@@ -46,16 +46,17 @@ void	draw_aim(t_data *data)
 {
 	t_intvec2	aim;
 	int			i;
+	const int	aim_size = 20;
 
-	aim.x = WIN_WIDTH / 2 - 20;
+	aim.x = WIN_WIDTH / 2 - aim_size;
 	aim.y = WIN_HEIGHT / 2;
 	i = -1;
-	while (++i < 40)
+	while (++i < aim_size * 2)
 		draw_point(data, aim.x + i, aim.y, 0xFF00FF);
 	aim.x = WIN_WIDTH / 2;
-	aim.y = WIN_HEIGHT / 2 - 20;
+	aim.y = WIN_HEIGHT / 2 - aim_size;
 	i = -1;
-	while (++i < 40)
+	while (++i < aim_size * 2)
 		draw_point(data, aim.x, aim.y + i, 0xFF00FF);
 }
 
