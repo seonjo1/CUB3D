@@ -14,22 +14,85 @@
 # define CUB3D_H
 # include <stdio.h>
 # include <fcntl.h>
+# include <math.h>
 # include "gnl/get_next_line.h"
-# include "libft_s/libft_s.h"
+# include "libft/libft.h"
 # include "minilibx/mlx.h"
 # include "math.h"
 
+# define TRUE 1
+# define FALSE 0
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
-# define PI 3.14
+# define WALL_HEIGHT 1080
+# define FOV_BASE 1.15192
 
-typedef enum {
+typedef enum s_keycode {
+	KEY_LEFT = 123,
+	KEY_UP = 126,
+	KEY_RIGHT = 124,
+	KEY_DOWN = 125,
 	KEY_A = 0,
-	KEY_S = 1,
-	KEY_D = 2,
 	KEY_W = 13,
-	ESC = 53
-}	e_key;
+	KEY_D = 2,
+	KEY_S = 1,
+	KEY_SHIFT = 257,
+	KEY_SPACE = 49,
+	KEY_1 = 18,
+	KEY_2 = 19,
+	KEY_ESC = 53
+}	t_keycode;
+
+typedef enum s_keybinds {
+	KB_FORWARD,
+	KB_BACKWARD,
+	KB_LEFT,
+	KB_RIGHT,
+	KB_ROTATE_LEFT,
+	KB_ROTATE_RIGHT,
+	KB_ROTATE_UP,
+	KB_ROTATE_DOWN,
+	KB_SHITF,
+	KB_JUMP,
+	KB_1
+}	t_keybinds;
+
+typedef enum s_player_state {
+	PLS_IDLE,
+	PLS_WALK,
+	PLS_RUN,
+	PLS_JUMP
+}	t_palyer_state;
+
+typedef struct s_vec2 {
+	double	x;
+	double	y;
+}	t_vec2;
+
+typedef struct s_vec3 {
+	double	x;
+	double	y;
+	double	z;
+}	t_vec3;
+
+typedef struct s_intvec2 {
+	int	x;
+	int	y;
+}	t_intvec2;
+
+typedef struct s_player {
+	t_vec3		pos;
+	double		fov;
+	t_vec2		move;
+	t_vec2		dir;
+	t_vec2		plane;
+	t_vec2		euler_dir;
+	t_vec2		motion_dir;
+	t_vec3		motion;
+	int			keybinds;
+	int			state;
+	long long	time;
+}	t_player;
 
 typedef struct s_map {
 	char	**data;
@@ -37,20 +100,7 @@ typedef struct s_map {
 	int		col;
 }	t_map;
 
-typedef struct s_vec2 {
-	double	x;
-	double	y;
-}	t_vec2;
-
-typedef struct s_player {
-	t_vec2	pos;
-	t_vec2	dir;
-	t_vec2	plane;
-}	t_player;
-
 typedef struct s_data {
-	t_map		map;
-	t_player	player;
 	void		*mlx;
 	void		*mlx_win;
 	void		*img;
@@ -58,6 +108,8 @@ typedef struct s_data {
 	int			bpp;
 	int			line_length;
 	int			endian;
+	t_map		map;
+	t_player	player;
 }	t_data;
 
 typedef struct s_rc_data {

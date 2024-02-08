@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft_s.c                                          :+:      :+:    :+:   */
+/*   play.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: michang <michang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/04 20:55:27 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/04 20:57:00 by seonjo           ###   ########.fr       */
+/*   Created: 2024/02/07 18:00:19 by michang           #+#    #+#             */
+/*   Updated: 2024/02/07 18:00:20 by michang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_s.h"
+#ifndef PLAY_H
+# define PLAY_H
+# include "../cub3d.h"
 
-void	*ft_calloc_s(size_t count, size_t size)
-{
-	void	*new;
+void	play_update(t_data *data);
 
-	new = ft_calloc(count, size);
-	if (!new)
-		exit(1);
-	return (new);
-}
+#endif

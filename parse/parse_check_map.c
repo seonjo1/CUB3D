@@ -11,25 +11,24 @@
 /* ************************************************************************** */
 
 #include "parse.h"
+#include "../libft_s/libft_s.h"
 
-static int	parse_is_start_point(char c)
+static int	parse_init_player(char **data, int y, int x, t_player *player)
 {
-	if (c == 'W' || c == 'N' || c == 'S' || c == 'E')
-		return (1);
-	return (0);
-}
-
-static int	parse_init_player(char *c, int x, int y, t_player *player)
-{
-	if (!parse_is_start_point(*c))
+	if (!(data[y][x] == 'W' || data[y][x] == 'N'
+		|| data[y][x] == 'S' || data[y][x] == 'E'))
 		return (0);
 	player->pos.x = x;
 	player->pos.y = y;
-	player->dir.x = (*c == 'E') - (*c == 'W');
-	player->dir.y = (*c == 'S') - (*c == 'N');
-	player->plane.x = 0.65 * ((*c == 'N') - (*c == 'S'));
-	player->plane.y = 0.65 * ((*c == 'E') - (*c == 'W'));
-	*c = '0';
+	if (data[y][x] == 'S')
+		player->euler_dir.y = 90;
+	else if (data[y][x] == 'W')
+		player->euler_dir.y = 180;
+	else if (data[y][x] == 'N')
+		player->euler_dir.y = 270;
+	player->fov = FOV_BASE;
+	player->euler_dir.y *= 3.141592 / 180.0;
+	data[y][x] = '0';
 	return (1);
 }
 
@@ -40,16 +39,12 @@ void	parse_check_start_point(t_map *map, t_player *player)
 	int	flag;
 
 	flag = 0;
-	i = 0;
-	while (i < map->row)
+	i = -1;
+	while (++i < map->row)
 	{
-		j = 0;
-		while (j < map->col)
-		{
-			flag += parse_init_player(&(map->data[i][j]), j, i, player);
-			j++;
-		}
-		i++;
+		j = -1;
+		while (++j < map->col)
+			flag += parse_init_player(map->data, i, j, player);
 	}
 	if (flag != 1)
 		parse_error("invalid map");
@@ -90,8 +85,7 @@ void	parse_check_wall(t_map *map)
 		j = -1;
 		while (++j < map->col)
 		{
-			if (map->data[i][j] == '0' || \
-				parse_is_start_point(map->data[i][j]))
+			if (map->data[i][j] == '0')
 				parse_dfs(map, check, i, j);
 		}
 	}

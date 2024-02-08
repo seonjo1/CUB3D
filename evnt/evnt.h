@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hook.h                                             :+:      :+:    :+:   */
+/*   evnt.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: michang <michang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 15:36:21 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 16:00:32 by seonjo           ###   ########.fr       */
+/*   Created: 2024/02/08 14:11:06 by michang           #+#    #+#             */
+/*   Updated: 2024/02/08 14:11:06 by michang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOK_H
-# define HOOK_H
+#ifndef EVNT_H
+# define EVNT_H
 # include "../cub3d.h"
 
-int	keypress_event(int keycode, t_data *data);
-int	leave_event(t_data *data);
+int	evnt_keypress(int keycode, t_player *player);
+int	evnt_keyrelease(int keycode, t_player *player);
+int	evnt_leave(int keycode, int tmp);
 
 #endif

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "parse.h"
+#include "../libft_s/libft_s.h"
 
 int	parse_fill_map(t_map *map, char *line, int *col)
 {

@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			:= cc
-WFLAG		:= -Wall -Wextra -Werror -fsanitize=address -g3
+# WFLAG		:= -Wall -Wextra -Werror -fsanitize=address -g3
 MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
@@ -23,8 +23,8 @@ BASE		:=	main \
 				parse/parse parse/parse_check_map parse/parse_make_map \
 				parse/parse_sizing_map parse/parse_utils \
 				rc/rc_get_distance rc/rc_raycast \
-				hook/hook \
-				libft_s/libft_s
+				play/play evnt/evnt \
+				libft_s/libft_s libft_s/vec2_utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3d
@@ -68,9 +68,18 @@ fclean : clean
 re : fclean all
 
 t1 : all clean
-	./$(NAME) ./test_map.cub
+	./$(NAME) ./map/test_map.cub
 
 t2 : all clean
-	./$(NAME) ./test_map.cub
+	./$(NAME) ./map/test_map2.cub
+
+t3 : all clean
+	./$(NAME) ./map/test_map3.cub
+
+t4 : all clean
+	./$(NAME) ./map/test_map4.cub
+
+t5 : all clean
+	./$(NAME) ./map/test_map5.cub
 
 .PHONY : all clean fclean re t

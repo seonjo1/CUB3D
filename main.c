@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "parse/parse.h"
+#include "evnt/evnt.h"
 #include "rc/rc.h"
-#include "hook/hook.h"
+#include "play/play.h"
 
 void	utils_draw_point(t_data *data, int x, int y, int color)
 {
@@ -20,10 +21,31 @@ void	utils_draw_point(t_data *data, int x, int y, int color)
 		*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = color;
 }
 
+void	draw_aim(t_data *data)
+{
+	t_intvec2	aim;
+	int			i;
+	const int	aim_size = 20;
+
+	aim.x = WIN_WIDTH / 2 - aim_size;
+	aim.y = WIN_HEIGHT / 2;
+	i = -1;
+	while (++i < aim_size * 2)
+		utils_draw_point(data, aim.x + i, aim.y, 0xFF00FF);
+	aim.x = WIN_WIDTH / 2;
+	aim.y = WIN_HEIGHT / 2 - aim_size;
+	i = -1;
+	while (++i < aim_size * 2)
+		utils_draw_point(data, aim.x, aim.y + i, 0xFF00FF);
+}
+
 int	main_loop(t_data *data)
 {
+	play_update(data);
 	rc_raycast(data);
+	draw_aim(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+	mlx_do_sync(data->mlx);
 	return (0);
 }
 
@@ -42,6 +64,7 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
+	ft_bzero(&(data->player), sizeof(t_player));
 }
 
 int	main(int argc, char **argv)
@@ -50,9 +73,12 @@ int	main(int argc, char **argv)
 
 	parse_map(&(data.map), &(data.player), argc, argv);
 	main_init(&data);
-	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n", data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
-	mlx_hook(data.mlx_win, 2, 0, &keypress_event, &data);
-	mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
+	parse_map(&(data.map), &(data.player), argc, argv);
+	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n",\
+		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
+	mlx_hook(data.mlx_win, 17, 0, &evnt_leave, 0);
 	mlx_loop_hook(data.mlx, &main_loop, &data);
+	mlx_hook(data.mlx_win, 2, 0, &evnt_keypress, &(data.player));
+	mlx_hook(data.mlx_win, 3, 0, &evnt_keyrelease, &(data.player));
 	mlx_loop(data.mlx);
 }
