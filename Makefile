@@ -6,12 +6,12 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/02/04 21:01:41 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/08 15:58:55 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			:= cc
-WFLAG		:= -Wall -Wextra -Werror
+WFLAG		:= -Wall -Wextra -Werror -fsanitize=address -g3
 MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
@@ -22,6 +22,8 @@ BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
 				parse/parse parse/parse_check_map parse/parse_make_map \
 				parse/parse_sizing_map parse/parse_utils \
+				rc/rc_get_distance rc/rc_raycast \
+				hook/hook \
 				libft_s/libft_s
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
@@ -36,7 +38,7 @@ NAME		:= cub3d
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
-	$(CC) $(MLXFLAG) $(FTFLAG) $^ -o $@
+	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $^ -o $@
 
 $(MLX) :
 	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi
@@ -65,7 +67,10 @@ fclean : clean
 
 re : fclean all
 
-t : all clean
+t1 : all clean
+	./$(NAME) ./test_map.cub
+
+t2 : all clean
 	./$(NAME) ./test_map.cub
 
 .PHONY : all clean fclean re t
