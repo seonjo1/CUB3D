@@ -141,6 +141,17 @@ void	ray_casting(t_data *data, t_player	*player)
 	}
 }
 
+void	main_init(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		exit(1);
+	data->mlx_win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
+	if (!data->mlx_win)
+		exit(1);
+	ft_bzero(&(data->player), sizeof(t_player));
+}
+
 int	main_loop(t_data *data)
 {
 	data->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
@@ -158,17 +169,6 @@ int	main_loop(t_data *data)
 	mlx_destroy_image(data->mlx, data->img);
 	mlx_do_sync(data->mlx);
 	return (0);
-}
-
-void	main_init(t_data *data)
-{
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		exit(1);
-	data->mlx_win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
-	if (!data->mlx_win)
-		exit(1);
-	ft_bzero(&(data->player), sizeof(t_player));
 }
 
 int	main(int argc, char **argv)
