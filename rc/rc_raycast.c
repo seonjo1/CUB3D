@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 14:09:31 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:17:33 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,85 +19,99 @@ double	double_abs(double n)
 	return (n);
 }
 
-void	rc_draw_col(t_data *data, t_vec2 ray, int x)
+void	rc_init_map_and_inc(t_data *data, t_rc_data *rc_data, t_vec2 ray)
 {
-	int		hit;
-	int		side;
-	t_vec2	map;
-	t_vec2	inc;
-	t_vec2	dis;
-	t_vec2	step;
-
-	map.x = (int)data->player.pos.x;
-	map.y = (int)data->player.pos.y;
+	rc_data->map.x = (int)data->player.pos.x;
+	rc_data->map.y = (int)data->player.pos.y;
 	if (ray.x == 0)
-		inc.x = INFINITY;
+		rc_data->inc.x = INFINITY;
 	else
-		inc.x = double_abs(1 / ray.x);
+		rc_data->inc.x = double_abs(1 / ray.x);
 	if (ray.y == 0)
-		inc.y = INFINITY;
+		rc_data->inc.y = INFINITY;
 	else
-		inc.y = double_abs(1 / ray.y);
+		rc_data->inc.y = double_abs(1 / ray.y);	
+}
+
+void	rc_init_dis_and_step(t_data *data, t_rc_data *rc_data, t_vec2 ray)
+{
 	if (ray.x < 0)
 	{
-		step.x = -1;
-		dis.x = (data->player.pos.x - map.x) * inc.x;
+		rc_data->step.x = -1;
+		rc_data->dis.x = (data->player.pos.x - rc_data->map.x) * rc_data->inc.x;
 	}
 	else
 	{
-		step.x = 1;
-		dis.x = (map.x + 1 - data->player.pos.x) * inc.x;
+		rc_data->step.x = 1;
+		rc_data->dis.x = (rc_data->map.x + 1 - data->player.pos.x) * rc_data->inc.x;
 	}
 	if (ray.y < 0)
 	{
-		step.y = -1;
-		dis.y = (data->player.pos.y - map.y) * inc.y;
+		rc_data->step.y = -1;
+		rc_data->dis.y = (data->player.pos.y - rc_data->map.y) * rc_data->inc.y;
 	}
 	else
 	{
-		step.y = 1;
-		dis.y = (map.y + 1 - data->player.pos.y) * inc.y;
+		rc_data->step.y = 1;
+		rc_data->dis.y = (rc_data->map.y + 1 - data->player.pos.y) * rc_data->inc.y;
 	}
-	hit = 0;
-	while (!hit)
+}
+
+void	rc_shoot_ray(t_data *data, t_rc_data *rc_data)
+{
+	while (1)
 	{
-		if (dis.x < dis.y)
+		if (rc_data->dis.x < rc_data->dis.y)
 		{
-			side = 1;
-			dis.x += inc.x;
-			map.x += step.x;
+			rc_data->side = 1;
+			rc_data->dis.x += rc_data->inc.x;
+			rc_data->map.x += rc_data->step.x;
 		}
 		else
 		{
-			side = 0;
-			dis.y += inc.y;
-			map.y += step.y;
+			rc_data->side = 0;
+			rc_data->dis.y += rc_data->inc.y;
+			rc_data->map.y += rc_data->step.y;
 		}
-		if (data->map.data[(int)map.y][(int)map.x] == '1')
-			hit = 1;
+		if (data->map.data[(int)rc_data->map.y][(int)rc_data->map.x] == '1')
+			break ;
 	}
-	double	v_dis;
-	if (side)
-		v_dis = (map.x - data->player.pos.x + (1 - step.x) / 2) / ray.x;
+}
+
+double	rc_get_distance(t_data *data, t_vec2 ray)
+{
+	t_rc_data	rc_data;
+
+	rc_init_map_and_inc(data, &rc_data, ray);
+	rc_init_dis_and_step(data, &rc_data, ray);
+	rc_shoot_ray(data, &rc_data);
+	if (rc_data.side)
+		return ((rc_data.map.x - data->player.pos.x + \
+			(1 - rc_data.step.x) / 2) / ray.x);
 	else
-		v_dis = (map.y - data->player.pos.y + (1 - step.y) / 2) / ray.y;
+		return ((rc_data.map.y - data->player.pos.y + \
+			(1 - rc_data.step.y) / 2) / ray.y);
+}
 
-	int height = (int)(WIN_HEIGHT / v_dis);
+void	rc_draw_col(t_data *data, t_vec2 ray, int x)
+{
+	int			i;
+	double		dis;
+	t_height	h;
 
-	int draw_start = -height / 2 + WIN_HEIGHT / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	int draw_end = height / 2 + WIN_HEIGHT / 2;
-	if (draw_end >= WIN_HEIGHT)
-		draw_end = WIN_HEIGHT - 1;
-	int i = 0;
-	int color = 0x00ff00;
-	if (side)
-		color = color * 0.7;
-	while (i < draw_start)
+	dis = rc_get_distance(data, ray);
+	h.height = (int)(WIN_HEIGHT / dis);
+	h.draw_start = -h.height / 2 + WIN_HEIGHT / 2;
+	if (h.draw_start < 0)
+		h.draw_start = 0;
+	h.draw_end = h.height / 2 + WIN_HEIGHT / 2;
+	if (h.draw_end >= WIN_HEIGHT)
+		h.draw_end = WIN_HEIGHT - 1;
+	i = 0;
+	while (i < h.draw_start)
 		utils_draw_point(data, x, i++, 0x0);
-	while (i < draw_end)
-		utils_draw_point(data, x, i++, color);
+	while (i < h.draw_end)
+		utils_draw_point(data, x, i++, 0x00ff00);
 	while (i < WIN_HEIGHT)
 		utils_draw_point(data, x, i++, 0x0);
 }
