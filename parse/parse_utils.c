@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:11:05 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 21:38:59 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 21:42:01 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ long long	parse_atoi(char *str)
 	i = 0;
 	num = 0;
 	minus = 1;
-	while (*str >= 9 && *str <= 13)
-		str++;
 	str = parse_sign_check(str, &minus);
 	if (!(*str >= '0' && *str <= '9'))
 		return (-1);
