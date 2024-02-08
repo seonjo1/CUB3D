@@ -179,7 +179,7 @@ int	main(int argc, char **argv)
 	parse_map(&(data.map), &(data.player), argc, argv);
 	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n",\
 		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
-	// // mlx_hook(data.mlx_win, 17, 0, &leave_event, &data);
+	mlx_hook(data.mlx_win, 17, 0, &evnt_leave, 0);
 	mlx_loop_hook(data.mlx, &main_loop, &data);
 	mlx_hook(data.mlx_win, 2, 0, &evnt_keypress, &(data.player));
 	mlx_hook(data.mlx_win, 3, 0, &evnt_keyrelease, &(data.player));
