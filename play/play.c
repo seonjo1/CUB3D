@@ -21,21 +21,21 @@ void	play_state_update(t_player *player)
 	if (!(player->move.x || player->move.y))
 	{
 		player->state = PLS_IDLE;
-		player->pos.z = cos(player->time / (double)25.0) * 8;
+		player->pos.z = sin(player->time / (double)25.0) * 8;
 		player->time += 1;
 	}
 	else if (!(kb & (1 << KB_SHITF)))
 	{
 		player->state = PLS_WALK;
 		vec2_normalize(&(player->move), 0.0085);
-		player->pos.z = cos(player->time / (double)25.0) * 12.5;
+		player->pos.z = sin(player->time / (double)25.0) * 12.5;
 		player->time += 5;
 	}
 	else if (kb & (1 << KB_SHITF))
 	{
 		player->state = PLS_RUN;
 		vec2_normalize(&(player->move), 0.0085 * 1.5);
-		player->pos.z = cos(player->time / (double)25.0) * 15;
+		player->pos.z = sin(player->time / (double)25.0) * 15;
 		player->time += 7;
 	}
 }
@@ -77,11 +77,20 @@ void	play_dir_update(t_player *player)
 	// printf("kb:%d, motion_diry:%.2f\n", kb, player->motion_dir.y);
 }
 
+void	play_set_dir_plane(t_player *player)
+{
+	double	sn;
+	double	cs;
+
+	sn = sin(player->euler_dir.y);
+	cs = cos(player->euler_dir.y);
+	player->dir = vec2_creat(cs, sn);
+	player->plane = vec2_scala_mul(vec2_creat(-sn, cs), 0.66);
+}
+
 void	play_motion(t_player *player)
 {
 	t_vec2	old_move;
-	t_vec2	old_dir;
-	t_vec2	old_plane;
 
 	old_move = player->move;
 	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
@@ -89,20 +98,7 @@ void	play_motion(t_player *player)
 	player->motion = vec2_scala_mul(player->motion, 0.85);
 	player->pos.x += player->motion.x;
 	player->pos.y += player->motion.y;
-	// player->pos = vec2_add(player->pos, player->motion);
-	old_dir = player->dir;
-	player->dir.x = old_dir.x * cos(player->motion_dir.y) - old_dir.y * sin(player->motion_dir.y);
-	player->dir.y = old_dir.x * sin(player->motion_dir.y) + old_dir.y * cos(player->motion_dir.y);
-	old_plane = player->plane;
-	player->plane.x = old_plane.x * cos(player->motion_dir.y) - old_plane.y * sin(player->motion_dir.y);
-	player->plane.y = old_plane.x * sin(player->motion_dir.y) + old_plane.y * cos(player->motion_dir.y);
-	// printf("dirx:%.2f diry:%.2f\n", player->dir.x, player->dir.y);
-	// handle_keys(player, vars->bonus);
-	// player->motion_yaw *= 0.914;
-	// player->motion_pitch *= 0.82;
-	
-	// update_render(player, vars, vars->bonus);
-	// player->yaw += player->motion_yaw;
+	player->euler_dir.y += player->motion_dir.y;
 }
 
 void	play_mouse_update(t_data *data)
@@ -127,6 +123,7 @@ void	play_mouse_update(t_data *data)
 void	play_update(t_data *data)
 {
 	play_mouse_update(data);
+	play_set_dir_plane(&(data->player));
 	play_movement_update(&(data->player));
 	play_state_update(&(data->player));
 	play_dir_update(&(data->player));
