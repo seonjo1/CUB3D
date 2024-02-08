@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 20:36:19 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 21:21:43 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ typedef struct s_map {
 	char	**data;
 	int		row;
 	int		col;
+	int		floor;
+	int		ceiling;
 }	t_map;
 
 typedef struct s_data {
