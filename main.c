@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/07 20:30:21 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 11:17:21 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ double	double_abs(double n)
 	return (n);
 }
 
-void	shoot_ray(t_data *data, t_vec2 ray, int x)
+void	shoot_ray(t_data *data, t_vec2 ray, int x, FILE *file)
 {
 	int		hit;
 	int		side;
@@ -39,7 +39,10 @@ void	shoot_ray(t_data *data, t_vec2 ray, int x)
 
 	inc.x = double_abs(1 / ray.x);
 	inc.y = double_abs(1 / ray.y);
-
+	if (ray.x == 0)
+		inc.x = 1;
+	if (ray.y == 0)
+		inc.y = 1;
 	hit = 0;
 	if (ray.x < 0)
 	{
@@ -61,7 +64,10 @@ void	shoot_ray(t_data *data, t_vec2 ray, int x)
 		step.y = 1;
 		dis.y = (map.y + 1 - data->player.pos.y) * inc.y;
 	}
-	
+	fprintf(file, "\n\n\nray x : %f y : %f\n", ray.x, ray.y);
+	fprintf(file, "map x : %f y : %f\n", map.x, map.y);
+	fprintf(file, "inc x : %f y : %f\n", inc.x, inc.y);
+	fprintf(file, "dis x : %f y : %f\n\n", dis.x, dis.y);
 	while (!hit)
 	{
 		if (dis.x < dis.y)
@@ -76,6 +82,8 @@ void	shoot_ray(t_data *data, t_vec2 ray, int x)
 			map.y += step.y;
 			side = 1;
 		}
+		fprintf(file, "map x : %f y : %f\n", map.x, map.y);
+		fprintf(file, "dis x : %f y : %f\n", dis.x, dis.y);
 		if (data->map.data[(int)map.y][(int)map.x] == '1')
 			hit = 1;
 	}
@@ -84,6 +92,7 @@ void	shoot_ray(t_data *data, t_vec2 ray, int x)
 		v_dis = (map.x - data->player.pos.x + (1 - step.x) / 2) / ray.x;
 	else
 		v_dis = (map.y - data->player.pos.y + (1 - step.y) / 2) / ray.y;
+
 	int height = (int)(WIN_HEIGHT / v_dis);
 
 	int draw_start = -height / 2 + WIN_HEIGHT / 2;
@@ -110,13 +119,14 @@ int	main_loop(t_data *data)
 	double	camera_x;
 	t_vec2	ray;
 
+	FILE *file = fopen("test", "w");
 	x = 0;
 	while (x < WIN_WIDTH)
 	{
 		camera_x = 2 * x / (double) WIN_WIDTH - 1;
 		ray.x = data->player.dir.x + data->player.plane.x * camera_x;
 		ray.y = data->player.dir.y + data->player.plane.y * camera_x;
-		shoot_ray(data, ray, x);
+		shoot_ray(data, ray, x, file);
 		x++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
