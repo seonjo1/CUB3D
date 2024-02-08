@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:12:00 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 19:56:00 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 21:11:17 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	parse_make_map(t_map *map, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		parse_error("unable to open file");
+	parse_texture(map, fd);
 	col = 0;
 	while (parse_fill_map(map, gnl(fd), &col))
 		;
