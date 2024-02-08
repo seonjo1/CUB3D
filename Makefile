@@ -78,4 +78,7 @@ t3 : all clean
 t4 : all clean
 	./$(NAME) ./map/test_map4.cub
 
+t5 : all clean
+	./$(NAME) ./map/test_map5.cub
+
 .PHONY : all clean fclean re t
