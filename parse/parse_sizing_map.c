@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:10:41 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/05 15:30:51 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 20:13:23 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parse_sizing_line(t_map *map, char *line, int fd)
 	while (line[i] != '\0' && line[i] != '\n')
 	{
 		if (!parse_is_valid_char(line[i]) && parse_close(fd))
-			parse_error("invalid map");
+			parse_error("invalid map file");
 		else if (line[i] != ' ')
 			is_valid_line = 1;
 		i++;
@@ -62,7 +62,7 @@ int	parse_check_multiple_map(char *line, int fd)
 		{
 			free(line);
 			parse_close(fd);
-			parse_error("invalid map");
+			parse_error("invalid map file");
 		}
 		i++;
 	}
@@ -83,5 +83,5 @@ void	parse_sizing_map(t_map *map, char *file)
 		;
 	close(fd);
 	if (map->row == 0)
-		parse_error("invalid map");
+		parse_error("invalid map file");
 }
