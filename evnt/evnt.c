@@ -37,6 +37,8 @@ static void	evnt_keybinds_set(int *kb, int keycode, char press)
 		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (press << KB_ROTATE_RIGHT);
 	else if (keycode == KEY_SHIFT)
 		(*kb) = (*kb & ~(1 << KB_SHITF)) | (press << KB_SHITF);
+	else if (keycode == KEY_SPACE)
+		(*kb) = (*kb & ~(1 << KB_JUMP)) | (press << KB_JUMP);
 	else if (keycode == KEY_1 && press == TRUE)
 		evnt_mouse_cursor(kb);
 	// printf("keybinds:%d\n", *kb);
