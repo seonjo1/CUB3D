@@ -15,29 +15,27 @@
 
 void	play_dir_update(t_data *data)
 {
-	static long long	delay = 0;
+	static unsigned int	delay = 0;
 	int					kb;
 	t_intvec2			mouse_pos;
 
 	kb = data->player.keybinds;
 	if (kb & (1 << KB_1))
 	{
-		printf("%d | %d\n", delay, data->player.time);
-		if (delay + 5 > data->player.time)
+		mlx_mouse_get_pos(data->mlx_win, &(mouse_pos.x), &(mouse_pos.y));
+		mlx_mouse_move(data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+		delay++;
+		if (delay >= 5)
 		{
-			mlx_mouse_get_pos(data->mlx_win, &(mouse_pos.x), &(mouse_pos.y));
-			mlx_mouse_move(data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 			if (mouse_pos.x - WIN_WIDTH / 2 != 0)
 				data->player.motion_dir.y = (mouse_pos.x - WIN_WIDTH / 2) / 314.0;
 			else
 				data->player.motion_dir.y *= 0.795;
 			delay = data->player.time;
 		}
-		else if (delay - 4 < data->player.time)
-			delay += 2;
-		else
-			delay = data->player.time - 4;
 	}
+	else
+		delay = 0;
 	if (!(kb & (1 << KB_ROTATE_LEFT)) && kb & (1 << KB_ROTATE_RIGHT))
 		data->player.motion_dir.y = 0.02;
 	else if (!(kb & (1 << KB_ROTATE_RIGHT)) && kb & (1 << KB_ROTATE_LEFT))
