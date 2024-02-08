@@ -15,7 +15,6 @@
 
 static int	parse_init_player(char **data, int y, int x, t_player *player)
 {
-	printf("y:%d x:%d\n", y, x);
 	if (!(data[y][x] == 'W' || data[y][x] == 'N'
 		|| data[y][x] == 'S' || data[y][x] == 'E'))
 		return (0);
@@ -23,8 +22,8 @@ static int	parse_init_player(char **data, int y, int x, t_player *player)
 	player->pos.y = y;
 	player->dir.x = (data[y][x] == 'E') - (data[y][x] == 'W');
 	player->dir.y = (data[y][x] == 'S') - (data[y][x] == 'N');
-	player->plane.x = 0.65 * ((data[y][x] == 'N') - (data[y][x] == 'S'));
-	player->plane.y = 0.65 * ((data[y][x] == 'E') - (data[y][x] == 'W'));
+	player->plane.x = 0.66 * ((data[y][x] == 'N') - (data[y][x] == 'S'));
+	player->plane.y = 0.66 * ((data[y][x] == 'E') - (data[y][x] == 'W'));
 	player->speed = 0.05;
 	data[y][x] = '0';
 	return (1);
