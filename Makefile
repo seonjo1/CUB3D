@@ -6,7 +6,7 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/02/04 21:01:41 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/08 15:58:55 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
 				parse/parse parse/parse_check_map parse/parse_make_map \
 				parse/parse_sizing_map parse/parse_utils \
+				rc/rc_get_distance rc/rc_raycast \
 				play/play evnt/evnt \
 				libft_s/libft_s libft_s/vec2_utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
