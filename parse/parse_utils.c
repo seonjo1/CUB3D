@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:11:05 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 21:28:51 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 21:38:59 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ long long	parse_overflow_check(long long num, long long i)
 {
 	if (i > 10)
 		return (-1);
-	if (num < 0 || num > 2147483647)
+	if (num < 0 || num > 255)
 		return (-1);
 	return (num);
 }
