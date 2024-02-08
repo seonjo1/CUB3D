@@ -28,10 +28,10 @@ void	draw_vertical_line(t_data *data, int now_x, double perpwall_dist, int color
 	int		line_height;
 	
 	line_height = (int)(WALL_HEIGHT / perpwall_dist) * FOV_BASE / data->player.fov;
-	y_start = -1 * line_height / 2 + WALL_HEIGHT / 2 + data->player.pos.z;
+	y_start = -1 * line_height / 2 + WALL_HEIGHT / 2 + data->player.pos.z / perpwall_dist;
 	if (y_start < 0)
 		y_start = 0;
-	y_end = line_height / 2 + WALL_HEIGHT / 2 + data->player.pos.z;
+	y_end = line_height / 2 + WALL_HEIGHT / 2 + data->player.pos.z / perpwall_dist;
 	if (y_end >= WALL_HEIGHT)
 		y_end = WALL_HEIGHT - 1;
 	// printf("x:%d, perp:%f, y_start:%d, y_end:%d\n", x, perpwall_dist, y_start, y_end);
