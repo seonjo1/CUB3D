@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 15:20:20 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 15:23:49 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:31:42 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ double	rc_get_distance(t_data *data, t_rc_data *rc_data, t_vec2 ray)
 {
 	rc_init_map_and_inc(data, rc_data, ray);
 	rc_init_dis_and_step(data, rc_data, ray);
-	rc_shoot_ray(data, &rc_data);
+	rc_shoot_ray(data, rc_data);
 	if (rc_data->side)
 		return ((rc_data->map.x - data->player.pos.x + \
 			(1 - rc_data->step.x) / 2) / ray.x);
