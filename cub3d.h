@@ -64,7 +64,8 @@ typedef enum s_player_state {
 	PLS_IDLE,
 	PLS_WALK,
 	PLS_RUN,
-	PLS_JUMP
+	PLS_JUMP,
+	PLS_CROUCH
 }	t_palyer_state;
 
 typedef struct s_vec2 {
