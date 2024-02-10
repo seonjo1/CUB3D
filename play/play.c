@@ -78,14 +78,18 @@ void	play_movement_update(t_player *player)
 	}
 }
 
-void	play_fov_update(t_player *player, double target)
+int	play_target_update(double *target, double goal, double delta, double offset)
 {
-	if (player->fov + 0.03 < target)
-		player->fov += 0.015;
-	else if (player->fov - 0.03 > target)
-		player->fov -= 0.015;
+	if (*target + offset < goal)
+		*target += delta;
+	else if (*target - offset > goal)
+		*target -= delta;
 	else
-		player->fov = target;
+	{
+		*target = goal;
+		return (1);
+	}
+	return (0);
 }
 
 void	play_state_update(t_player *player)
@@ -93,40 +97,52 @@ void	play_state_update(t_player *player)
 	int	kb;
 
 	kb = player->keybinds;
+	player->state = 0 | (player->state & (1 << PLS_JUMP)) | (player->state & (1 << PLS_CROUCH));
 	if (!(player->move.x || player->move.y))
 	{
 		player->state |= (1 << PLS_IDLE);
-		if (!(player->state & (1 << PLS_JUMP)))
+		if (!(player->state & (1 << PLS_JUMP)) && !(player->state & (1 << PLS_CROUCH)))
 			player->pos.z = sin(player->time / (double)25.0) * 20;
 		player->time += 1;
-		play_fov_update(player, FOV_BASE);
+		play_target_update(&(player->fov), FOV_BASE, 0.015, 0.03);
 	}
 	else if (!(kb & (1 << KB_D_FORWARD)))
 	{
 		player->state |= (1 << PLS_WALK);
 		vec2_normalize(&(player->move), 0.0085);
-		if (!(player->state & (1 << PLS_JUMP)))
+		if (!(player->state & (1 << PLS_JUMP)) && !(player->state & (1 << PLS_CROUCH)))
 		{
 			player->pos.z = sin(player->time / (double)25.0) * 30;
 			player->time += 5;
 		}
-		play_fov_update(player, FOV_BASE);
+		play_target_update(&(player->fov), FOV_BASE, 0.015, 0.03);
 	}
 	else if (kb & (1 << KB_D_FORWARD))
 	{
 		vec2_normalize(&(player->move), 0.0085 * 1.5);
-		if (!(player->state & (1 << PLS_JUMP)))
+		if (!(player->state & (1 << PLS_JUMP)) && !(player->state & (1 << PLS_CROUCH)))
 		{
 			player->pos.z = sin(player->time / (double)25.0) * 50;
 			player->time += 7;
 		}
-		play_fov_update(player, FOV_BASE * 1.1);
+		play_target_update(&(player->fov), FOV_BASE * 1.1, 0.015, 0.03);
 	}
-	if (kb & (1 << KB_JUMP) && !(player->state & (1 << PLS_JUMP)))
+	if (kb & (1 << KB_JUMP) && !(player->state & (1 << PLS_JUMP)) && !(player->state & (1 << PLS_CROUCH)))
 	{
 		player->state = (player->state & ~(1 << PLS_JUMP)) | (1 << PLS_JUMP);
 		player->motion.z = 45;
+		player->time = 0;
 	}
+	else if (kb & (1 << KB_CROUCH) && !(player->state & (1 << PLS_JUMP)))
+	{
+		player->time = 0;
+		player->state |= (1 << PLS_CROUCH);
+		vec2_normalize(&(player->move), 0.0085 * 0.25);
+		play_target_update(&(player->pos.z), -150, 30, 40);
+	}
+	else if (!(kb & (1 << KB_CROUCH)) && (player->state & (1 << PLS_CROUCH))
+		&& play_target_update(&(player->pos.z), 0, 30, 40))
+			player->state = player->state & ~(1 << PLS_CROUCH);
 }
 
 void	play_motion(t_player *player)
@@ -146,7 +162,10 @@ void	play_motion(t_player *player)
 		player->pos.z += player->motion.z;
 		player->motion.z -= 2.5;
 		if (player->motion.z < -45)
+		{
 			player->state = player->state & ~(1 << PLS_JUMP);
+			player->pos.z = 0;
+		}
 	}
 }
 
