@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:24 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 13:33:03 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 13:45:54 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSE_H
 # include "../cub3d.h"
 
-void		parse_map(t_data *data, t_player *player, int argc, char **argv);
+void		parse_map(t_data *data, int argc, char **argv);
 void		parse_sizing_map(t_map *map, char *file);
 void		parse_check_start_point(t_map *map, t_player *player);
 void		parse_check_wall(t_map *map);
