@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:01 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 13:17:57 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 13:46:18 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	parse_check_arg(int argc, char **argv)
 		parse_error("invalid extension");
 }
 
-void	parse_map(t_data *data, t_player *player, int argc, char **argv)
+void	parse_map(t_data *data, int argc, char **argv)
 {	
 	ft_memset(&(data->map), 0, sizeof(t_map));
 	parse_check_arg(argc, argv);
 	parse_sizing_map(&(data->map), argv[1]);
 	parse_make_map(data, argv[1]);
-	parse_check_start_point(&(data->map), player);
+	parse_check_start_point(&(data->map), &(data->player));
 	parse_check_wall(&(data->map));
 }
