@@ -23,20 +23,26 @@ static void	evnt_mouse_cursor(int *kb)
 
 void	evnt_forward_set(int *kb, long long time, char press)
 {
+	static long long	press_gap = 0;
+	static long long	first_press = 0;
 	static long long	last_release = 0;
 
 	if (press == TRUE)
 	{
+		printf("%lld %lld %lld %lld\n", time, last_release, first_press, press_gap);
 		(*kb) |= (1 << KB_FORWARD);
-		if (time - last_release < 10)
+		if (press_gap < 30 && time - last_release < 15)
 			(*kb) |= (1 << KB_D_FORWARD);
+		else if (first_press == 0)
+			first_press = time;
 	}
 	else
 	{
 		if (*kb & (1 << KB_D_FORWARD))
 			last_release = time - 11;
-		else
 			last_release = time;
+		press_gap = last_release - first_press;
+		first_press = 0;
 		*kb = *kb & ~(1 << KB_FORWARD);
 		*kb = *kb & ~(1 << KB_D_FORWARD);
 	}
