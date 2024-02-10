@@ -6,39 +6,41 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 20:57:08 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 13:34:45 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 15:53:52 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "parse.h"
+#include "../libft_s/libft_s.h"
 
-int	parse_tex_file(t_tex *tex, char *arr, int type, int *element)
+int	parse_tex_file(t_tex *tex, char *str, int type, int *element)
 {
 	if (*element & type)
 		return (1);
 	*element |= type;
-
+	tex->file = ft_strdup_s(str);
+	return (0);
 }
 
-int	parse_dot_check(char *line)
+int	parse_comma_check(char *str)
 {
 	int	i;
-	int	dot_num;
+	int	comma_num;
 
 	i = 0;
-	dot_num = 0;
-	while (line[i])
+	comma_num = 0;
+	while (str[i])
 	{
-		if (line[i++] == '.')
-			dot_num++;
+		if (str[i++] == ',')
+			comma_num++;
 	}
-	if (dot_num == 2)
+	if (comma_num == 2)
 		return (0);
 	else
 		return (1);
 }
 
-int	parse_color_check(char *line)
+int	parse_color_check(char *str)
 {
 	char	**arr;
 	int		i;
@@ -46,12 +48,12 @@ int	parse_color_check(char *line)
 	int		color;
 	int		flag;
 
-	arr = ft_split_s(line, '.');
+	arr = ft_split_s(str, ',');
 	i = 0;
 	flag = 0;
 	while (arr[i])
 	{
-		num = parse_atoi(arr[0]);
+		num = parse_atoi(arr[i]);
 		if (num == -1)
 		{
 			flag = 1;
@@ -64,22 +66,22 @@ int	parse_color_check(char *line)
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
-	if (i == 3)
-		return (color);
-	else
+	if (flag || i != 3)
 		return (-1);
+	else
+		return (color);
 }
 
-int	parse_tex_color(int *tex_color, char *arr, int type, int *element)
+int	parse_tex_color(int *tex_color, char *str, int type, int *element)
 {
 	int	input_color;
 
 	if (*element & type)
 		return (1);
 	*element |= type;
-	if (parse_dot_check(arr))
+	if (parse_comma_check(str))
 		return (1);
-	input_color = parse_color_check(arr);
+	input_color = parse_color_check(str);
 	if (input_color == -1)
 		return (1);
 	*tex_color = input_color;
@@ -91,22 +93,22 @@ void	parse_identifier_check(t_data *data, char **arr, int fd, int *element)
 	int	flag;
 
 	flag = 0;
-	if (ft_strncmp(arr[0], "\n", 2) == 0)
-		return ;
-	else if (!arr[1])
+	if (!arr[0] || !arr[1])
 		flag = 1;
+	else if (ft_strncmp(arr[0], "\n", 2) == 0)
+		return ;
 	else if (ft_strncmp(arr[0], "EA", 3) == 0)
-		flag = parse_tex_file(&(data->tex[0]), arr[1], TX_EA, *element);
+		flag = parse_tex_file(&(data->tex[0]), arr[1], TX_EA, element);
 	else if (ft_strncmp(arr[0], "WE", 3) == 0)
-		flag = parse_tex_file(&(data->tex[1]), arr[1], TX_WE, *element);
+		flag = parse_tex_file(&(data->tex[1]), arr[1], TX_WE, element);
 	else if (ft_strncmp(arr[0], "SO", 3) == 0)
-		flag = parse_tex_file(&(data->tex[2]), arr[1], TX_SO, *element);
+		flag = parse_tex_file(&(data->tex[2]), arr[1], TX_SO, element);
 	else if (ft_strncmp(arr[0], "NO", 3) == 0)
-		flag = parse_tex_file(&(data->tex[3]), arr[1], TX_NO, *element);
+		flag = parse_tex_file(&(data->tex[3]), arr[1], TX_NO, element);
 	else if (ft_strncmp(arr[0], "C", 2) == 0)
-		flag = parse_tex_color(&(data->c_color), arr[1], TX_C, *element);
+		flag = parse_tex_color(&(data->c_color), arr[1], TX_C, element);
 	else if (ft_strncmp(arr[0], "F", 2) == 0)
-		flag = parse_tex_color(&(data->f_color), arr[1], TX_F, *element);
+		flag = parse_tex_color(&(data->f_color), arr[1], TX_F, element);
 	else
 		flag = 1;
 	if ((flag || arr[2] != NULL) && parse_close(fd))
@@ -125,7 +127,7 @@ void	parse_texture(t_data *data, int fd)
 	{
 		line = gnl(fd);
 		arr = ft_split_s(line, ' ');
-		parse_identifier_check(data->tex, arr, fd, &element);
+		parse_identifier_check(data, arr, fd, &element);
 		i = 0;
 		while (!arr[i])
 			free(arr[i++]);
