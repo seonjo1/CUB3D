@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 20:57:08 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 18:09:11 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 18:13:42 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	parse_tex_file(t_tex *tex, char *str, int type, int *element)
 		return (1);
 	*element |= type;
 	tex->file = ft_strdup_s(str);
+	tex->file[ft_strlen(tex->file) - 1] = '\0';
 	return (0);
 }
 
