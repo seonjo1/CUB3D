@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			:= cc
-WFLAG		:= -Wall -Wextra -Werror -fsanitize=address -g3
+WFLAG		:= -Wall -Wextra -Werror #-fsanitize=address -g3
 MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
