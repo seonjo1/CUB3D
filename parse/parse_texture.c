@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 20:57:08 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 17:20:38 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 18:09:11 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,21 @@ void	parse_identifier_check(t_data *data, char **arr, int fd, int *element)
 		parse_error("invalid map file");
 }
 
+int	parse_is_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\n')
+			return (0);
+		i++;
+	}
+	free(line);
+	return (1);
+}
+
 void	parse_texture(t_data *data, int fd)
 {
 	int		i;
@@ -127,6 +142,8 @@ void	parse_texture(t_data *data, int fd)
 	while (element != TX_END)
 	{
 		line = gnl(fd);
+		if (parse_is_empty_line(line))
+			continue ;
 		arr = ft_split_s(line, ' ');
 		parse_identifier_check(data, arr, fd, &element);
 		i = 0;
