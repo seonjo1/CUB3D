@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:10:41 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 16:42:49 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 17:43:55 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	parse_count_element(char *line, int fd)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ' || line[i] != '\n')
+		if (line[i] != ' ' && line[i] != '\n')
 		{
 			free(line);
 			return (1);
