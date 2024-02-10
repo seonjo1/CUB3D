@@ -6,13 +6,13 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 20:57:08 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 22:05:14 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 13:25:23 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	parse_open_texture(int **tex, char *arr, int type, int *element)
+int	parse_open_texture(t_tex *tex, char *arr, int type, int *element)
 {
 	if (*element & type)
 		return (1);
@@ -70,7 +70,7 @@ int	parse_color_check(char *line)
 		return (-1);
 }
 
-int	parse_color(int *tex_color, char *arr, int type, int *element)
+int	parse_tex_color(int *tex_color, char *arr, int type, int *element)
 {
 	int	input_color;
 
@@ -86,7 +86,7 @@ int	parse_color(int *tex_color, char *arr, int type, int *element)
 	return (0);
 }
 
-void	parse_identifier_check(t_map *map, char **arr, int fd, int *element)
+void	parse_identifier_check(t_data *data, char **arr, int fd, int *element)
 {
 	int	flag;
 
@@ -95,25 +95,25 @@ void	parse_identifier_check(t_map *map, char **arr, int fd, int *element)
 		return ;
 	else if (!arr[1])
 		flag = 1;
-	else if (ft_strncmp(arr[0], "NO", 3) == 0)
-		flag = parse_open_texture(map->NO, arr[1], TX_NO, *element);
-	else if (ft_strncmp(arr[0], "SO", 3) == 0)
-		flag = parse_open_texture(map->SO, arr[1], TX_SO, *element);
-	else if (ft_strncmp(arr[0], "WE", 3) == 0)
-		flag = parse_open_texture(map->WE, arr[1], TX_WE, *element);
 	else if (ft_strncmp(arr[0], "EA", 3) == 0)
-		flag = parse_open_texture(map->EA, arr[1], TX_EA, *element);
-	else if (ft_strncmp(arr[0], "F", 2) == 0)
-		flag = parse_open_texture(map->F, arr[1], TX_F, *element);
+		flag = parse_open_texture(&(data->tex[0]), arr[1], TX_EA, *element);
+	else if (ft_strncmp(arr[0], "WE", 3) == 0)
+		flag = parse_open_texture(&(data->tex[1]), arr[1], TX_WE, *element);
+	else if (ft_strncmp(arr[0], "SO", 3) == 0)
+		flag = parse_open_texture(&(data->tex[2]), arr[1], TX_SO, *element);
+	else if (ft_strncmp(arr[0], "NO", 3) == 0)
+		flag = parse_open_texture(&(data->tex[3]), arr[1], TX_NO, *element);
 	else if (ft_strncmp(arr[0], "C", 2) == 0)
-		flag = parse_open_texture(map->C, arr[1], TX_C, *element);
+		flag = parse_tex_color(&(data->c_color), arr[1], TX_C, *element);
+	else if (ft_strncmp(arr[0], "F", 2) == 0)
+		flag = parse_tex_color(&(data->f_color), arr[1], TX_F, *element);
 	else
 		flag = 1;
 	if ((flag || arr[2] != NULL) && parse_close(fd))
 		parse_error("invalid map file");
 }
 
-void	parse_texture(t_map *map, int fd)
+void	parse_texture(t_data *data, int fd)
 {
 	int		i;
 	int		element;
@@ -125,7 +125,7 @@ void	parse_texture(t_map *map, int fd)
 	{
 		line = gnl(fd);
 		arr = ft_split_s(line, ' ');
-		parse_identifier_check(map, arr, fd, &element);
+		parse_identifier_check(data->tex, arr, fd, &element);
 		i = 0;
 		while (!arr[i])
 			free(arr[i++]);
