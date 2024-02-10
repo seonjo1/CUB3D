@@ -38,6 +38,7 @@ typedef enum s_keycode {
 	KEY_S = 1,
 	KEY_SHIFT = 257,
 	KEY_SPACE = 49,
+	KEY_CTRL = 256,
 	KEY_1 = 18,
 	KEY_2 = 19,
 	KEY_ESC = 53
@@ -55,6 +56,7 @@ typedef enum s_keybinds {
 	KB_ROTATE_DOWN,
 	KB_SHITF,
 	KB_JUMP,
+	KB_CROUCH,
 	KB_1
 }	t_keybinds;
 
