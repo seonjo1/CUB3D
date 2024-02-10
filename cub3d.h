@@ -45,6 +45,7 @@ typedef enum s_keycode {
 
 typedef enum s_keybinds {
 	KB_FORWARD,
+	KB_D_FORWARD,
 	KB_BACKWARD,
 	KB_LEFT,
 	KB_RIGHT,
@@ -110,6 +111,7 @@ typedef struct s_data {
 	int			endian;
 	t_map		map;
 	t_player	player;
+	long long	time;
 }	t_data;
 
 typedef struct s_rc_data {
