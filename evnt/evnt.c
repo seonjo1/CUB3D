@@ -60,6 +60,8 @@ static void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 		(*kb) = (*kb & ~(1 << KB_SHITF)) | (press << KB_SHITF);
 	else if (keycode == KEY_SPACE)
 		(*kb) = (*kb & ~(1 << KB_JUMP)) | (press << KB_JUMP);
+	else if (keycode == KEY_CTRL)
+		(*kb) = (*kb & ~(1 << KB_CROUCH)) | (press << KB_CROUCH);
 	else if (keycode == KEY_1 && press == TRUE)
 		evnt_mouse_cursor(kb);
 	// printf("keybinds:%d\n", *kb);
@@ -74,7 +76,7 @@ int	evnt_leave(int keycode, int tmp)
 
 int	evnt_keypress(int keycode, t_player *player)
 {
-	// printf("keycode:%d\n", keycode);
+	printf("keycode:%d\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(0);
 	else
