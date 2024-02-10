@@ -6,12 +6,12 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 19:07:27 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 19:13:29 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 19:16:14 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-#include "libft_s/libft_s.h"
+#include "../libft_s/libft_s.h"
 
 int	parse_comma_check(char *str)
 {
