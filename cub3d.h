@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 14:58:39 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 20:00:39 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef enum s_texture {
 	TX_END = 63
 }	t_texture;
 
-
 typedef enum s_player_state {
 	PLS_IDLE,
 	PLS_WALK,
@@ -109,8 +108,6 @@ typedef struct s_map {
 	char	**data;
 	int		row;
 	int		col;
-	int		floor;
-	int		ceiling;
 }	t_map;
 
 typedef struct s_tex {
@@ -128,10 +125,10 @@ typedef struct s_data {
 	int			bpp;
 	int			line_length;
 	int			endian;
-	t_map		map;
-	t_tex		tex[4];
 	int			c_color;
 	int			f_color;
+	t_map		map;
+	t_tex		tex[4];
 	t_player	player;
 }	t_data;
 
