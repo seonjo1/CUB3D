@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 20:55:27 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 21:47:10 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 14:12:04 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ char	**ft_split_s(const char *str, char c)
 	char	**new;
 
 	new = ft_split(str, c);
+	if (!new)
+		exit(1);
+	return (new);
+}
+
+char	*ft_strdup_s(const char *s1)
+{
+	char	*new;
+
+	new = ft_strdup(s1);
 	if (!new)
 		exit(1);
 	return (new);
