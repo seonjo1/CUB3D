@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 20:57:08 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 15:53:52 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 17:20:38 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	parse_color_check(char *str)
 	arr = ft_split_s(str, ',');
 	i = 0;
 	flag = 0;
+	color = 0;
 	while (arr[i])
 	{
 		num = parse_atoi(arr[i]);
@@ -59,7 +60,7 @@ int	parse_color_check(char *str)
 			flag = 1;
 			break ;
 		}
-		color = (color << 6) | num;
+		color = (color << 8) | num;
 		i++;
 	}
 	i = 0;
