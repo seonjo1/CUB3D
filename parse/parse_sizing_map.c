@@ -6,50 +6,37 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:10:41 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 15:51:05 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 16:42:49 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-int	parse_is_valid_char(char c)
-{
-	if (c == '0' || c == '1' || c == 'N' || c == 'S' \
-		|| c == 'W' || c == 'E' || c == ' ' || c == '\n')
-		return (1);
-	return (0);
-}
-
 int	parse_sizing_line(t_map *map, char *line, int fd)
 {
 	int	i;
 	int	col;
-	int	is_valid_line;
+	int	w_flag;
 
 	if (line == NULL)
 		return (0);
+	if (!parse_is_valid_line(line, fd))
+		return (!map->row);
 	col = 0;
-	is_valid_line = 0;
+	w_flag = 0;
 	i = ft_strlen(line) - 1;
 	while (i >= 0)
 	{
-		if (!parse_is_valid_char(line[i]) && parse_close(fd))
-			parse_error("invalid map file");
-		else if (line[i] != ' ' && line[i] != '\n')
-			is_valid_line = 1;
-		if (is_valid_line)
+		if (line[i] != ' ' && line[i] != '\n')
+			w_flag = 1;
+		if (w_flag)
 			col++;
 		i--;
 	}
 	free(line);
-	if (!is_valid_line && map->row != 0)
-		return (0);
-	else if (is_valid_line)
-	{
-		if (col > map->col)
-			map->col = col;
-		map->row++;
-	}
+	if (col > map->col)
+		map->col = col;
+	map->row++;
 	return (1);
 }
 
