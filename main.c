@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 16:00:08 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 14:13:19 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,8 @@ int	main(int argc, char **argv)
 {
 	t_data		data;
 
-	parse_map(&(data.map), &(data.player), argc, argv);
+	parse_map(&data, argc, argv);
 	main_init(&data);
-	parse_map(&(data.map), &(data.player), argc, argv);
 	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n",\
 		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
 	mlx_hook(data.mlx_win, 17, 0, &evnt_leave, 0);
