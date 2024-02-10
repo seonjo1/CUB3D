@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:24 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 13:18:14 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 13:33:03 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		parse_check_start_point(t_map *map, t_player *player);
 void		parse_check_wall(t_map *map);
 void		parse_error(char *msg);
 int			parse_close(int fd);
-void		parse_make_map(t_map *map, char *file);
+void		parse_make_map(t_data *data, char *file);
 void		parse_texture(t_data *data, int fd);
 long long	parse_atoi(char *str);
 
