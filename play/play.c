@@ -106,7 +106,7 @@ void	play_state_update(t_player *player)
 		player->time += 1;
 		play_target_update(&(player->fov), FOV_BASE, 0.015, 0.03);
 	}
-	else if (!(kb & (1 << KB_D_FORWARD)))
+	else if (!(kb & (1 << KB_D_FORWARD)) || player->state & (1 << PLS_CROUCH))
 	{
 		player->state |= (1 << PLS_WALK);
 		vec2_normalize(&(player->move), 0.0085);
