@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 13:23:40 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 14:58:39 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ typedef struct s_map {
 }	t_map;
 
 typedef struct s_tex {
-	void	*img;
+	char	*file;
+	int		*tex;
 	int		width;
 	int		height;
 }	t_tex;
