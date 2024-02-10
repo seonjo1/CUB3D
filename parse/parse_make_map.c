@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:12:00 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 21:11:17 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 13:17:10 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,22 @@ int	parse_fill_map(t_map *map, char *line, int *col)
 	return (1);
 }
 
-void	parse_make_map(t_map *map, char *file)
+void	parse_make_map(t_data *data, char *file)
 {
 	int	i;
 	int	fd;
 	int	col;
 
-	map->data = ft_calloc_s(map->row, sizeof(char *));
+	data->map.data = ft_calloc_s(data->map.row, sizeof(char *));
 	i = 0;
-	while (i < map->row)
-		map->data[i++] = ft_calloc_s(map->col, sizeof(char));
+	while (i < data->map.row)
+		data->map.data[i++] = ft_calloc_s(data->map.col, sizeof(char));
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		parse_error("unable to open file");
-	parse_texture(map, fd);
+	parse_texture(data, fd);
 	col = 0;
-	while (parse_fill_map(map, gnl(fd), &col))
+	while (parse_fill_map(&(data->map), gnl(fd), &col))
 		;
 	parse_close(fd);
 }
