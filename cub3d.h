@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 21:21:43 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 13:23:40 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,12 @@ typedef struct s_map {
 	int		ceiling;
 }	t_map;
 
+typedef struct s_tex {
+	void	*img;
+	int		width;
+	int		height;
+}	t_tex;
+
 typedef struct s_data {
 	void		*mlx;
 	void		*mlx_win;
@@ -122,6 +128,9 @@ typedef struct s_data {
 	int			line_length;
 	int			endian;
 	t_map		map;
+	t_tex		tex[4];
+	int			c_color;
+	int			f_color;
 	t_player	player;
 }	t_data;
 
