@@ -21,10 +21,31 @@ static void	evnt_mouse_cursor(int *kb)
 		mlx_mouse_show();
 }
 
-static void	evnt_keybinds_set(int *kb, int keycode, char press)
+void	evnt_forward_set(int *kb, long long time, char press)
+{
+	static long long	last_release = 0;
+
+	if (press == TRUE)
+	{
+		(*kb) |= (1 << KB_FORWARD);
+		if (time - last_release < 10)
+			(*kb) |= (1 << KB_D_FORWARD);
+	}
+	else
+	{
+		if (*kb & (1 << KB_D_FORWARD))
+			last_release = time - 11;
+		else
+			last_release = time;
+		*kb = *kb & ~(1 << KB_FORWARD);
+		*kb = *kb & ~(1 << KB_D_FORWARD);
+	}
+}
+
+static void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 {
 	if (keycode == KEY_W)
-		(*kb) = (*kb & ~(1 << KB_FORWARD)) | (press << KB_FORWARD);
+		evnt_forward_set(kb, time, press);
 	else if (keycode == KEY_S)
 		(*kb) = (*kb & ~(1 << KB_BACKWARD)) | (press << KB_BACKWARD);
 	else if (keycode == KEY_A)
@@ -57,12 +78,12 @@ int	evnt_keypress(int keycode, t_player *player)
 	if (keycode == KEY_ESC)
 		exit(0);
 	else
-		evnt_keybinds_set(&(player->keybinds), keycode, TRUE);
+		evnt_keybinds_set(&(player->keybinds), keycode, player->time, TRUE);
 	return (0);
 }
 
 int	evnt_keyrelease(int keycode, t_player *player)
 {
-	evnt_keybinds_set(&(player->keybinds), keycode, FALSE);
+	evnt_keybinds_set(&(player->keybinds), keycode, player->time, FALSE);
 	return (0);
 }
