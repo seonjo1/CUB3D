@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:10:41 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 20:15:28 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 15:51:05 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	parse_is_valid_char(char c)
 {
-	if (c == '0' || c == '1' || c == 'N' || \
-		c == 'S' || c == 'W' || c == 'E' || c == ' ')
+	if (c == '0' || c == '1' || c == 'N' || c == 'S' \
+		|| c == 'W' || c == 'E' || c == ' ' || c == '\n')
 		return (1);
 	return (0);
 }
@@ -23,27 +23,31 @@ int	parse_is_valid_char(char c)
 int	parse_sizing_line(t_map *map, char *line, int fd)
 {
 	int	i;
+	int	col;
 	int	is_valid_line;
 
 	if (line == NULL)
 		return (0);
-	i = 0;
+	col = 0;
 	is_valid_line = 0;
-	while (line[i] != '\0' && line[i] != '\n')
+	i = ft_strlen(line) - 1;
+	while (i >= 0)
 	{
 		if (!parse_is_valid_char(line[i]) && parse_close(fd))
 			parse_error("invalid map file");
-		else if (line[i] != ' ')
+		else if (line[i] != ' ' && line[i] != '\n')
 			is_valid_line = 1;
-		i++;
+		if (is_valid_line)
+			col++;
+		i--;
 	}
 	free(line);
 	if (!is_valid_line && map->row != 0)
 		return (0);
 	else if (is_valid_line)
 	{
-		if (map->col < i)
-			map->col = i;
+		if (col > map->col)
+			map->col = col;
 		map->row++;
 	}
 	return (1);
