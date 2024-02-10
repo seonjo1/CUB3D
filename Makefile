@@ -6,7 +6,7 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/02/10 14:54:54 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/10 19:15:58 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ DIR			:= ./
 BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
 				parse/parse parse/parse_check_map parse/parse_make_map \
-				parse/parse_sizing_map parse/parse_utils parse/parse_texture \
+				parse/parse_color parse/parse_sizing_map \
+				parse/parse_utils parse/parse_texture \
 				rc/rc_get_distance rc/rc_raycast \
 				play/play evnt/evnt \
 				libft_s/libft_s libft_s/vec2_utils
