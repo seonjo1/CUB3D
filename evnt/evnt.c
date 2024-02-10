@@ -76,7 +76,7 @@ int	evnt_leave(int keycode, int tmp)
 
 int	evnt_keypress(int keycode, t_player *player)
 {
-	printf("keycode:%d\n", keycode);
+	// printf("keycode:%d\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(0);
 	else
