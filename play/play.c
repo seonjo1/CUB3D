@@ -58,7 +58,7 @@ void	play_dir_plane_set(t_player *player)
 void	play_movement_update(t_player *player)
 {
 	int	kb;
-
+	
 	kb = player->keybinds;
 	player->move.x = 0;
 	if (!(kb & (1 << KB_FORWARD) && kb & (1 << KB_BACKWARD)))
@@ -101,7 +101,7 @@ void	play_state_update(t_player *player)
 		player->time += 1;
 		play_fov_update(player, FOV_BASE);
 	}
-	else if (!(kb & (1 << KB_SHITF)))
+	else if (!(kb & (1 << KB_D_FORWARD)))
 	{
 		player->state |= (1 << PLS_WALK);
 		vec2_normalize(&(player->move), 0.0085);
@@ -112,9 +112,8 @@ void	play_state_update(t_player *player)
 		}
 		play_fov_update(player, FOV_BASE);
 	}
-	else if (kb & (1 << KB_SHITF))
+	else if (kb & (1 << KB_D_FORWARD))
 	{
-		player->state |= (1 << PLS_RUN);
 		vec2_normalize(&(player->move), 0.0085 * 1.5);
 		if (!(player->state & (1 << PLS_JUMP)))
 		{
