@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 14:52:23 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 17:38:46 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	ft_bzero(&(data->player), sizeof(t_player));
 }
 
 int	main(int argc, char **argv)
