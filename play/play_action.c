@@ -79,3 +79,32 @@ void	play_action_crouch(t_player *player, char *transition, char enter)
 			ft_strlcpy(player->state, "W__", 4);
 	}
 }
+
+void	play_action_flash(t_player *player, char *transition, char enter)
+{
+	static int			flash_time;
+	static t_vec2		flash_dir;
+
+	if (enter == ENTER)
+	{
+		ft_strlcpy(player->state, transition, 4);
+		if (!(player->move.x || player->move.y))
+			flash_dir = vec2_creat(1, 0);
+		else
+			flash_dir = player->move;
+		flash_time = 0;
+		vec2_normalize(&flash_dir, 0.0085 * 300);
+	}
+	else if (enter == RUN)
+	{
+		if (player->state[2] == 'F')
+		{
+			flash_dir = vec2_scala_mul(flash_dir, 0.25);
+			player->move = flash_dir;
+			printf("now: %d\n", flash_time);
+			if (flash_time > 5)
+				player->state[2] = '_';
+			flash_time++;
+		}
+	}
+}
