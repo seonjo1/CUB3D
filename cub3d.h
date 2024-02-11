@@ -31,6 +31,8 @@
 # define FOV_BASE 1.15192
 
 typedef enum s_keycode {
+	MOUSE_LEFT = 1,
+	MOUSE_RIGHT = 2,
 	KEY_LEFT = 123,
 	KEY_UP = 126,
 	KEY_RIGHT = 124,
