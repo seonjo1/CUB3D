@@ -87,6 +87,7 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 
 	if (enter == ENTER)
 	{
+		player->keybinds = (player->keybinds & ~(1 << KB_FLASH));
 		ft_strlcpy(player->state, transition, 4);
 		if (!(player->move.x || player->move.y))
 			flash_dir = vec2_creat(1, 0);
