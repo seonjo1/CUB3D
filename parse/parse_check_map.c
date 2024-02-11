@@ -15,28 +15,17 @@
 
 static int	parse_init_player(char **data, int y, int x, t_player *player)
 {
-	int			i;
-	t_play_lst	*tmp;
-
 	if (!(data[y][x] == 'W' || data[y][x] == 'N'
 		|| data[y][x] == 'S' || data[y][x] == 'E'))
 		return (0);
 	player->pos.x = x;
 	player->pos.y = y;
-	player->euler_dir.y += 90 * (data[y][x] == 'S') + 180 * (data[y][x] == 'W');
+	player->euler_dir.y += 90 * (data[y][x] == 'S');
+	player->euler_dir.y += 180 * (data[y][x] == 'W');
 	player->euler_dir.y += 270 * (data[y][x] == 'N');
 	player->fov = FOV_BASE;
 	player->euler_dir.y *= M_PI / 180.0;
 	ft_strlcpy(player->state, "W__", 4);
-	player->lst_h = ft_calloc_s(1, sizeof(t_play_lst));
-	tmp = player->lst_h;
-	i = -1;
-	while (++i < 10)
-	{
-		tmp->next = ft_calloc_s(1, sizeof(t_play_lst));
-		tmp = tmp->next;
-	}
-	tmp->next = player->lst_h;
 	data[y][x] = '0';
 	return (1);
 }
