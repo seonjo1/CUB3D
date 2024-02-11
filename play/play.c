@@ -156,6 +156,7 @@ void	play_motion(t_player *player)
 	play_action_jump(player, player->state, RUN);
 	play_action_crouch(player, "W__", RUN);
 	play_action_flash(player, "___", RUN);
+	play_action_recall(player, &(player->recall), RUN);
 	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
 	player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
 	player->motion.x = player->motion.x * 0.85;
@@ -171,6 +172,6 @@ void	play_update(t_data *data)
 	play_dir_update(data);
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
-	printf("ps:%s\n", data->player.state);
+	// printf("ps:%s\n", data->player.state);
 	play_motion(&(data->player));
 }
