@@ -16,6 +16,8 @@
 
 int	evnt_keypress(int keycode, t_player *player);
 int	evnt_keyrelease(int keycode, t_player *player);
+int	evnt_mousepress(int keycode, int x, int y, t_player *player);
+int	evnt_mouserelease(int keycode, int x, int y, t_player *player);
 int	evnt_leave(int keycode, int tmp);
 
 #endif
