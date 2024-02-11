@@ -83,11 +83,13 @@ typedef struct s_intvec2 {
 	int	y;
 }	t_intvec2;
 
-typedef struct s_play_lst {
-	t_vec3				pos;
-	t_vec2				euler_dir;
-	struct s_play_lst	*next;
-}	t_play_lst;
+typedef struct s_recall {
+	t_vec3	pos[10];
+	t_vec2	euler_dir[10];
+	int		idx;
+	int		save_freq;
+	int		t;
+}	t_recall;
 
 typedef struct s_player {
 	t_vec3		pos;
@@ -98,9 +100,9 @@ typedef struct s_player {
 	t_vec2		euler_dir;
 	t_vec2		motion_dir;
 	t_vec3		motion;
-	t_play_lst	*head;	
 	int			keybinds;
 	char		state[4];
+	t_recall	recall;	
 	long long	time;
 }	t_player;
 
