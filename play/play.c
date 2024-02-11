@@ -110,7 +110,7 @@ void	play_transition_by_key_event(t_player *player)
 		else if (kb & (1 << KB_JUMP))
 			play_action_jump(player, "WJ_", ENTER);
 		else if (kb & (1 << KB_FLASH))
-			ft_strlcpy(ps, "W_F", 4);
+			play_action_flash(player, "W_F", ENTER);
 		else if (kb & (1 << KB_RECALL))
 			ft_strlcpy(ps, "__R", 4);
 	}
@@ -123,7 +123,7 @@ void	play_transition_by_key_event(t_player *player)
 		else if (kb & (1 << KB_JUMP))
 			play_action_jump(player, "RJ_", ENTER);
 		else if (kb & (1 << KB_FLASH))
-			ft_strlcpy(ps, "R_F", 4);
+			play_action_flash(player, "R_F", ENTER);
 		else if (kb & (1 << KB_RECALL))
 			ft_strlcpy(ps, "__R", 4);
 	}
@@ -135,16 +135,16 @@ void	play_transition_by_key_event(t_player *player)
 	else if (!ft_strncmp(ps, "WJ_", 4))
 	{
 		if (kb & (1 << KB_FLASH))
-			ft_strlcpy(ps, "WJF", 4);
+			play_action_flash(player, "WJF", ENTER);
 		else if (kb & (1 << KB_RECALL))
-			ft_strlcpy(ps, "__F", 4);
+			play_action_flash(player, "__F", ENTER);
 	}
 	else if (!ft_strncmp(ps, "RJ_", 4))
 	{
 		if (!(kb & (1 << KB_D_FORWARD)))
 			ft_strlcpy(ps, "WJ_", 4);
 		else if (kb & (1 << KB_FLASH))
-			ft_strlcpy(ps, "RJF", 4);
+			play_action_flash(player, "RJF", ENTER);
 		else if (kb & (1 << KB_RECALL))
 			ft_strlcpy(ps, "__R", 4);
 	}
@@ -155,6 +155,7 @@ void	play_motion(t_player *player)
 	play_action_movement(player);
 	play_action_jump(player, player->state, RUN);
 	play_action_crouch(player, "W__", RUN);
+	play_action_flash(player, "___", RUN);
 	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
 	player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
 	player->motion.x = player->motion.x * 0.85;
