@@ -74,8 +74,8 @@ static void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 		(*kb) = (*kb & ~(1 << KB_JUMP)) | (press << KB_JUMP);
 	else if (keycode == KEY_CTRL)
 		(*kb) = (*kb & ~(1 << KB_CROUCH)) | (press << KB_CROUCH);
-	// else if (keycode == KEY_SHIFT)
-	// 	(*kb) = (*kb & ~(1 << KB_FLASH)) | (press << KB_FLASH);
+	else if (keycode == KEY_SHIFT)
+		(*kb) = (*kb & ~(1 << KB_FLASH)) | (press << KB_FLASH);
 	// else if (keycode == KEY_E)
 	// 	(*kb) = (*kb & ~(1 << KB_RECALL)) | (press << KB_RECALL);
 	else if (keycode == KEY_1 && press == TRUE)
