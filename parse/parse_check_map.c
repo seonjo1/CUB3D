@@ -28,6 +28,7 @@ static int	parse_init_player(char **data, int y, int x, t_player *player)
 		player->euler_dir.y = 270;
 	player->fov = FOV_BASE;
 	player->euler_dir.y *= 3.141592 / 180.0;
+	ft_strlcpy(player->state, "W__", 4);
 	data[y][x] = '0';
 	return (1);
 }
