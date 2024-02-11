@@ -82,4 +82,7 @@ t4 : all clean
 t5 : all clean
 	./$(NAME) ./map/test_map5.cub
 
+norm :
+	norminette evnt gnl libft libft_s map  parse play rc main.c
+
 .PHONY : all clean fclean re t
