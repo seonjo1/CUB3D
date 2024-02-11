@@ -98,7 +98,6 @@ void	play_action_jump(t_player *player, char *transition, char enter)
 	{
 		ft_strlcpy(player->state, transition, 4);
 		player->motion.z = 45;
-		player->time = 0;
 	}
 	else if (enter == RUN)
 	{
@@ -118,16 +117,16 @@ void	play_action_jump(t_player *player, char *transition, char enter)
 void	play_action_crouch(t_player *player, char *transition, char enter)
 {
 	if (enter == ENTER)
-	{
 		ft_strlcpy(player->state, transition, 4);
-		player->time = 0;
-		vec2_normalize(&(player->move), 0.0085 * 0.25);
+	else if (enter == RUN && player->state[1] == 'C')
+	{
 		play_target_update(&(player->pos.z), -150, 30, 40);
+		vec2_normalize(&(player->move), 0.0085 * 0.25);
 	}
-	else if (enter == RUN && player->state[1] == '_')
+	else if (enter == RUN && player->state[1] == 'c')
 	{
 		if (play_target_update(&(player->pos.z), 0, 30, 40))
-			ft_strlcpy(player->state, transition, 4);
+			ft_strlcpy(player->state, "W__", 4);
 	}
 }
 
@@ -169,7 +168,7 @@ void	play_transition_by_key_event(t_player *player)
 	else if (!ft_strncmp(ps, "WC_", 4))
 	{
 		if (!(kb & (1 << KB_CROUCH)))
-			ft_strlcpy(ps, "W__", 4);
+			ft_strlcpy(ps, "Wc_", 4);
 	}
 	else if (!ft_strncmp(ps, "WJ_", 4))
 	{
@@ -196,9 +195,9 @@ void	play_action_movement(t_player *player)
 	ps = player->state;
 	if (ps[0] == 'W')
 	{
-		if (!(player->move.x || player->move.y))
+		if (!(player->move.x || player->move.y) && ps[1] == '_')
 			player->pos.z = sin(player->time++ / (double)25.0) * 20;
-		else if (ps[1] != '_')
+		else if (ps[1] == '_')
 		{
 			player->pos.z = sin(player->time / (double)25.0) * 30;
 			player->time += 5;
@@ -209,7 +208,7 @@ void	play_action_movement(t_player *player)
 	else if (ps[0] == 'R')
 	{
 		vec2_normalize(&(player->move), 0.0085 * 1.5);
-		if (ps[1] != '_')
+		if (ps[1] == '_')
 		{
 			player->pos.z = sin(player->time / (double)25.0) * 50;
 			player->time += 7;
@@ -218,64 +217,10 @@ void	play_action_movement(t_player *player)
 	}
 }
 
-// void	play_state_update(t_player *player)
-// {
-// 	int	kb;
-
-// 	kb = player->keybinds;
-// 	player->state = 0 | (player->state & (1 << PLS_JUMP)) | (player->state & (1 << PLS_CROUCH));
-// 	if (!(player->move.x || player->move.y))
-// 	{
-// 		player->state |= (1 << PLS_IDLE);
-// 		if (!(player->state & (1 << PLS_JUMP)) && !(player->state & (1 << PLS_CROUCH)))
-// 			player->pos.z = sin(player->time / (double)25.0) * 20;
-// 		player->time += 1;
-// 		play_target_update(&(player->fov), FOV_BASE, 0.015, 0.03);
-// 	}
-// 	else if (!(kb & (1 << KB_D_FORWARD)) || player->state & (1 << PLS_CROUCH))
-// 	{
-// 		player->state |= (1 << PLS_WALK);
-// 		vec2_normalize(&(player->move), 0.0085);
-// 		if (!(player->state & (1 << PLS_JUMP)) && !(player->state & (1 << PLS_CROUCH)))
-// 		{
-// 			player->pos.z = sin(player->time / (double)25.0) * 30;
-// 			player->time += 5;
-// 		}
-// 		play_target_update(&(player->fov), FOV_BASE, 0.015, 0.03);
-// 	}
-// 	else if (kb & (1 << KB_D_FORWARD))
-// 	{
-// 		vec2_normalize(&(player->move), 0.0085 * 1.5);
-// 		if (!(player->state & (1 << PLS_JUMP)) && !(player->state & (1 << PLS_CROUCH)))
-// 		{
-// 			player->pos.z = sin(player->time / (double)25.0) * 50;
-// 			player->time += 7;
-// 		}
-// 		play_target_update(&(player->fov), FOV_BASE * 1.1, 0.015, 0.03);
-// 	}
-// 	if (kb & (1 << KB_JUMP) && !(player->state & (1 << PLS_JUMP)) && !(player->state & (1 << PLS_CROUCH)))
-// 	{
-// 		player->state = (player->state & ~(1 << PLS_JUMP)) | (1 << PLS_JUMP);
-// 		player->motion.z = 45;
-// 		player->time = 0;
-// 	}
-// 	else if (kb & (1 << KB_CROUCH) && !(player->state & (1 << PLS_JUMP)))
-// 	{
-// 		player->time = 0;
-// 		player->state |= (1 << PLS_CROUCH);
-// 		vec2_normalize(&(player->move), 0.0085 * 0.25);
-// 		play_target_update(&(player->pos.z), -150, 30, 40);
-// 	}
-// 	else if (!(kb & (1 << KB_CROUCH)) && (player->state & (1 << PLS_CROUCH))
-// 		&& play_target_update(&(player->pos.z), 0, 30, 40))
-// 			player->state = player->state & ~(1 << PLS_CROUCH);
-// }
-
 void	play_motion(t_player *player)
 {
-	t_vec2	old_move;
-
-	old_move = player->move;
+	play_action_jump(player, player->state, RUN);
+	play_action_crouch(player, "W__", RUN);
 	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
 	player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
 	player->motion.x = player->motion.x * 0.85;
@@ -283,16 +228,14 @@ void	play_motion(t_player *player)
 	player->pos.x += player->motion.x;
 	player->pos.y += player->motion.y;
 	player->euler_dir.y += player->motion_dir.y;
-	play_action_jump(player, player->state, RUN);
-	play_action_crouch(player, player->state, RUN);
 }
 
 void	play_update(t_data *data)
 {
+	play_transition_by_key_event(&(data->player));
 	play_dir_update(data);
 	play_dir_plane_set(&(data->player));
 	play_movement_update(&(data->player));
-	play_transition_by_key_event(&(data->player));
 	play_action_movement(&(data->player));
 	printf("ps:%s\n", data->player.state);
 	play_motion(&(data->player));
