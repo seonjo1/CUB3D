@@ -93,15 +93,15 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 		if (!(player->move.x || player->move.y))
 			flash_dir = vec2_creat(1, 0);
 		flash_time = 0;
-		vec2_normalize(&flash_dir, 0.0085 * 300);
+		vec2_normalize(&flash_dir, 0.0085 * 1250);
 	}
 	else if (enter == RUN)
 	{
 		if (player->state[2] == 'F')
 		{
-			flash_dir = vec2_scala_mul(flash_dir, 0.25);
+			flash_dir = vec2_scala_mul(flash_dir, 0.075);
 			player->move = flash_dir;
-			if (flash_time > 5)
+			if (flash_time == 2)
 				player->state[2] = '_';
 			flash_time++;
 		}
