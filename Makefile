@@ -23,7 +23,7 @@ BASE		:=	main \
 				parse/parse parse/parse_check_map parse/parse_make_map \
 				parse/parse_sizing_map parse/parse_utils \
 				rc/rc_get_distance rc/rc_raycast \
-				play/play evnt/evnt \
+				play/play play/play_action evnt/evnt \
 				libft_s/libft_s libft_s/vec2_utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
