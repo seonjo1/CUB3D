@@ -22,6 +22,9 @@
 
 # define TRUE 1
 # define FALSE 0
+# define ENTER 0
+# define RUN 1
+# define EXIT 2
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define WALL_HEIGHT 1080
