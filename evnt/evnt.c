@@ -27,14 +27,22 @@ void	evnt_forward_set(int *kb, long long time, char press)
 	static long long	first_press = 0;
 	static long long	last_release = 0;
 
-	if (press == TRUE)
+	if (*kb & (1 << KB_CROUCH))
 	{
-		printf("%lld %lld %lld %lld\n", time, last_release, first_press, press_gap);
-		(*kb) |= (1 << KB_FORWARD);
+		(*kb) = (*kb & ~(1 << KB_FORWARD)) | (press << KB_FORWARD);
+		first_press = 1;
+		last_release = 0;
+	}
+	else if (press == TRUE)
+	{
+		// printf("%lld %lld %lld %lld\n", time, last_release, first_press, press_gap);
 		if (press_gap < 30 && time - last_release < 15)
 			(*kb) |= (1 << KB_D_FORWARD);
 		else if (first_press == 0)
+		{
 			first_press = time;
+			(*kb) |= (1 << KB_FORWARD);
+		}
 	}
 	else
 	{
@@ -62,12 +70,14 @@ static void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 		(*kb) = (*kb & ~(1 << KB_ROTATE_LEFT)) | (press << KB_ROTATE_LEFT);
 	else if (keycode == KEY_RIGHT)
 		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (press << KB_ROTATE_RIGHT);
-	else if (keycode == KEY_SHIFT)
-		(*kb) = (*kb & ~(1 << KB_SHITF)) | (press << KB_SHITF);
 	else if (keycode == KEY_SPACE)
 		(*kb) = (*kb & ~(1 << KB_JUMP)) | (press << KB_JUMP);
 	else if (keycode == KEY_CTRL)
 		(*kb) = (*kb & ~(1 << KB_CROUCH)) | (press << KB_CROUCH);
+	// else if (keycode == KEY_SHIFT)
+	// 	(*kb) = (*kb & ~(1 << KB_FLASH)) | (press << KB_FLASH);
+	// else if (keycode == KEY_E)
+	// 	(*kb) = (*kb & ~(1 << KB_RECALL)) | (press << KB_RECALL);
 	else if (keycode == KEY_1 && press == TRUE)
 		evnt_mouse_cursor(kb);
 	// printf("keybinds:%d\n", *kb);

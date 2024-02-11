@@ -22,6 +22,9 @@
 
 # define TRUE 1
 # define FALSE 0
+# define ENTER 0
+# define RUN 1
+# define EXIT 2
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define WALL_HEIGHT 1080
@@ -36,6 +39,7 @@ typedef enum s_keycode {
 	KEY_W = 13,
 	KEY_D = 2,
 	KEY_S = 1,
+	KEY_E = 14,
 	KEY_SHIFT = 257,
 	KEY_SPACE = 49,
 	KEY_CTRL = 256,
@@ -54,19 +58,21 @@ typedef enum s_keybinds {
 	KB_ROTATE_RIGHT,
 	KB_ROTATE_UP,
 	KB_ROTATE_DOWN,
-	KB_SHITF,
+	KB_FLASH,
 	KB_JUMP,
 	KB_CROUCH,
+	KB_RECALL,
 	KB_1
 }	t_keybinds;
 
-typedef enum s_player_state {
-	PLS_IDLE,
-	PLS_WALK,
-	PLS_RUN,
-	PLS_JUMP,
-	PLS_CROUCH
-}	t_palyer_state;
+// typedef enum s_player_state {
+// 	PLS_WALK,
+// 	PLS_RUN,
+// 	PLS_JUMP,
+// 	PLS_CROUCH,
+// 	PLS_FLASH,
+// 	PLS_RECALL
+// }	t_palyer_state;
 
 typedef struct s_vec2 {
 	double	x;
@@ -94,7 +100,7 @@ typedef struct s_player {
 	t_vec2		motion_dir;
 	t_vec3		motion;
 	int			keybinds;
-	int			state;
+	char		state[4];
 	long long	time;
 }	t_player;
 
