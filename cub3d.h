@@ -67,15 +67,6 @@ typedef enum s_keybinds {
 	KB_1
 }	t_keybinds;
 
-// typedef enum s_player_state {
-// 	PLS_WALK,
-// 	PLS_RUN,
-// 	PLS_JUMP,
-// 	PLS_CROUCH,
-// 	PLS_FLASH,
-// 	PLS_RECALL
-// }	t_palyer_state;
-
 typedef struct s_vec2 {
 	double	x;
 	double	y;
@@ -92,6 +83,12 @@ typedef struct s_intvec2 {
 	int	y;
 }	t_intvec2;
 
+typedef struct s_play_lst {
+	t_vec3				pos;
+	t_vec2				euler_dir;
+	struct s_play_lst	*next;
+}	t_play_lst;
+
 typedef struct s_player {
 	t_vec3		pos;
 	double		fov;
@@ -101,6 +98,7 @@ typedef struct s_player {
 	t_vec2		euler_dir;
 	t_vec2		motion_dir;
 	t_vec3		motion;
+	t_play_lst	*head;	
 	int			keybinds;
 	char		state[4];
 	long long	time;
