@@ -64,6 +64,21 @@ void	evnt_shift_set(int *kb, char press)
 	(*kb) = (*kb & ~(1 << KB_FLASH));
 }
 
+void	evnt_e_set(int *kb, char press)
+{
+	static char	is_pressed = FALSE;
+
+	if (press == TRUE && is_pressed == FALSE)
+	{
+		is_pressed = TRUE;
+		(*kb) |= (1 << KB_RECALL);
+		return ;
+	}
+	else if (press == FALSE)
+		is_pressed = FALSE;
+	(*kb) = (*kb & ~(1 << KB_RECALL));
+}
+
 void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 {
 	if (keycode == KEY_W)
@@ -85,8 +100,7 @@ void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 	else if (keycode == KEY_SHIFT)
 		evnt_shift_set(kb, press);
 	else if (keycode == KEY_E)
-		(*kb) = (*kb & ~(1 << KB_RECALL)) | (press << KB_RECALL);
+		evnt_e_set(kb, press);
 	else if (keycode == KEY_1 && press == TRUE)
 		evnt_toggle_mouse_cursor(kb);
-	// printf("keybinds:%d\n", *kb);
 }
