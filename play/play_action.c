@@ -89,10 +89,9 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 	{
 		player->keybinds = (player->keybinds & ~(1 << KB_FLASH));
 		ft_strlcpy(player->state, transition, 4);
+		flash_dir = player->move;
 		if (!(player->move.x || player->move.y))
 			flash_dir = vec2_creat(1, 0);
-		else
-			flash_dir = player->move;
 		flash_time = 0;
 		vec2_normalize(&flash_dir, 0.0085 * 300);
 	}
@@ -102,7 +101,6 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 		{
 			flash_dir = vec2_scala_mul(flash_dir, 0.25);
 			player->move = flash_dir;
-			printf("now: %d\n", flash_time);
 			if (flash_time > 5)
 				player->state[2] = '_';
 			flash_time++;
