@@ -35,7 +35,7 @@ void	evnt_forward_set(int *kb, long long time, char press)
 	}
 	else if (press == TRUE)
 	{
-		printf("%lld %lld %lld %lld\n", time, last_release, first_press, press_gap);
+		// printf("%lld %lld %lld %lld\n", time, last_release, first_press, press_gap);
 		if (press_gap < 30 && time - last_release < 15)
 			(*kb) |= (1 << KB_D_FORWARD);
 		else if (first_press == 0)
