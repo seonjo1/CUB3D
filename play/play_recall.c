@@ -46,7 +46,7 @@ void	play_action_recall(t_player *player, t_recall *re, char enter)
 		{
 
 		}
-		else if (++save_freq > 60)
+		else if (++save_freq > 150)
 		{
 			re->idx++;
 			re->pos[re->idx] = player->pos;
