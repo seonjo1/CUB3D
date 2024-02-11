@@ -98,9 +98,23 @@ int	evnt_leave(int keycode, int tmp)
 	return (0);
 }
 
+int	evnt_mousepress(int keycode, int x, int y, t_player *player)
+{
+	if (keycode == MOUSE_RIGHT)
+		evnt_shift_set(&(player->keybinds), TRUE);
+	return (x + y);
+}
+
+int	evnt_mouserelease(int keycode, int x, int y, t_player *player)
+{
+	if (keycode == MOUSE_RIGHT)
+		evnt_shift_set(&(player->keybinds), FALSE);
+	return (x + y);
+}
+
 int	evnt_keypress(int keycode, t_player *player)
 {
-	// printf("keycode:%d\n", keycode);
+	// printf("keycode: %d %p\n", keycode, &(player->keybinds));
 	if (keycode == KEY_ESC)
 		exit(0);
 	else
