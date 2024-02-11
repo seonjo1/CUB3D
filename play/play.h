@@ -21,5 +21,4 @@ void	play_action_crouch(t_player *player, char *transition, char enter);
 void	play_action_flash(t_player *player, char *transition, char enter);
 int		play_target_update(double *target, double goal, double delta, double offset);
 
-
 #endif
