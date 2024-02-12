@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:47:57 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 19:59:43 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/12 20:11:25 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,22 @@ void	parse_open_tex_file(t_data *data, int fd)
 		j = 0;
 		while (j < tex->height)
 			tex->data[j++] = malloc(sizeof(int) * tex->width);
-		tex->gap = tmp.line_length - tex->width;
+		tex->gap = tmp.line_length / 4 - tex->width;
 		parse_copy_tex_data(tex, tmp.addr);
 		mlx_destroy_image(data->mlx, tmp.img);
+		
+		// for (int i = 0; i < WIN_HEIGHT; i++)
+		// {
+		// 	for (int j = 0; j < WIN_WIDTH; j++)
+		// 	{
+		// 		int x = (j * tex->width) / WIN_WIDTH;
+		// 		int y = (i * tex->height) / WIN_HEIGHT;
+		// 		int color = tex->data[y][x];
+		// 		utils_draw_point(data, j, i, color);
+		// 	}
+		// }
+		// mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+		// mlx_loop(data->mlx);
 		i++;
 	}
 }
