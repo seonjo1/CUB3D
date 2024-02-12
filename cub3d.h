@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 20:00:39 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:26:42 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,10 @@ typedef struct s_map {
 
 typedef struct s_tex {
 	char	*file;
-	int		*tex;
+	int		**data;
 	int		width;
 	int		height;
+	int		gap;
 }	t_tex;
 
 typedef struct s_data {
