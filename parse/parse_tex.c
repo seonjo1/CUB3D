@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 20:57:08 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 19:52:05 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:59:03 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ void	parse_texture(t_data *data, int fd)
 		free(arr);
 		free(line);
 	}
-	parse_open_tex_file(&data, fd);
+	parse_open_tex_file(data, fd);
 }

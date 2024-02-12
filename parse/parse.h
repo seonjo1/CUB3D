@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:35:24 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 19:52:04 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:58:56 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ long long	parse_atoi(char *str);
 int			parse_is_valid_line(char *line, int fd);
 int			parse_tex_color(int *tex_color, char *str, int type, int *element);
 void		parse_open_tex_file(t_data *data, int fd);
+int			parse_tex_file(t_tex *tex, char *str, int type, int *element);
+
 
 #endif
