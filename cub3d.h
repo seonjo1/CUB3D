@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 19:26:42 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/12 21:25:25 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,22 @@ typedef enum s_keybinds {
 	KB_1
 }	t_keybinds;
 
-typedef enum s_texture {
-	TX_NO = 1,
-	TX_SO = 2,
-	TX_WE = 4,
-	TX_EA = 8,
-	TX_F = 16,
-	TX_C = 32,
-	TX_END = 63
-}	t_texture;
+typedef enum s_parse_code {
+	PC_EA = 1,
+	PC_WE = 2,
+	PC_SO = 4,
+	PC_NO = 8,
+	PC_F = 16,
+	PC_C = 32,
+	PC_END = 63
+}	t_parse_code;
+
+typedef enum s_tex_code {
+	TC_EA = 0,
+	TC_WE = 1,
+	TC_SO = 2,
+	TC_NO = 3
+}	t_tex_code;
 
 typedef enum s_player_state {
 	PLS_IDLE,
