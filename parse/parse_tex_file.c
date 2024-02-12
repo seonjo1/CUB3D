@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:47:57 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 19:51:44 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:59:43 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	parse_open_tex_file(t_data *data, int fd)
 		while (j < tex->height)
 			tex->data[j++] = malloc(sizeof(int) * tex->width);
 		tex->gap = tmp.line_length - tex->width;
-		copy_texture_data(tex, tmp.addr);
+		parse_copy_tex_data(tex, tmp.addr);
 		mlx_destroy_image(data->mlx, tmp.img);
 		i++;
 	}
