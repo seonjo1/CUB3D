@@ -30,6 +30,7 @@
 # define WIN_HEIGHT 1080
 # define WALL_HEIGHT 1080
 # define FOV_BASE 1.15192
+# define RECALL_STORE_MAX 50
 
 typedef enum s_keycode {
 	MOUSE_LEFT = 1,
@@ -85,8 +86,8 @@ typedef struct s_intvec2 {
 }	t_intvec2;
 
 typedef struct s_recall {
-	t_vec3	pos[10];
-	t_vec2	euler_dir[10];
+	t_vec3	pos[RECALL_STORE_MAX];
+	t_vec2	euler_dir[RECALL_STORE_MAX];
 	int		idx;
 	int		save_freq;
 	int		t;
@@ -117,6 +118,7 @@ typedef struct s_data {
 	void		*mlx;
 	void		*mlx_win;
 	void		*img;
+	void		*hand;
 	char		*addr;
 	int			bpp;
 	int			line_length;
