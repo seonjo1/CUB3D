@@ -112,7 +112,7 @@ void	play_transition_by_key_event(t_player *player)
 		else if (kb & (1 << KB_FLASH))
 			play_action_flash(player, "W_F", ENTER);
 		else if (kb & (1 << KB_RECALL))
-			ft_strlcpy(ps, "__R", 4);
+			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "R__", 4))
 	{
@@ -125,7 +125,7 @@ void	play_transition_by_key_event(t_player *player)
 		else if (kb & (1 << KB_FLASH))
 			play_action_flash(player, "R_F", ENTER);
 		else if (kb & (1 << KB_RECALL))
-			ft_strlcpy(ps, "__R", 4);
+			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "WC_", 4))
 	{
@@ -137,7 +137,7 @@ void	play_transition_by_key_event(t_player *player)
 		if (kb & (1 << KB_FLASH))
 			play_action_flash(player, "WJF", ENTER);
 		else if (kb & (1 << KB_RECALL))
-			play_action_flash(player, "__F", ENTER);
+			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "RJ_", 4))
 	{
@@ -146,7 +146,7 @@ void	play_transition_by_key_event(t_player *player)
 		else if (kb & (1 << KB_FLASH))
 			play_action_flash(player, "RJF", ENTER);
 		else if (kb & (1 << KB_RECALL))
-			ft_strlcpy(ps, "__R", 4);
+			play_action_recall(player, &(player->recall), ENTER);
 	}
 }
 
@@ -157,13 +157,16 @@ void	play_motion(t_player *player)
 	play_action_crouch(player, "W__", RUN);
 	play_action_flash(player, "___", RUN);
 	play_action_recall(player, &(player->recall), RUN);
-	player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
-	player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
-	player->motion.x = player->motion.x * 0.85;
-	player->motion.y = player->motion.y * 0.85;
-	player->pos.x += player->motion.x;
-	player->pos.y += player->motion.y;
-	player->euler_dir.y += player->motion_dir.y;
+	if (player->state[0] != '_')
+	{
+		player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
+		player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
+		player->motion.x = player->motion.x * 0.85;
+		player->motion.y = player->motion.y * 0.85;
+		player->pos.x += player->motion.x;
+		player->pos.y += player->motion.y;
+		player->euler_dir.y += player->motion_dir.y;
+	}
 }
 
 void	play_update(t_data *data)
@@ -172,6 +175,6 @@ void	play_update(t_data *data)
 	play_dir_update(data);
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
-	// printf("ps:%s\n", data->player.state);
+	printf("ps:%s\n", data->player.state);
 	play_motion(&(data->player));
 }
