@@ -41,3 +41,23 @@ char	*ft_strdup_s(const char *s1)
 		exit(1);
 	return (new);
 }
+
+char	*ft_itoa_s(int n)
+{
+	char	*new;
+
+	new = ft_itoa(n);
+	if (!new)
+		exit(1);
+	return (new);
+}
+
+char	*ft_strjoin_s(char const *s1, char const *s2)
+{
+	char	*new;
+
+	new = ft_strjoin(s1, s2);
+	if (!new)
+		exit(1);
+	return (new);
+}
