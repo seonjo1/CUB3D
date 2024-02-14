@@ -90,7 +90,7 @@ typedef struct s_recall {
 	t_vec3	pos[RECALL_STORE_MAX];
 	t_vec2	euler_dir[RECALL_STORE_MAX];
 	int		idx;
-	int		save_freq;
+	int		frame;
 	int		cooldown;
 }	t_recall;
 
