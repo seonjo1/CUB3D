@@ -39,4 +39,10 @@ void	hand_init_each(t_data *data, void **arr, int max, char *base)
 void	hand_init_xpm_imgs(t_data *data)
 {
 	hand_init_each(data, &(data->hand_res.flash), HN_FLASH, "../res/flash");
+	hand_init_each(data, &(data->hand_res.attack), HN_ATTACK, "../res/attack");
+	hand_init_each(data, &(data->hand_res.pulse), HN_PULSE, "../res/pulse");
+	hand_init_each(data, &(data->hand_res.recall), HN_RECALL, "../res/recall");
+	hand_init_each(data, &(data->hand_res.reload), HN_RELOAD, "../res/reload");
+	hand_init_each(data, &(data->hand_res.shot), HN_SHOT, "../res/shot");
+	hand_init_each(data, &(data->hand_res.walk), HN_WALK, "../res/walk");
 }
