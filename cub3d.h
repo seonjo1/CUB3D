@@ -31,6 +31,7 @@
 # define WALL_HEIGHT 1080
 # define FOV_BASE 1.15192
 # define RECALL_STORE_MAX 50
+# define RECALL_COOLDOWN 450
 
 typedef enum s_keycode {
 	MOUSE_LEFT = 1,
@@ -90,7 +91,7 @@ typedef struct s_recall {
 	t_vec2	euler_dir[RECALL_STORE_MAX];
 	int		idx;
 	int		save_freq;
-	int		t;
+	int		cooldown;
 }	t_recall;
 
 typedef struct s_player {
