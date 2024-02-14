@@ -18,7 +18,7 @@ void	play_action_movement(t_player *player)
 	char	*ps;
 
 	ps = player->state;
-	if (ps[0] == 'W')
+	if (ps[0] == 'W' && ps[2] == '_')
 	{
 		if (!(player->move.x || player->move.y) && ps[1] == '_')
 			player->motion.z = sin(player->time++ / (double)25.0) * 10;
@@ -30,7 +30,7 @@ void	play_action_movement(t_player *player)
 		vec2_normalize(&(player->move), 0.0085);
 		play_target_update(&(player->fov), FOV_BASE, 0.015, 0.03);
 	}
-	else if (ps[0] == 'R')
+	else if (ps[0] == 'R' && ps[2] == '_')
 	{
 		vec2_normalize(&(player->move), 0.0085 * 1.5);
 		if (ps[1] == '_')
