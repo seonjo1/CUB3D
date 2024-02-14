@@ -134,7 +134,7 @@ typedef struct s_tex {
 
 typedef enum e_hand_res_num {
 	HN_FLASH = 5,
-	HN_ATTACK = 24,
+	HN_ATTACK = 16,
 	HN_PULSE = 15,
 	HN_RECALL = 24,
 	HN_RELOAD = 23,
@@ -153,20 +153,19 @@ typedef struct s_hand_res {
 }	t_hand_res;
 
 typedef struct s_data {
-	void			*mlx;
-	void			*mlx_win;
-	void			*img;
-	void			*hand;
-	char			*addr;
-	int				bpp;
-	int				line_length;
-	int				endian;
-	int				c_color;
-	int				f_color;
-	t_map			map;
-	t_tex			tex[4];
-	t_player		player;
-	t_hand_res	hand_res;
+	void		*mlx;
+	void		*mlx_win;
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			line_length;
+	int			endian;
+	int			c_color;
+	int			f_color;
+	t_map		map;
+	t_tex		tex[4];
+	t_player	player;
+	t_hand_res	h_res;
 	long long	time;
 }	t_data;
 
