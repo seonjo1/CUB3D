@@ -30,7 +30,10 @@ void	hand_init_each(t_data *data, void **arr, int max, char *base)
 		tmp = file_name;
 		file_name = ft_strjoin_s(file_name, ".xpm");
 		free(tmp);
+		printf("file:%s load\n", file_name);
 		arr[i] = mlx_xpm_file_to_image(data->mlx, file_name, &w, &h);
+		if (!arr[i])
+			exit(1);
 		free(file_name);
 		i++;
 	}
@@ -38,11 +41,11 @@ void	hand_init_each(t_data *data, void **arr, int max, char *base)
 
 void	hand_init_xpm_imgs(t_data *data)
 {
-	hand_init_each(data, &(data->hand_res.flash), HN_FLASH, "../res/flash");
-	hand_init_each(data, &(data->hand_res.attack), HN_ATTACK, "../res/attack");
-	hand_init_each(data, &(data->hand_res.pulse), HN_PULSE, "../res/pulse");
-	hand_init_each(data, &(data->hand_res.recall), HN_RECALL, "../res/recall");
-	hand_init_each(data, &(data->hand_res.reload), HN_RELOAD, "../res/reload");
-	hand_init_each(data, &(data->hand_res.shot), HN_SHOT, "../res/shot");
-	hand_init_each(data, &(data->hand_res.walk), HN_WALK, "../res/walk");
+	hand_init_each(data, data->h_res.flash, HN_FLASH, "res/flash/flash_");
+	hand_init_each(data, data->h_res.attack, HN_ATTACK, "res/attack/attack_");
+	hand_init_each(data, data->h_res.pulse, HN_PULSE, "res/pulse/pulse_");
+	hand_init_each(data, data->h_res.recall, HN_RECALL, "res/recall/recall_");
+	hand_init_each(data, data->h_res.reload, HN_RELOAD, "res/reload/reload_");
+	hand_init_each(data, data->h_res.shot, HN_SHOT, "res/shot/shot_");
+	hand_init_each(data, data->h_res.walk, HN_WALK, "res/walk/walk_");
 }
