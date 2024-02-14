@@ -28,6 +28,7 @@ void	parse_check_arg(int argc, char **argv)
 void	parse_map(t_data *data, int argc, char **argv)
 {	
 	ft_memset(&(data->map), 0, sizeof(t_map));
+	ft_bzero(&(data->player), sizeof(t_player));
 	parse_check_arg(argc, argv);
 	parse_sizing_map(&(data->map), argv[1]);
 	parse_make_map(data, argv[1]);

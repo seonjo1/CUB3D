@@ -20,14 +20,13 @@ static int	parse_init_player(char **data, int y, int x, t_player *player)
 		return (0);
 	player->pos.x = x;
 	player->pos.y = y;
-	if (data[y][x] == 'S')
-		player->euler_dir.y = 90;
-	else if (data[y][x] == 'W')
-		player->euler_dir.y = 180;
-	else if (data[y][x] == 'N')
-		player->euler_dir.y = 270;
+	player->euler_dir.y += 90 * (data[y][x] == 'S');
+	player->euler_dir.y += 180 * (data[y][x] == 'W');
+	player->euler_dir.y += 270 * (data[y][x] == 'N');
 	player->fov = FOV_BASE;
-	player->euler_dir.y *= 3.141592 / 180.0;
+	player->euler_dir.y *= M_PI / 180.0;
+	player->recall.cooldown = RECALL_COOLDOWN;
+	ft_strlcpy(player->state, "W__", 4);
 	data[y][x] = '0';
 	return (1);
 }

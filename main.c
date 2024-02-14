@@ -41,16 +41,26 @@ void	draw_aim(t_data *data)
 
 int	main_loop(t_data *data)
 {
+	clock_t start, end;
+
+	start = clock();
 	play_update(data);
 	rc_raycast(data);
 	draw_aim(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->hand, 0, 0);
 	mlx_do_sync(data->mlx);
+	data->time++;
+	end = clock();
+	printf("+ %.5f\n", ((double) (end - start)) / CLOCKS_PER_SEC);
 	return (0);
 }
 
 void	main_init(t_data *data)
 {
+	int	img_width;
+	int	img_height;
+	
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(1);
@@ -64,6 +74,7 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
+	data->hand = mlx_xpm_file_to_image(data->mlx, "map/hand.xpm", &img_width, &img_height);
 }
 
 int	main(int argc, char **argv)
@@ -75,8 +86,10 @@ int	main(int argc, char **argv)
 	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n", \
 		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
 	mlx_hook(data.mlx_win, 17, 0, &evnt_leave, 0);
-	mlx_loop_hook(data.mlx, &main_loop, &data);
 	mlx_hook(data.mlx_win, 2, 0, &evnt_keypress, &(data.player));
 	mlx_hook(data.mlx_win, 3, 0, &evnt_keyrelease, &(data.player));
+	mlx_hook(data.mlx_win, 4, 0, &evnt_mousepress, &(data.player));
+	mlx_hook(data.mlx_win, 5, 0, &evnt_mouserelease, &(data.player));
+	mlx_loop_hook(data.mlx, &main_loop, &data);
 	mlx_loop(data.mlx);
 }
