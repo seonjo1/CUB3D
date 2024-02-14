@@ -132,7 +132,7 @@ typedef struct s_tex {
 	int		height;
 }	t_tex;
 
-typedef enum e_hand_resource_num {
+typedef enum e_hand_res_num {
 	HN_FLASH = 5,
 	HN_ATTACK = 24,
 	HN_PULSE = 15,
@@ -140,9 +140,9 @@ typedef enum e_hand_resource_num {
 	HN_RELOAD = 23,
 	HN_SHOT = 11,
 	HN_WALK = 19,
-}	t_hand_resource_num;
+}	t_hand_res_num;
 
-typedef struct s_hand_resource {
+typedef struct s_hand_res {
 	void	*flash[HN_FLASH];
 	void	*attack[HN_ATTACK];
 	void	*pulse[HN_PULSE];
@@ -150,22 +150,23 @@ typedef struct s_hand_resource {
 	void	*reload[HN_RELOAD];
 	void	*shot[HN_SHOT];
 	void	*walk[HN_WALK];
-}	t_hand_resource;
+}	t_hand_res;
 
 typedef struct s_data {
-	void		*mlx;
-	void		*mlx_win;
-	void		*img;
-	void		*hand;
-	char		*addr;
-	int			bpp;
-	int			line_length;
-	int			endian;
-	int			c_color;
-	int			f_color;
-	t_map		map;
-	t_tex		tex[4];
-	t_player	player;
+	void			*mlx;
+	void			*mlx_win;
+	void			*img;
+	void			*hand;
+	char			*addr;
+	int				bpp;
+	int				line_length;
+	int				endian;
+	int				c_color;
+	int				f_color;
+	t_map			map;
+	t_tex			tex[4];
+	t_player		player;
+	t_hand_res	hand_res;
 	long long	time;
 }	t_data;
 
