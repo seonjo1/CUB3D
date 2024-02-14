@@ -156,7 +156,6 @@ void	play_motion(t_player *player)
 	play_action_jump(player, player->state, RUN);
 	play_action_crouch(player, "W__", RUN);
 	play_action_flash(player, "___", RUN);
-	play_action_recall(player, &(player->recall), RUN);
 	if (player->state[0] != '_')
 	{
 		player->motion.x += player->move.x * player->dir.x - player->move.y * player->dir.y;
@@ -167,6 +166,7 @@ void	play_motion(t_player *player)
 		player->pos.y += player->motion.y;
 		player->euler_dir.y += player->motion_dir.y;
 	}
+	play_action_recall(player, &(player->recall), RUN);
 }
 
 void	play_update(t_data *data)
