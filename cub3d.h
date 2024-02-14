@@ -150,6 +150,7 @@ typedef struct s_data {
 }	t_data;
 
 typedef struct s_rc_data {
+	int		tmp;
 	int		side;
 	t_vec2	map;
 	t_vec2	dis;
