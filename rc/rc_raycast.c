@@ -6,38 +6,61 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 15:25:37 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/14 17:40:41 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rc.h"
 
+void	rc_get_tex_x(t_data *data, t_rc_data *rc_data, t_draw_data *d_data, t_vec2 ray)
+{
+	if (rc_data->side && ray.x > 0)
+		d_data->type = TC_EA;
+	else if (rc_data->side && ray.x < 0)
+		d_data->type = TC_WE;
+	else if (ray.y > 0)
+		d_data->type = TC_SO;
+	else
+		d_data->type = TC_NO;
+	if (rc_data->side)
+		d_data->wall_x = data->player.pos.y + d_data->dist * ray.y;
+	else
+		d_data->wall_x = data->player.pos.x + d_data->dist * ray.x;
+	if (d_data->type == TC_NO || d_data->type == TC_EA)
+		d_data->wall_x = d_data->wall_x - floor(d_data->wall_x);
+	else
+		d_data->wall_x = ceil(d_data->wall_x) - d_data->wall_x;
+	d_data->tex_x =	d_data->wall_x * (double)data->tex[d_data->type].width;
+}
+
 void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 {
 	int			i;
-	int			color;
-	double		dis;
-	t_height	h;
-	t_rc_data	rd;
+	t_draw_data	d_data;
+	t_rc_data	rc_data;
 
-	dis = rc_get_distance(data, &rd, ray);
-	h.height = (int)(WIN_HEIGHT / dis) *FOV_BASE / data->player.fov;
-	rd.tmp = (WIN_HEIGHT >> 1) + data->player.pos.z / dis \
+	rc_get_distance(data, &rc_data, &d_data, ray);
+	rc_get_tex_x(data, &rc_data, &d_data, ray);
+	d_data.tex_h = (int)(WIN_HEIGHT / d_data.dist) * FOV_BASE / data->player.fov;
+	d_data.start = -d_data.tex_h / 2 + WIN_HEIGHT / 2 + data->player.pos.z / d_data.dist \
 		+ data->player.motion.z;
-	h.draw_start = -(h.height >> 1) + rd.tmp;
-	if (h.draw_start < 0)
-		h.draw_start = 0;
-	h.draw_end = (h.height >> 1) + rd.tmp;
-	if (h.draw_end >= WIN_HEIGHT)
-		h.draw_end = WIN_HEIGHT - 1;
+	d_data.end = d_data.tex_h / 2 + WIN_HEIGHT / 2 + data->player.pos.z / d_data.dist \
+		+ data->player.motion.z;
+	d_data.offset = d_data.start;
+	if (d_data.start < 0)
+		d_data.start = 0;
+	if (d_data.end >= WIN_HEIGHT)
+		d_data.end = WIN_HEIGHT - 1;
 	i = 0;
-	color = 0x615f5f * !(rd.side) + 0x777777 * (rd.side);
-	while (i < h.draw_start)
-		utils_draw_point(data, x, i++, 0x555555);
-	while (i < h.draw_end)
-		utils_draw_point(data, x, i++, color);
+	while (i < d_data.start)
+		utils_draw_point(data, x, i++, data->c_color);
+	while (i < d_data.end)
+	{
+		d_data.color = data->tex[d_data.type].data[((i - d_data.offset) * data->tex[d_data.type].height) / d_data.tex_h][d_data.tex_x];
+		utils_draw_point(data, x, i++, d_data.color);
+	}
 	while (i < WIN_HEIGHT)
-		utils_draw_point(data, x, i++, 0x494a4e);
+		utils_draw_point(data, x, i++, data->f_color);
 }
 
 void	rc_raycast(t_data *data)

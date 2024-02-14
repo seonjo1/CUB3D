@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 20:00:39 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/14 17:41:29 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,22 @@ typedef enum s_keybinds {
 	KB_1
 }	t_keybinds;
 
-typedef enum s_texture {
-	TX_NO = 1,
-	TX_SO = 2,
-	TX_WE = 4,
-	TX_EA = 8,
-	TX_F = 16,
-	TX_C = 32,
-	TX_END = 63
-}	t_texture;
+typedef enum s_parse_code {
+	PC_EA = 1,
+	PC_WE = 2,
+	PC_SO = 4,
+	PC_NO = 8,
+	PC_F = 16,
+	PC_C = 32,
+	PC_END = 63
+}	t_parse_code;
+
+typedef enum s_tex_code {
+	TC_EA = 0,
+	TC_WE = 1,
+	TC_SO = 2,
+	TC_NO = 3
+}	t_tex_code;
 
 typedef struct s_vec2 {
 	double	x;
@@ -127,9 +134,10 @@ typedef struct s_map {
 
 typedef struct s_tex {
 	char	*file;
-	int		*tex;
+	int		**data;
 	int		width;
 	int		height;
+	int		gap;
 }	t_tex;
 
 typedef struct s_data {
@@ -150,7 +158,6 @@ typedef struct s_data {
 }	t_data;
 
 typedef struct s_rc_data {
-	int		tmp;
 	int		side;
 	t_vec2	map;
 	t_vec2	dis;
@@ -158,11 +165,17 @@ typedef struct s_rc_data {
 	t_vec2	step;
 }	t_rc_data;
 
-typedef struct s_height {
-	int	height;
-	int	draw_start;
-	int	draw_end;
-}	t_height;
+typedef struct s_draw_data {
+	int		type;
+	int		start;
+	int		end;
+	int		color;
+	int		tex_x;
+	int		tex_h;
+	int		offset;
+	double	wall_x;
+	double	dist;
+}	t_draw_data;
 
 void	utils_draw_point(t_data *data, int x, int y, int color);
 
