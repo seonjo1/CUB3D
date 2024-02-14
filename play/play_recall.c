@@ -34,14 +34,20 @@ void	play_test_lst_print(t_player *player)
 
 void	play_recall_doing(t_player *player, t_recall *re)
 {
-	player->pos = re->pos[re->idx];
-	player->euler_dir = re->euler_dir[re->idx];
-	re->frame++;
-	if (re->frame == 50)
+	if (re->frame < RECALL_STORE_MAX)
+	{
+		player->pos = re->pos[re->idx];
+		player->euler_dir = re->euler_dir[re->idx];
+	}
+	else
 	{
 		player->pos.z = 0;
-		ft_strlcpy(player->state, "W__", 4);
+		player->move.x = 0;
+		player->move.y = 0;
+		if (re->frame == RECALL_STORE_MAX + 5)
+			ft_strlcpy(player->state, "W__", 4);
 	}
+	re->frame++;
 	re->idx--;
 	if (re->idx == -1)
 		re->idx = RECALL_STORE_MAX - 1;
