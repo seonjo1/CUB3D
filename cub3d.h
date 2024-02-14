@@ -111,7 +111,7 @@ typedef struct s_player {
 	t_vec2		dir;
 	t_vec2		plane;
 	t_vec2		euler_dir;
-	t_vec2		motion_dir;
+	t_vec3		motion_dir;
 	t_vec3		motion;
 	int			keybinds;
 	char		state[4];
