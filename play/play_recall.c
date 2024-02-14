@@ -37,15 +37,17 @@ void	play_action_recall(t_player *player, t_recall *re, char enter)
 	static int	frame;
 	static int	save_freq = 0;
 
-	if (enter == ENTER)
+	if (enter == ENTER && re->cooldown < 0)
 	{
 		player->keybinds = (player->keybinds & ~(1 << KB_RECALL));
 		ft_strlcpy(player->state, "__R", 4);
 		frame = 0;
+		re->cooldown = RECALL_COOLDOWN;
 		play_test_lst_print(player);
 	}
 	else if (enter == RUN)
 	{
+		re->cooldown--;
 		if (player->state[2] == 'R')
 		{
 			player->pos = re->pos[re->idx];
