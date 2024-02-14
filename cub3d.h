@@ -132,6 +132,16 @@ typedef struct s_tex {
 	int		height;
 }	t_tex;
 
+typedef enum e_hand_state {
+	HS_FLASH,
+	HS_ATTACK,
+	HS_PULSE,
+	HS_RECALL,
+	HS_RELOAD,
+	HS_SHOT,
+	HS_WALK,
+}	t_hand_state;
+
 typedef enum e_hand_res_num {
 	HN_FLASH = 5,
 	HN_ATTACK = 16,
