@@ -32,36 +32,41 @@ void	play_test_lst_print(t_player *player)
 	printf("\n\n");
 }
 
+void	play_recall_doing(t_player *player, t_recall *re)
+{
+	player->pos = re->pos[re->idx];
+	player->euler_dir = re->euler_dir[re->idx];
+	re->frame++;
+	if (re->frame == 50)
+	{
+		player->pos.z = 0;
+		ft_strlcpy(player->state, "W__", 4);
+	}
+	re->idx--;
+	if (re->idx == -1)
+		re->idx = RECALL_STORE_MAX - 1;
+}
+
+void	play_recall_enter(t_player *player, t_recall *re)
+{
+	player->keybinds = (player->keybinds & ~(1 << KB_RECALL));
+	ft_strlcpy(player->state, "__R", 4);
+	re->frame = 0;
+	re->cooldown = RECALL_COOLDOWN;
+	play_test_lst_print(player);
+}
+
 void	play_action_recall(t_player *player, t_recall *re, char enter)
 {
-	static int	frame;
 	static int	save_freq = 0;
 
 	if (enter == ENTER && re->cooldown < 0)
-	{
-		player->keybinds = (player->keybinds & ~(1 << KB_RECALL));
-		ft_strlcpy(player->state, "__R", 4);
-		frame = 0;
-		re->cooldown = RECALL_COOLDOWN;
-		play_test_lst_print(player);
-	}
+		play_recall_enter(player, re);
 	else if (enter == RUN)
 	{
 		re->cooldown--;
 		if (player->state[2] == 'R')
-		{
-			player->pos = re->pos[re->idx];
-			player->euler_dir = re->euler_dir[re->idx];
-			frame++;
-			if (frame == 50)
-			{
-				player->pos.z = 0;
-				ft_strlcpy(player->state, "W__", 4);
-			}
-			re->idx--;
-			if (re->idx == -1)
-				re->idx = RECALL_STORE_MAX - 1;
-		}
+			play_recall_doing(player, re);
 		else if (++save_freq > (150 / RECALL_STORE_MAX))
 		{
 			re->idx = (re->idx + 1) % RECALL_STORE_MAX;
