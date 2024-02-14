@@ -18,20 +18,20 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 	int			color;
 	double		dis;
 	t_height	h;
-	t_rc_data	rc_data;
+	t_rc_data	rd;
 
-	dis = rc_get_distance(data, &rc_data, ray);
-	h.height = (int)(WIN_HEIGHT / dis) * FOV_BASE / data->player.fov;
-	h.draw_start = -h.height / 2 + WIN_HEIGHT / 2 + data->player.pos.z / dis;
+	dis = rc_get_distance(data, &rd, ray);
+	h.height = (int)(WIN_HEIGHT / dis) *FOV_BASE / data->player.fov;
+	rd.tmp = (WIN_HEIGHT >> 1) + data->player.pos.z / dis \
+		+ data->player.motion.z;
+	h.draw_start = -(h.height >> 1) + rd.tmp;
 	if (h.draw_start < 0)
 		h.draw_start = 0;
-	h.draw_end = h.height / 2 + WIN_HEIGHT / 2 + data->player.pos.z / dis;
+	h.draw_end = (h.height >> 1) + rd.tmp;
 	if (h.draw_end >= WIN_HEIGHT)
 		h.draw_end = WIN_HEIGHT - 1;
 	i = 0;
-	color = 0x615f5f;
-	if (rc_data.side)
-		color = 0x777777;
+	color = 0x615f5f * !(rd.side) + 0x777777 * (rd.side);
 	while (i < h.draw_start)
 		utils_draw_point(data, x, i++, 0x555555);
 	while (i < h.draw_end)

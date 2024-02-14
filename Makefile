@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			:= cc
-WFLAG		:= -Wall -Wextra -Werror -fsanitize=address -g3
+WFLAG		:= -Wall -Wextra -Werror #-fsanitize=address -g3
 MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
@@ -24,7 +24,8 @@ BASE		:=	main \
 				parse/parse_color parse/parse_sizing_map \
 				parse/parse_utils parse/parse_texture \
 				rc/rc_get_distance rc/rc_raycast \
-				play/play evnt/evnt \
+				play/play play/play_action play/play_recall \
+				evnt/evnt evnt/evnt_utils \
 				libft_s/libft_s libft_s/vec2_utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
@@ -82,5 +83,8 @@ t4 : all clean
 
 t5 : all clean
 	./$(NAME) ./map/test_map5.cub
+
+norm :
+	norminette evnt gnl libft libft_s map  parse play rc main.c
 
 .PHONY : all clean fclean re t
