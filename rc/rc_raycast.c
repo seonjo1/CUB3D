@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 21:50:40 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:29:39 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 		wall_x = data->player.pos.y + dis * ray.y;
 	else
 		wall_x = data->player.pos.x + dis * ray.x;
-	wall_x -= floor(wall_x);
-	tex_x = (int)(wall_x * (double)data->tex[type].width);
-	
+	if (type == TC_NO || type == TC_EA)
+		wall_x = wall_x - floor(wall_x);
+	else
+		wall_x = ceil(wall_x) - wall_x;
+	tex_x =	wall_x * (double)data->tex[type].width;
 	h.height = (int)(WIN_HEIGHT / dis) * FOV_BASE / data->player.fov;
 	h.draw_start = -h.height / 2 + WIN_HEIGHT / 2 + data->player.pos.z / dis;
 	h.draw_end = h.height / 2 + WIN_HEIGHT / 2 + data->player.pos.z / dis;
@@ -51,14 +53,12 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 	if (h.draw_end >= WIN_HEIGHT)
 		h.draw_end = WIN_HEIGHT - 1;
 	i = 0;
-	if (rc_data.side)
-		color = 0x777777;
 	while (i < h.draw_start)
 		utils_draw_point(data, x, i++, data->c_color);
 	int tex_height = end - start;
 	while (i < h.draw_end)
 	{
-		color = data->tex[type].data[((i - start) * data->tex[type].height) / tex_height][tex_x];
+		color = data->tex[type].data[((i - start) * data->tex[type].height) / tex_height][(int)tex_x];
 		utils_draw_point(data, x, i++, color);
 	}
 	while (i < WIN_HEIGHT)
