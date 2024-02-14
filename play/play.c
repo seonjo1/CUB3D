@@ -175,6 +175,6 @@ void	play_update(t_data *data)
 	play_dir_update(data);
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
-	printf("ps:%s\n", data->player.state);
+	// printf("ps:%s\n", data->player.state);
 	play_motion(&(data->player));
 }
