@@ -42,6 +42,7 @@ void	play_action_recall(t_player *player, t_recall *re, char enter)
 		player->keybinds = (player->keybinds & ~(1 << KB_RECALL));
 		ft_strlcpy(player->state, "__R", 4);
 		frame = 0;
+		play_test_lst_print(player);
 	}
 	else if (enter == RUN)
 	{
@@ -51,7 +52,10 @@ void	play_action_recall(t_player *player, t_recall *re, char enter)
 			player->euler_dir = re->euler_dir[re->idx];
 			frame++;
 			if (frame == 50)
+			{
+				player->pos.z = 0;
 				ft_strlcpy(player->state, "W__", 4);
+			}
 			re->idx--;
 			if (re->idx == -1)
 				re->idx = RECALL_STORE_MAX - 1;
@@ -62,7 +66,6 @@ void	play_action_recall(t_player *player, t_recall *re, char enter)
 			re->pos[re->idx] = player->pos;
 			re->euler_dir[re->idx] = player->euler_dir;
 			save_freq = 0;
-			// play_test_lst_print(player);
 		}
 	}
 }
