@@ -115,6 +115,7 @@ typedef struct s_player {
 	t_vec3		motion;
 	int			keybinds;
 	char		state[4];
+	char		h_state;
 	t_recall	recall;	
 	long long	time;
 }	t_player;
@@ -133,13 +134,13 @@ typedef struct s_tex {
 }	t_tex;
 
 typedef enum e_hand_state {
-	HS_FLASH,
-	HS_ATTACK,
-	HS_PULSE,
-	HS_RECALL,
-	HS_RELOAD,
-	HS_SHOT,
-	HS_WALK,
+	HS_FLASH = 'f',
+	HS_ATTACK = 'a',
+	HS_PULSE = 'p',
+	HS_RECALL = 'r',
+	HS_RELOAD = 'l',
+	HS_SHOT = 's',
+	HS_WALK = 'w',
 }	t_hand_state;
 
 typedef enum e_hand_res_num {
