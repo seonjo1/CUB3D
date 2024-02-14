@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/08 15:59:36 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/10 20:00:39 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ typedef enum s_keybinds {
 	KB_1
 }	t_keybinds;
 
+typedef enum s_texture {
+	TX_NO = 1,
+	TX_SO = 2,
+	TX_WE = 4,
+	TX_EA = 8,
+	TX_F = 16,
+	TX_C = 32,
+	TX_END = 63
+}	t_texture;
+
 typedef struct s_vec2 {
 	double	x;
 	double	y;
@@ -115,6 +125,13 @@ typedef struct s_map {
 	int		col;
 }	t_map;
 
+typedef struct s_tex {
+	char	*file;
+	int		*tex;
+	int		width;
+	int		height;
+}	t_tex;
+
 typedef struct s_data {
 	void		*mlx;
 	void		*mlx_win;
@@ -124,7 +141,10 @@ typedef struct s_data {
 	int			bpp;
 	int			line_length;
 	int			endian;
+	int			c_color;
+	int			f_color;
 	t_map		map;
+	t_tex		tex[4];
 	t_player	player;
 	long long	time;
 }	t_data;

@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:06:29 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/07 16:47:53 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/08 20:13:23 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	parse_check_start_point(t_map *map, t_player *player)
 			flag += parse_init_player(map->data, i, j, player);
 	}
 	if (flag != 1)
-		parse_error("invalid map");
+		parse_error("invalid map file");
 }
 
 static void	parse_dfs(t_map *map, char **check, int i, int j)
@@ -55,11 +55,11 @@ static void	parse_dfs(t_map *map, char **check, int i, int j)
 		return ;
 	check[i][j] = 1;
 	if (map->data[i][j] == ' ')
-		parse_error("invalid map");
+		parse_error("invalid map file");
 	if (map->data[i][j] == '1')
 		return ;
 	if (i == 0 || i == map->row - 1 || j == 0 || j == map->col - 1)
-		parse_error("invalid map");
+		parse_error("invalid map file");
 	parse_dfs(map, check, i - 1, j);
 	parse_dfs(map, check, i + 1, j);
 	parse_dfs(map, check, i, j - 1);
