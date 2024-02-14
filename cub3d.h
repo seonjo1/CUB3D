@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/14 16:46:39 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/14 17:41:29 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ typedef struct s_data {
 }	t_data;
 
 typedef struct s_rc_data {
-	int		tmp;
 	int		side;
 	t_vec2	map;
 	t_vec2	dis;
