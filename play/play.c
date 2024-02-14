@@ -23,12 +23,12 @@ void	play_dir_update(t_data *data)
 	if (kb & (1 << KB_1))
 	{
 		mlx_mouse_get_pos(data->mlx_win, &(mouse_pos.x), &(mouse_pos.y));
-		mlx_mouse_move(data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+		mlx_mouse_move(data->mlx_win, (WIN_WIDTH >> 1), (WIN_HEIGHT >> 1));
 		delay++;
 		if (delay >= 5)
 		{
-			if (mouse_pos.x - WIN_WIDTH / 2 != 0)
-				data->player.motion_dir.y = (mouse_pos.x - WIN_WIDTH / 2) / 314.0;
+			if (mouse_pos.x - (WIN_WIDTH >> 1) != 0)
+				data->player.motion_dir.y = (mouse_pos.x - (WIN_WIDTH >> 1)) / 314.0;
 			else
 				data->player.motion_dir.y *= 0.795;
 			delay = data->player.time;
