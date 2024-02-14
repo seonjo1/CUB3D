@@ -13,7 +13,7 @@
 #include "hand.h"
 #include "../libft_s/libft_s.h"
 
-void	hand_init_each(t_data *data, void **arr, int max, char *base)
+static void	hand_init_each(t_data *data, void **arr, int max, char *base)
 {
 	char	*tmp;
 	char	*file_name;
