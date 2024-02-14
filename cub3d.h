@@ -132,6 +132,26 @@ typedef struct s_tex {
 	int		height;
 }	t_tex;
 
+typedef enum e_hand_resource_num {
+	HN_FLASH = 5,
+	HN_ATTACK = 24,
+	HN_PULSE = 15,
+	HN_RECALL = 24,
+	HN_RELOAD = 23,
+	HN_SHOT = 11,
+	HN_WALK = 19,
+}	t_hand_resource_num;
+
+typedef struct s_hand_resource {
+	void	*flash[HN_FLASH];
+	void	*attack[HN_ATTACK];
+	void	*pulse[HN_PULSE];
+	void	*recall[HN_RECALL];
+	void	*reload[HN_RELOAD];
+	void	*shot[HN_SHOT];
+	void	*walk[HN_WALK];
+}	t_hand_resource;
+
 typedef struct s_data {
 	void		*mlx;
 	void		*mlx_win;
