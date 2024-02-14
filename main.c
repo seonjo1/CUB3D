@@ -14,6 +14,7 @@
 #include "evnt/evnt.h"
 #include "rc/rc.h"
 #include "play/play.h"
+#include "hand/hand.h"
 
 void	utils_draw_point(t_data *data, int x, int y, int color)
 {
@@ -48,7 +49,7 @@ int	main_loop(t_data *data)
 	rc_raycast(data);
 	draw_aim(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->hand, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->h_res.walk[0], 0, 0);
 	mlx_do_sync(data->mlx);
 	data->time++;
 	end = clock();
@@ -57,10 +58,7 @@ int	main_loop(t_data *data)
 }
 
 void	main_init(t_data *data)
-{
-	int	img_width;
-	int	img_height;
-	
+{	
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(1);
@@ -74,7 +72,7 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	data->hand = mlx_xpm_file_to_image(data->mlx, "map/hand.xpm", &img_width, &img_height);
+	hand_init_xpm_imgs(data);
 }
 
 int	main(int argc, char **argv)
