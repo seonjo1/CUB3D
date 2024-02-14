@@ -47,15 +47,16 @@ void	play_action_jump(t_player *player, char *transition, char enter)
 	if (enter == ENTER)
 	{
 		ft_strlcpy(player->state, transition, 4);
-		player->motion.z = 45;
+		player->motion_dir.z = 45;
 	}
 	else if (enter == RUN)
 	{
 		if (player->state[1] == 'J')
 		{
-			player->pos.z += player->motion.z;
-			player->motion.z -= 2.5;
-			if (player->motion.z < -45)
+			play_target_update(&(player->motion.z), 0, 2, 4);
+			player->pos.z += player->motion_dir.z;
+			player->motion_dir.z -= 2.5;
+			if (player->motion_dir.z < -45)
 			{
 				player->state[1] = '_';
 				player->pos.z = 0;
