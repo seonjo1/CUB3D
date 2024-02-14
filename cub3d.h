@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 21:25:25 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/14 16:46:39 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +148,17 @@ typedef struct s_rc_data {
 	t_vec2	step;
 }	t_rc_data;
 
-typedef struct s_height {
-	int	height;
-	int	draw_start;
-	int	draw_end;
-}	t_height;
+typedef struct s_draw_data {
+	int		type;
+	int		start;
+	int		end;
+	int		color;
+	int		tex_x;
+	int		tex_h;
+	int		offset;
+	double	wall_x;
+	double	dist;
+}	t_draw_data;
 
 void	utils_draw_point(t_data *data, int x, int y, int color);
 
