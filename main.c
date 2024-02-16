@@ -42,10 +42,10 @@ void	draw_aim(t_data *data)
 
 int	main_loop(t_data *data)
 {
-	clock_t start, end;
+	// clock_t start, end;
 	void	*hand;
 
-	start = clock();
+	// start = clock();
 	play_update(data);
 	hand = hand_update(data);
 	rc_raycast(data);
@@ -54,8 +54,8 @@ int	main_loop(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->mlx_win, hand, 0, 0);
 	mlx_do_sync(data->mlx);
 	data->time++;
-	end = clock();
-	printf("+ %.5f\n", ((double) (end - start)) / CLOCKS_PER_SEC);
+	// end = clock();
+	// printf("+ %.5f\n", ((double) (end - start)) / CLOCKS_PER_SEC);
 	return (0);
 }
 
