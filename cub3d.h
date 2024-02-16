@@ -67,7 +67,9 @@ typedef enum s_keybinds {
 	KB_JUMP,
 	KB_CROUCH,
 	KB_RECALL,
-	KB_1
+	KB_1,
+	KB_M_LEFT,
+	KB_M_RIGHT
 }	t_keybinds;
 
 typedef enum s_texture {
@@ -98,7 +100,7 @@ typedef enum e_hand_res_num {
 	HN_PULSE = 15,
 	HN_RECALL = 28,
 	HN_RELOAD = 23,
-	HN_SHOT = 11,
+	HN_SHOT = 8,
 	HN_WALK = 32,
 }	t_hand_res_num;
 
