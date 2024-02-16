@@ -77,6 +77,16 @@ void	*hand_action_recall(void **arr, int rf)
 	return (arr[t]);
 }
 
+void	*hand_action_flash(void **arr, int ff)
+{
+	int	t;
+
+	t = ff - 1;
+	if (ff >= HN_FLASH)
+		t = HN_FLASH - 1;
+	return (arr[t]);
+}
+
 void	*hand_update(t_data *data)
 {
 	static void	*hand;
@@ -87,8 +97,8 @@ void	*hand_update(t_data *data)
 		hand = hand_action_walk(&(data->player), data->h_res.walk, 3);
 	else if (!ft_strncmp(ps, "R__", 4))
 		hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
-	// else if (ps[2] == 'F')
-	// 	hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
+	else if (ps[2] == 'F')
+		hand = hand_action_flash(data->h_res.flash, data->player.flash_frame);
 	else if (ps[2] == 'R')
 		hand = hand_action_recall(data->h_res.recall, data->player.recall.frame);
 	return (hand);
