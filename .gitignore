@@ -1,5 +1,5 @@
 *.o
-.DS_Stroe
+.DS_Store
 test.c
 a.out
 .vscode
