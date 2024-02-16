@@ -74,8 +74,12 @@ void	*hand_action_recall(void **arr, int delay)
 	if (++cnt > delay)
 	{
 		cnt = 0;
-		if (++t == HN_RECALL)
+		if (++t > HN_RECALL)
+		{
+			cnt = 0;
 			t = 0;
+			return (arr[HN_RECALL - 1]);
+		}
 	}
 	return (arr[t]);
 }
@@ -93,6 +97,6 @@ void	*hand_update(t_data *data)
 	// else if (ps[2] == 'F')
 	// 	hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
 	else if (ps[2] == 'R')
-		hand = hand_action_recall(data->h_res.recall, 2);
+		hand = hand_action_recall(data->h_res.recall, 1);
 	return (hand);
 }
