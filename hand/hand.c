@@ -66,21 +66,14 @@ void	*hand_action_walk(t_player *player, void **arr, int delay)
 	return (arr[t]);
 }
 
-void	*hand_action_recall(void **arr, int delay)
+void	*hand_action_recall(void **arr, int rf)
 {
-	static int	cnt = 0;
-	static int	t = 0;
+	int	t;
 
-	if (++cnt > delay)
-	{
-		cnt = 0;
-		if (++t > HN_RECALL)
-		{
-			cnt = 0;
-			t = 0;
-			return (arr[HN_RECALL - 1]);
-		}
-	}
+	if (rf >= HN_RECALL << 1)
+		t = HN_RECALL - 1;
+	else
+		t = (rf >> 1);
 	return (arr[t]);
 }
 
@@ -97,6 +90,6 @@ void	*hand_update(t_data *data)
 	// else if (ps[2] == 'F')
 	// 	hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
 	else if (ps[2] == 'R')
-		hand = hand_action_recall(data->h_res.recall, 1);
+		hand = hand_action_recall(data->h_res.recall, data->player.recall.frame);
 	return (hand);
 }
