@@ -104,8 +104,10 @@ void	*hand_action_attack(void **arr, int *kb)
 	{
 		(*kb) = (*kb & ~(1 << KB_ATTACK));
 		t = 0;
-		return (arr[KB_ATTACK - 1]);
+		printf("attack:%d\n", HN_ATTACK - 1);
+		return (arr[HN_ATTACK - 1]);
 	}
+	printf("attack:%d\n", (t - 1) >> 1);
 	return (arr[(t - 1) >> 1]);
 }
 
@@ -119,10 +121,10 @@ void	*hand_update(t_data *data)
 		hand = hand_action_flash(data->h_res.flash, data->player.flash_frame);
 	else if (ps[2] == 'R')
 		hand = hand_action_recall(data->h_res.recall, data->player.recall.frame);
-	else if (data->player.keybinds & (1 << KB_M_LEFT))
-		hand = hand_action_shot(data->h_res.shot);
 	else if (data->player.keybinds & (1 << KB_ATTACK))
 		hand = hand_action_attack(data->h_res.attack, &(data->player.keybinds));
+	else if (data->player.keybinds & (1 << KB_M_LEFT))
+		hand = hand_action_shot(data->h_res.shot);
 	else if (!ft_strncmp(ps, "W__", 4))
 		hand = hand_action_walk(&(data->player), data->h_res.walk, 3);
 	else if (!ft_strncmp(ps, "R__", 4))
