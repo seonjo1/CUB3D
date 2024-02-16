@@ -155,7 +155,7 @@ void	*hand_update(t_data *data)
 		hand = hand_action_recall(data->h_res.recall, &(data->player), &magazine);
 	else if (data->player.keybinds & (1 << KB_ATTACK))
 		hand = hand_action_attack(data->h_res.attack, &(data->player));
-	else if (data->player.keybinds & (1 << KB_RELOAD))
+	else if (data->player.keybinds & (1 << KB_RELOAD) && magazine != 50)
 		hand = hand_action_reload(data->h_res.reload, &(data->player.keybinds), &(data->player.reload_frame), &magazine);
 	else if (data->player.keybinds & (1 << KB_M_LEFT))
 		hand = hand_action_shot(data->h_res.shot, &(data->player.keybinds), &magazine);
