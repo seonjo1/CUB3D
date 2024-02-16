@@ -96,7 +96,7 @@ typedef enum e_hand_res_num {
 	HN_FLASH = 5,
 	HN_ATTACK = 16,
 	HN_PULSE = 15,
-	HN_RECALL = 24,
+	HN_RECALL = 28,
 	HN_RELOAD = 23,
 	HN_SHOT = 11,
 	HN_WALK = 32,
