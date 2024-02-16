@@ -114,7 +114,7 @@ void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 		evnt_x_set(kb, press, KB_RECALL, 1);
 	else if (keycode == KEY_1 && press == TRUE)
 		evnt_toggle_mouse_cursor(kb);
-	else if (keycode == KEY_F)
+	else if (keycode == KEY_V)
 		evnt_attack_set(kb, press);
 	else if (keycode == KEY_R)
 		evnt_reload_set(kb, press);

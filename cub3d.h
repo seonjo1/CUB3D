@@ -47,7 +47,7 @@ typedef enum s_keycode {
 	KEY_S = 1,
 	KEY_E = 14,
 	KEY_R = 15,
-	KEY_F = 3,
+	KEY_V = 9,
 	KEY_SHIFT = 257,
 	KEY_SPACE = 49,
 	KEY_CTRL = 256,
