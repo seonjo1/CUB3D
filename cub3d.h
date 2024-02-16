@@ -84,10 +84,12 @@ typedef enum e_h_state {
 	HS_FLASH = 'f',
 	HS_ATTACK = 'a',
 	HS_PULSE = 'p',
-	HS_RECALL = 'r',
+	HS_RECALL = 'i',
 	HS_RELOAD = 'l',
 	HS_SHOT = 's',
 	HS_WALK = 'w',
+	HS_RUN = 'r',
+	HS_NONE = 'n'
 }	t_h_state;
 
 typedef enum e_hand_res_num {
@@ -97,7 +99,7 @@ typedef enum e_hand_res_num {
 	HN_RECALL = 24,
 	HN_RELOAD = 23,
 	HN_SHOT = 11,
-	HN_WALK = 19,
+	HN_WALK = 32,
 }	t_hand_res_num;
 
 typedef struct s_vec2 {
