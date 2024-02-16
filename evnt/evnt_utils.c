@@ -68,7 +68,7 @@ void	evnt_attack_set(int *kb, char press)
 {
 	static char	is_pressed = FALSE;
 	
-	if (press == TRUE && is_pressed == FALSE)
+	if (press == TRUE && is_pressed == FALSE && !(*kb & (1 << KB_LEFT)))
 	{
 		(*kb) |= (press << KB_ATTACK);
 		is_pressed = TRUE;
