@@ -113,5 +113,7 @@ void	*hand_update(t_data *data)
 		hand = hand_action_walk(&(data->player), data->h_res.walk, 3);
 	else if (!ft_strncmp(ps, "R__", 4))
 		hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
+	else
+		hand = data->h_res.walk[0];
 	return (hand);
 }
