@@ -21,15 +21,32 @@ int	evnt_leave(int keycode, int tmp)
 
 int	evnt_mousepress(int keycode, int x, int y, t_player *player)
 {
+	int	*kb;
+
+	printf("keycode:%d\n", keycode);
+	kb = &(player->keybinds);
 	if (keycode == MOUSE_RIGHT)
 		evnt_shift_set(&(player->keybinds), TRUE);
+	if (keycode == MOUSE_LEFT)
+	{
+		printf("press\n");
+		(*kb) |= (1 << KB_M_LEFT);
+	}
 	return (x + y);
 }
 
 int	evnt_mouserelease(int keycode, int x, int y, t_player *player)
 {
+	int	*kb;
+
+	kb = &(player->keybinds);
 	if (keycode == MOUSE_RIGHT)
 		evnt_shift_set(&(player->keybinds), FALSE);
+	if (keycode == MOUSE_LEFT)
+	{
+		printf("release\n");
+		(*kb) = (*kb & ~(1 << KB_M_LEFT));
+	}
 	return (x + y);
 }
 
