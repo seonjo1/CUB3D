@@ -49,3 +49,34 @@ void	hand_init_xpm_imgs(t_data *data)
 	hand_init_each(data, data->h_res.shot, HN_SHOT, "res/shot/shot_");
 	hand_init_each(data, data->h_res.walk, HN_WALK, "res/walk/walk_");
 }
+
+void	hand_action_walk(t_player *player)
+{
+	
+}
+
+void	hand_state_update(t_player *player)
+{
+	char		*ps;
+	t_h_state	*hs;
+
+	ps = player->state;
+	hs = &(player->h_state);
+	if (ft_strncmp(ps, "W__", 4))
+		*hs = HS_WALK;
+	else if (ft_strncmp(ps, "R__", 4))
+		*hs = HS_RUN;
+	else if (ft_strncmp(ps, "WC_", 4))
+		*hs = HS_NONE;
+	else if (ps[1] == 'J')
+		*hs = HS_NONE;
+	else if (ps[2] == 'F')
+		*hs = HS_FLASH;
+	else if (ps[2] == 'R')
+		*hs = HS_RECALL;
+}
+
+void	hand_update(t_data *data)
+{
+	hand_state_update(&(data->player));
+}
