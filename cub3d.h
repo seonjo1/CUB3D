@@ -80,6 +80,26 @@ typedef enum s_texture {
 	TX_END = 63
 }	t_texture;
 
+typedef enum e_h_state {
+	HS_FLASH = 'f',
+	HS_ATTACK = 'a',
+	HS_PULSE = 'p',
+	HS_RECALL = 'r',
+	HS_RELOAD = 'l',
+	HS_SHOT = 's',
+	HS_WALK = 'w',
+}	t_h_state;
+
+typedef enum e_hand_res_num {
+	HN_FLASH = 5,
+	HN_ATTACK = 16,
+	HN_PULSE = 15,
+	HN_RECALL = 24,
+	HN_RELOAD = 23,
+	HN_SHOT = 11,
+	HN_WALK = 19,
+}	t_hand_res_num;
+
 typedef struct s_vec2 {
 	double	x;
 	double	y;
@@ -115,7 +135,7 @@ typedef struct s_player {
 	t_vec3		motion;
 	int			keybinds;
 	char		state[4];
-	char		h_state;
+	t_h_state	h_state;
 	t_recall	recall;	
 	long long	time;
 }	t_player;
@@ -132,26 +152,6 @@ typedef struct s_tex {
 	int		width;
 	int		height;
 }	t_tex;
-
-typedef enum e_hand_state {
-	HS_FLASH = 'f',
-	HS_ATTACK = 'a',
-	HS_PULSE = 'p',
-	HS_RECALL = 'r',
-	HS_RELOAD = 'l',
-	HS_SHOT = 's',
-	HS_WALK = 'w',
-}	t_hand_state;
-
-typedef enum e_hand_res_num {
-	HN_FLASH = 5,
-	HN_ATTACK = 16,
-	HN_PULSE = 15,
-	HN_RECALL = 24,
-	HN_RELOAD = 23,
-	HN_SHOT = 11,
-	HN_WALK = 19,
-}	t_hand_res_num;
 
 typedef struct s_hand_res {
 	void	*flash[HN_FLASH];
