@@ -93,7 +93,7 @@ typedef enum e_h_state {
 }	t_h_state;
 
 typedef enum e_hand_res_num {
-	HN_FLASH = 7,
+	HN_FLASH = 4,
 	HN_ATTACK = 16,
 	HN_PULSE = 15,
 	HN_RECALL = 28,
@@ -138,7 +138,8 @@ typedef struct s_player {
 	int			keybinds;
 	char		state[4];
 	t_h_state	h_state;
-	t_recall	recall;	
+	t_recall	recall;
+	int			flash_frame;
 	long long	time;
 }	t_player;
 
