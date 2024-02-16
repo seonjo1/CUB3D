@@ -92,7 +92,6 @@ void	*hand_action_flash(void **arr, t_player *player)
 {
 	int	t;
 
-	// hand_reset_reload(&(player->keybinds), &(player->reload_frame));
 	t = player->flash_frame - 1;
 	if (player->flash_frame >= HN_FLASH)
 		t = HN_FLASH - 1;
