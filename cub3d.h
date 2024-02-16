@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/16 17:40:26 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:43:29 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef enum s_tex_code {
 	TC_EA = 0,
 	TC_WE = 1,
 	TC_SO = 2,
-	TC_NO = 3
+	TC_NO = 3,
 	TC_C = 4,
 	TC_F = 5
 }	t_tex_code;
