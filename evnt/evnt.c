@@ -26,7 +26,7 @@ int	evnt_mousepress(int keycode, int x, int y, t_player *player)
 	printf("keycode:%d\n", keycode);
 	kb = &(player->keybinds);
 	if (keycode == MOUSE_RIGHT)
-		evnt_shift_set(&(player->keybinds), TRUE);
+		evnt_x_set(&(player->keybinds), 1, KB_FLASH, 0);
 	if (keycode == MOUSE_LEFT || keycode == MOUSE_OTHER)
 		(*kb) |= (1 << KB_M_LEFT);
 	return (x + y);
@@ -38,7 +38,7 @@ int	evnt_mouserelease(int keycode, int x, int y, t_player *player)
 
 	kb = &(player->keybinds);
 	if (keycode == MOUSE_RIGHT)
-		evnt_shift_set(&(player->keybinds), FALSE);
+		evnt_x_set(&(player->keybinds), 0, KB_FLASH, 0);
 	if (keycode == MOUSE_LEFT || keycode == MOUSE_OTHER)
 		(*kb) = (*kb & ~(1 << KB_M_LEFT));
 	return (x + y);
