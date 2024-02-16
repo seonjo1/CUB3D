@@ -8,7 +8,7 @@ static char *hand_attack_10[] = {
 "o c #257179",
 "O c #B13E53",
 "+ c #EF7D57",
-"@ c #38B764",
+"@ c None",
 "# c #A7F070",
 "$ c #566C86",
 "% c #73EFF7",
