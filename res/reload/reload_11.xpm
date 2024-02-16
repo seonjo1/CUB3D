@@ -9,7 +9,7 @@ static char *reload_11[] = {
 "O c #257179",
 "+ c #B13E53",
 "@ c #EF7D57",
-"# c #38B764",
+"# c None",
 "$ c #A7F070",
 "% c #FFCD75",
 "& c #566C86",
