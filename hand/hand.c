@@ -13,6 +13,13 @@
 #include "hand.h"
 #include "../libft_s/libft_s.h"
 
+int	hand_reset_reload(int *kb, int *rf)
+{
+	(*rf) = 0;
+	(*kb) = (*kb & ~(1 << KB_RELOAD));
+	return (0);
+}
+
 static void	hand_init_each(t_data *data, void **arr, int max, char *base)
 {
 	char	*tmp;
@@ -66,23 +73,28 @@ void	*hand_action_walk(t_player *player, void **arr, int delay)
 	return (arr[t]);
 }
 
-void	*hand_action_recall(void **arr, int rf)
+void	*hand_action_recall(void **arr,  t_player *player, int *magazine)
 {
 	int	t;
 
-	if (rf >= HN_RECALL << 1)
+	hand_reset_reload(&(player->keybinds), &(player->reload_frame));
+	if (player->recall.frame >= HN_RECALL << 1)
+	{
 		t = HN_RECALL - 1;
+		*magazine = 50;
+	}
 	else
-		t = (rf >> 1);
+		t = (player->recall.frame >> 1);
 	return (arr[t]);
 }
 
-void	*hand_action_flash(void **arr, int ff)
+void	*hand_action_flash(void **arr, t_player *player)
 {
 	int	t;
 
-	t = ff - 1;
-	if (ff >= HN_FLASH)
+	hand_reset_reload(&(player->keybinds), &(player->reload_frame));
+	t = player->flash_frame - 1;
+	if (player->flash_frame >= HN_FLASH)
 		t = HN_FLASH - 1;
 	return (arr[t]);
 }
@@ -102,13 +114,14 @@ void	*hand_action_shot(void **arr, int *kb, int *magazine)
 	return (arr[HN_SHOT - 1]);
 }
 
-void	*hand_action_attack(void **arr, int *kb)
+void	*hand_action_attack(void **arr,  t_player *player)
 {
 	static int	t = 0;
 
+	hand_reset_reload(&(player->keybinds), &(player->reload_frame));
 	if (++t == (HN_ATTACK << 1))
 	{
-		(*kb) = (*kb & ~(1 << KB_ATTACK));
+		player->keybinds = (player->keybinds & ~(1 << KB_ATTACK));
 		t = 0;
 		printf("attack:%d\n", HN_ATTACK - 1);
 		return (arr[HN_ATTACK - 1]);
@@ -122,6 +135,7 @@ void	*hand_action_reload(void **arr, int *kb, int *rf, int *magazine)
 	(*rf)++;
 	if (*rf >= (HN_RELOAD << 1))
 	{
+		(*rf) = 0;
 		*magazine = 50;
 		(*kb) = (*kb & ~(1 << KB_RELOAD));
 	}
@@ -136,15 +150,15 @@ void	*hand_update(t_data *data)
 	
 	ps = data->player.state;
 	if (ps[2] == 'F')
-		hand = hand_action_flash(data->h_res.flash, data->player.flash_frame);
+		hand = hand_action_flash(data->h_res.flash, &(data->player));
 	else if (ps[2] == 'R')
-		hand = hand_action_recall(data->h_res.recall, data->player.recall.frame);
+		hand = hand_action_recall(data->h_res.recall, &(data->player), &magazine);
 	else if (data->player.keybinds & (1 << KB_ATTACK))
-		hand = hand_action_attack(data->h_res.attack, &(data->player.keybinds));
-	else if (data->player.keybinds & (1 << KB_M_LEFT))
-		hand = hand_action_shot(data->h_res.shot, &(data->player.keybinds), &magazine);
+		hand = hand_action_attack(data->h_res.attack, &(data->player));
 	else if (data->player.keybinds & (1 << KB_RELOAD))
 		hand = hand_action_reload(data->h_res.reload, &(data->player.keybinds), &(data->player.reload_frame), &magazine);
+	else if (data->player.keybinds & (1 << KB_M_LEFT))
+		hand = hand_action_shot(data->h_res.shot, &(data->player.keybinds), &magazine);
 	else if (!ft_strncmp(ps, "W__", 4))
 		hand = hand_action_walk(&(data->player), data->h_res.walk, 3);
 	else if (!ft_strncmp(ps, "R__", 4))
