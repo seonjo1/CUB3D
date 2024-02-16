@@ -87,19 +87,31 @@ void	*hand_action_flash(void **arr, int ff)
 	return (arr[t]);
 }
 
+void	*hand_action_shot(void **arr)
+{
+	static int	t = 0;
+
+	if (++t == HN_SHOT)
+		t = 0;
+	printf("shot:%d\n", t);
+	return (arr[t]);
+}
+
 void	*hand_update(t_data *data)
 {
 	static void	*hand;
 	char		*ps;
 	
 	ps = data->player.state;
-	if (!ft_strncmp(ps, "W__", 4))
-		hand = hand_action_walk(&(data->player), data->h_res.walk, 3);
-	else if (!ft_strncmp(ps, "R__", 4))
-		hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
-	else if (ps[2] == 'F')
+	if (ps[2] == 'F')
 		hand = hand_action_flash(data->h_res.flash, data->player.flash_frame);
 	else if (ps[2] == 'R')
 		hand = hand_action_recall(data->h_res.recall, data->player.recall.frame);
+	else if (data->player.keybinds & (1 << KB_M_LEFT))
+		hand = hand_action_shot(data->h_res.shot);
+	else if (!ft_strncmp(ps, "W__", 4))
+		hand = hand_action_walk(&(data->player), data->h_res.walk, 3);
+	else if (!ft_strncmp(ps, "R__", 4))
+		hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
 	return (hand);
 }
