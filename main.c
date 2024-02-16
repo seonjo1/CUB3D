@@ -43,13 +43,15 @@ void	draw_aim(t_data *data)
 int	main_loop(t_data *data)
 {
 	clock_t start, end;
+	void	*hand;
 
 	start = clock();
 	play_update(data);
+	hand = hand_update(data);
 	rc_raycast(data);
 	draw_aim(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->h_res.walk[0], 0, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, hand, 0, 0);
 	mlx_do_sync(data->mlx);
 	data->time++;
 	end = clock();
