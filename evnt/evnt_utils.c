@@ -49,34 +49,32 @@ static void	evnt_forward_set(int *kb, long long time, char press)
 	}
 }
 
-void	evnt_shift_set(int *kb, char press)
+void	evnt_x_set(int *kb, char press, int t_kb, int num)
 {
-	static char	is_pressed = FALSE;
+	static char	is_pressed[3];
 
-	if (press == TRUE && is_pressed == FALSE)
+	if (press == TRUE && is_pressed[num] == FALSE)
 	{
-		is_pressed = TRUE;
-		(*kb) |= (1 << KB_FLASH);
+		is_pressed[num] = TRUE;
+		(*kb) |= (1 << t_kb);
 		return ;
 	}
 	else if (press == FALSE)
-		is_pressed = FALSE;
-	(*kb) = (*kb & ~(1 << KB_FLASH));
+		is_pressed[num] = FALSE;
+	(*kb) = (*kb & ~(1 << t_kb));
 }
 
-void	evnt_e_set(int *kb, char press)
+void	evnt_attack_set(int *kb, char press)
 {
 	static char	is_pressed = FALSE;
-
+	
 	if (press == TRUE && is_pressed == FALSE)
 	{
+		(*kb) |= (press << KB_ATTACK);
 		is_pressed = TRUE;
-		(*kb) |= (1 << KB_RECALL);
-		return ;
 	}
 	else if (press == FALSE)
 		is_pressed = FALSE;
-	(*kb) = (*kb & ~(1 << KB_RECALL));
 }
 
 void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
@@ -98,9 +96,11 @@ void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 	else if (keycode == KEY_CTRL)
 		(*kb) = (*kb & ~(1 << KB_CROUCH)) | (press << KB_CROUCH);
 	else if (keycode == KEY_SHIFT)
-		evnt_shift_set(kb, press);
+		evnt_x_set(kb, press, KB_FLASH, 0);
 	else if (keycode == KEY_E)
-		evnt_e_set(kb, press);
+		evnt_x_set(kb, press, KB_RECALL, 1);
 	else if (keycode == KEY_1 && press == TRUE)
 		evnt_toggle_mouse_cursor(kb);
+	else if (keycode == KEY_F)
+		evnt_attack_set(kb, press);
 }
