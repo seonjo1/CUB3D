@@ -15,5 +15,6 @@
 # include "../cub3d.h"
 
 void	hand_init_xpm_imgs(t_data *data);
+void	*hand_update(t_data *data);
 
 #endif
