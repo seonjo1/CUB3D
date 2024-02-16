@@ -46,6 +46,7 @@ typedef enum s_keycode {
 	KEY_D = 2,
 	KEY_S = 1,
 	KEY_E = 14,
+	KEY_R = 15,
 	KEY_F = 3,
 	KEY_SHIFT = 257,
 	KEY_SPACE = 49,
@@ -70,6 +71,7 @@ typedef enum s_keybinds {
 	KB_CROUCH,
 	KB_RECALL,
 	KB_ATTACK,
+	KB_RELOAD,
 	KB_1,
 	KB_M_LEFT,
 	KB_M_RIGHT
@@ -103,7 +105,7 @@ typedef enum e_hand_res_num {
 	HN_PULSE = 15,
 	HN_RECALL = 28,
 	HN_RELOAD = 23,
-	HN_SHOT = 8,
+	HN_SHOT = 9,
 	HN_WALK = 32,
 }	t_hand_res_num;
 
@@ -145,6 +147,7 @@ typedef struct s_player {
 	t_h_state	h_state;
 	t_recall	recall;
 	int			flash_frame;
+	int			reload_frame;
 	long long	time;
 }	t_player;
 
