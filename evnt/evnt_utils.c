@@ -64,6 +64,19 @@ void	evnt_x_set(int *kb, char press, int t_kb, int num)
 	(*kb) = (*kb & ~(1 << t_kb));
 }
 
+void	evnt_reload_set(int *kb, char press)
+{
+	static char	is_pressed = FALSE;
+	
+	if (press == TRUE && is_pressed == FALSE && !(*kb & (1 << KB_RELOAD)))
+	{
+		(*kb) |= (press << KB_RELOAD);
+		is_pressed = TRUE;
+	}
+	else if (press == FALSE)
+		is_pressed = FALSE;
+}
+
 void	evnt_attack_set(int *kb, char press)
 {
 	static char	is_pressed = FALSE;
@@ -103,4 +116,6 @@ void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 		evnt_toggle_mouse_cursor(kb);
 	else if (keycode == KEY_F)
 		evnt_attack_set(kb, press);
+	else if (keycode == KEY_R)
+		evnt_reload_set(kb, press);
 }
