@@ -83,7 +83,6 @@ void	play_action_crouch(t_player *player, char *transition, char enter)
 
 void	play_action_flash(t_player *player, char *transition, char enter)
 {
-	static int			flash_time;
 	static t_vec2		flash_dir;
 
 	if (enter == ENTER)
@@ -93,8 +92,8 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 		flash_dir = player->move;
 		if (!(player->move.x || player->move.y))
 			flash_dir = vec2_creat(1, 0);
-		flash_time = 0;
-		vec2_normalize(&flash_dir, 0.0085 * 1250);
+		player->flash_frame = 0;
+		vec2_normalize(&flash_dir, 0.0085 * 1450);
 	}
 	else if (enter == RUN)
 	{
@@ -102,9 +101,10 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 		{
 			flash_dir = vec2_scala_mul(flash_dir, 0.075);
 			player->move = flash_dir;
-			if (flash_time == 2)
+			if (player->flash_frame == HN_FLASH)
 				player->state[2] = '_';
-			flash_time++;
+			player->flash_frame++;
+			printf("player->flash_frame:%d\n", player->flash_frame);
 		}
 	}
 }
