@@ -93,7 +93,7 @@ typedef enum e_h_state {
 }	t_h_state;
 
 typedef enum e_hand_res_num {
-	HN_FLASH = 5,
+	HN_FLASH = 7,
 	HN_ATTACK = 16,
 	HN_PULSE = 15,
 	HN_RECALL = 28,
