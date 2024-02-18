@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/16 17:43:29 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/18 15:20:58 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ typedef enum s_parse_code {
 	PC_WE = 2,
 	PC_SO = 4,
 	PC_NO = 8,
-	PC_C = 16,
-	PC_F = 32,
-	PC_CT = 64,
-	PC_FT = 128,
+	PC_F = 16,
+	PC_C = 32,
+	PC_FT = 64,
+	PC_CT = 128,
 	PC_END = 255
 }	t_parse_code;
 
@@ -87,8 +87,8 @@ typedef enum s_tex_code {
 	TC_WE = 1,
 	TC_SO = 2,
 	TC_NO = 3,
-	TC_C = 4,
-	TC_F = 5
+	TC_F = 4,
+	TC_C = 5
 }	t_tex_code;
 
 typedef struct s_vec2 {
