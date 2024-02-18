@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 20:57:08 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 21:24:29 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:49:54 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void	parse_identifier_check(t_data *data, char **arr, int fd, int *element)
 		flag = parse_tex_file(&(data->tex[2]), arr[1], PC_SO, element);
 	else if (ft_strncmp(arr[0], "NO", 3) == 0)
 		flag = parse_tex_file(&(data->tex[3]), arr[1], PC_NO, element);
+	else if (ft_strncmp(arr[0], "CT", 3) == 0)
+		flag = parse_tex_file(&(data->tex[4]), arr[1], PC_CT, element);
+	else if (ft_strncmp(arr[0], "FT", 3) == 0)
+		flag = parse_tex_file(&(data->tex[5]), arr[1], PC_FT, element);
 	else if (ft_strncmp(arr[0], "C", 2) == 0)
 		flag = parse_tex_color(&(data->c_color), arr[1], PC_C, element);
 	else if (ft_strncmp(arr[0], "F", 2) == 0)
