@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/16 17:51:46 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:05:34 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 		d_data.start = 0;
 	if (d_data.end >= WIN_HEIGHT)
 		d_data.end = WIN_HEIGHT - 1;
-	i = 0;
-	while (i < d_data.start)
-		utils_draw_point(data, x, i++, data->c_color);
+	i = d_data.start;
+	// while (i < d_data.start)
+	// 	utils_draw_point(data, x, i++, data->c_color);
 	while (i < d_data.end)
 	{
 		d_data.color = data->tex[d_data.type].data[((i - d_data.offset) * data->tex[d_data.type].height) / d_data.tex_h][d_data.tex_x];
