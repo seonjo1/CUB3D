@@ -24,7 +24,7 @@ void rc_draw_floor(t_data *data)
 	y = 1;
 	while (y < WIN_HEIGHT / 2)
 	{
-		x = -1;
+		x = 0;
 		while (x < WIN_WIDTH)
 		{
 			camera_x = 2 * x / (double) WIN_WIDTH - 1;
