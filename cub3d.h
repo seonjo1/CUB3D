@@ -36,6 +36,7 @@
 typedef enum s_keycode {
 	MOUSE_LEFT = 1,
 	MOUSE_RIGHT = 2,
+	MOUSE_OTHER = 3,
 	KEY_LEFT = 123,
 	KEY_UP = 126,
 	KEY_RIGHT = 124,
@@ -45,6 +46,8 @@ typedef enum s_keycode {
 	KEY_D = 2,
 	KEY_S = 1,
 	KEY_E = 14,
+	KEY_R = 15,
+	KEY_V = 9,
 	KEY_SHIFT = 257,
 	KEY_SPACE = 49,
 	KEY_CTRL = 256,
@@ -67,7 +70,11 @@ typedef enum s_keybinds {
 	KB_JUMP,
 	KB_CROUCH,
 	KB_RECALL,
-	KB_1
+	KB_ATTACK,
+	KB_RELOAD,
+	KB_1,
+	KB_M_LEFT,
+	KB_M_RIGHT
 }	t_keybinds;
 
 typedef enum s_parse_code {
@@ -86,6 +93,28 @@ typedef enum s_tex_code {
 	TC_SO = 2,
 	TC_NO = 3
 }	t_tex_code;
+
+typedef enum e_h_state {
+	HS_FLASH = 'f',
+	HS_ATTACK = 'a',
+	HS_PULSE = 'p',
+	HS_RECALL = 'i',
+	HS_RELOAD = 'l',
+	HS_SHOT = 's',
+	HS_WALK = 'w',
+	HS_RUN = 'r',
+	HS_NONE = 'n'
+}	t_h_state;
+
+typedef enum e_hand_res_num {
+	HN_FLASH = 4,
+	HN_ATTACK = 16,
+	HN_PULSE = 15,
+	HN_RECALL = 28,
+	HN_RELOAD = 23,
+	HN_SHOT = 9,
+	HN_WALK = 32,
+}	t_hand_res_num;
 
 typedef struct s_vec2 {
 	double	x;
@@ -122,7 +151,10 @@ typedef struct s_player {
 	t_vec3		motion;
 	int			keybinds;
 	char		state[4];
-	t_recall	recall;	
+	t_h_state	h_state;
+	t_recall	recall;
+	int			flash_frame;
+	int			reload_frame;
 	long long	time;
 }	t_player;
 
@@ -140,11 +172,20 @@ typedef struct s_tex {
 	int		gap;
 }	t_tex;
 
+typedef struct s_hand_res {
+	void	*flash[HN_FLASH];
+	void	*attack[HN_ATTACK];
+	void	*pulse[HN_PULSE];
+	void	*recall[HN_RECALL];
+	void	*reload[HN_RELOAD];
+	void	*shot[HN_SHOT];
+	void	*walk[HN_WALK];
+}	t_hand_res;
+
 typedef struct s_data {
 	void		*mlx;
 	void		*mlx_win;
 	void		*img;
-	void		*hand;
 	char		*addr;
 	int			bpp;
 	int			line_length;
@@ -154,6 +195,7 @@ typedef struct s_data {
 	t_map		map;
 	t_tex		tex[4];
 	t_player	player;
+	t_hand_res	h_res;
 	long long	time;
 }	t_data;
 

@@ -109,9 +109,9 @@ void	play_transition_by_key_event(t_player *player)
 			play_action_crouch(player, "WC_", ENTER);
 		else if (kb & (1 << KB_JUMP))
 			play_action_jump(player, "WJ_", ENTER);
-		else if (kb & (1 << KB_FLASH))
+		else if (kb & (1 << KB_FLASH) && !(kb & (1 << KB_ATTACK)))
 			play_action_flash(player, "W_F", ENTER);
-		else if (kb & (1 << KB_RECALL))
+		else if (kb & (1 << KB_RECALL) && !(kb & (1 << KB_ATTACK)))
 			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "R__", 4))
@@ -122,9 +122,9 @@ void	play_transition_by_key_event(t_player *player)
 			play_action_crouch(player, "WC_", ENTER);
 		else if (kb & (1 << KB_JUMP))
 			play_action_jump(player, "RJ_", ENTER);
-		else if (kb & (1 << KB_FLASH))
+		else if (kb & (1 << KB_FLASH) && !(kb & (1 << KB_ATTACK)))
 			play_action_flash(player, "R_F", ENTER);
-		else if (kb & (1 << KB_RECALL))
+		else if (kb & (1 << KB_RECALL) && !(kb & (1 << KB_ATTACK)))
 			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "WC_", 4))
@@ -134,18 +134,18 @@ void	play_transition_by_key_event(t_player *player)
 	}
 	else if (!ft_strncmp(ps, "WJ_", 4))
 	{
-		if (kb & (1 << KB_FLASH))
+		if (kb & (1 << KB_FLASH) && !(kb & (1 << KB_ATTACK)))
 			play_action_flash(player, "WJF", ENTER);
-		else if (kb & (1 << KB_RECALL))
+		else if (kb & (1 << KB_RECALL) && !(kb & (1 << KB_ATTACK)))
 			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "RJ_", 4))
 	{
 		if (!(kb & (1 << KB_D_FORWARD)))
 			ft_strlcpy(ps, "WJ_", 4);
-		else if (kb & (1 << KB_FLASH))
+		else if (kb & (1 << KB_FLASH) && !(kb & (1 << KB_ATTACK)))
 			play_action_flash(player, "RJF", ENTER);
-		else if (kb & (1 << KB_RECALL))
+		else if (kb & (1 << KB_RECALL) && !(kb & (1 << KB_ATTACK)))
 			play_action_recall(player, &(player->recall), ENTER);
 	}
 }
@@ -175,6 +175,6 @@ void	play_update(t_data *data)
 	play_dir_update(data);
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
-	// printf("ps:%s\n", data->player.state);
+	printf("ps:%s\n", data->player.state);
 	play_motion(&(data->player));
 }

@@ -26,6 +26,7 @@ BASE		:=	main \
 				rc/rc_get_distance rc/rc_raycast \
 				play/play play/play_action play/play_recall \
 				evnt/evnt evnt/evnt_utils \
+				hand/hand \
 				libft_s/libft_s libft_s/vec2_utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
