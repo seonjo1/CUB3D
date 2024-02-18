@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:24:10 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/18 16:42:32 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/18 18:00:35 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	rc_draw_sky(t_data *data)
 	double	camera_x;
 	t_vec2	ray;
 	
-	start = fmod(((6.28 + data->player.euler_dir.y) - (FOV_BASE / 2)), 6.28);
-	start = (start * data->tex[TC_C].width) / 6.28;
-	tex_len = WIN_WIDTH * (FOV_BASE / 2);
+	start = fmod(((M_PI * 2 + data->player.euler_dir.y) - (FOV_BASE / 2)), M_PI * 2);
+	start = (start * data->tex[TC_C].width) / M_PI * 2;
+	tex_len = data->tex[TC_C].width * (FOV_BASE / (M_PI * 2));
 	y = 0;
 	while (y < WIN_HEIGHT / 2)
 	{
