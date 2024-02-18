@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/14 17:40:41 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:51:46 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 		d_data.color = data->tex[d_data.type].data[((i - d_data.offset) * data->tex[d_data.type].height) / d_data.tex_h][d_data.tex_x];
 		utils_draw_point(data, x, i++, d_data.color);
 	}
-	while (i < WIN_HEIGHT)
-		utils_draw_point(data, x, i++, data->f_color);
+	// while (i < WIN_HEIGHT)
+	// 	utils_draw_point(data, x, i++, data->f_color);
 }
 
 void	rc_raycast(t_data *data)
