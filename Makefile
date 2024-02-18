@@ -6,7 +6,7 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/02/16 17:46:57 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/18 15:25:01 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ BASE		:=	main \
 				parse/parse parse/parse_check_map parse/parse_make_map \
 				parse/parse_sizing_map parse/parse_utils \
 				parse/parse_tex parse/parse_tex_color parse/parse_tex_file \
-				rc/rc_get_distance rc/rc_raycast rc/rc_draw_floor \
+				rc/rc_get_distance rc/rc_raycast rc/rc_draw_floor rc/rc_draw_sky \
 				play/play play/play_action play/play_recall \
 				evnt/evnt evnt/evnt_utils \
 				libft_s/libft_s libft_s/vec2_utils
