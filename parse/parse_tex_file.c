@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:47:57 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/18 16:42:36 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/18 17:57:45 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	parse_open_sky_tex(t_data *data, int fd)
 		&(tmp.line_length), &(tmp.endian));
 	tex->data = malloc(sizeof(int *) * tex->height);
 	i = 0;
-	width = WIN_WIDTH * 3.14;
+	width = WIN_WIDTH * M_PI;
 	while (i < tex->height)
 		tex->data[i++] = malloc(sizeof(int) * width);
 	tex->gap = tmp.line_length / 4 - tex->width;
