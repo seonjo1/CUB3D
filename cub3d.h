@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/18 15:20:58 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/18 20:26:40 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define ENTER 0
 # define RUN 1
 # define EXIT 2
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1200
+# define WIN_HEIGHT 900
 # define WALL_HEIGHT 1080
 # define FOV_BASE 1.15192
 # define RECALL_STORE_MAX 50
