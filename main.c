@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/12 19:41:19 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/19 13:51:02 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "rc/rc.h"
 #include "play/play.h"
 #include "hand/hand.h"
+#include "obj/obj.h"
 
 void	utils_draw_point(t_data *data, int x, int y, int color)
 {
@@ -50,8 +51,10 @@ int	main_loop(t_data *data)
 	hand = hand_update(data);
 	rc_raycast(data);
 	draw_aim(data);
+	obj_draw_minimap(data, &(data->mini));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, hand, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->mini.img, WIN_WIDTH - data->mini.size, WIN_HEIGHT - data->mini.size);
 	mlx_do_sync(data->mlx);
 	data->time++;
 	// end = clock();
@@ -74,6 +77,7 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
+	obj_mini_init(data);
 	hand_init_xpm_imgs(data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/14 17:41:29 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/19 14:17:05 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,17 @@ typedef struct s_hand_res {
 	void	*walk[HN_WALK];
 }	t_hand_res;
 
+typedef struct s_mini {
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		size;
+	double	start_i;
+	double	start_j;
+}	t_mini;
+
 typedef struct s_data {
 	void		*mlx;
 	void		*mlx_win;
@@ -192,6 +203,7 @@ typedef struct s_data {
 	int			endian;
 	int			c_color;
 	int			f_color;
+	t_mini		mini;
 	t_map		map;
 	t_tex		tex[4];
 	t_player	player;
