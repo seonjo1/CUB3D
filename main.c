@@ -54,7 +54,6 @@ int	main_loop(t_data *data)
 	obj_draw_minimap(data, &(data->mini));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, hand, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->mini.img, WIN_WIDTH - data->mini.size, WIN_HEIGHT - data->mini.size);
 	mlx_do_sync(data->mlx);
 	data->time++;
 	// end = clock();
