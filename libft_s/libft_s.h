@@ -25,5 +25,6 @@ t_vec2	vec2_scala_mul(t_vec2 a, double b);
 void	vec2_normalize(t_vec2 *vec, double scale);
 int		utils_blend_color(int a, int b, float op);
 void	utils_draw_point(t_data *data, int x, int y, int color);
+char	utils_is_in_map(int x, int y, t_map *map);
 
 #endif
