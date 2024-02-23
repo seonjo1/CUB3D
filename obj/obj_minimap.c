@@ -62,7 +62,7 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 {
 	int			i;
 	int			j;
-	t_intvec2	color;
+	int			color;
 	double		x;
 	double		y;
 
@@ -76,12 +76,11 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 		{
 			x = (double)j / 6.0 + mini->start_j;
 			y = (double)i / 6.0 + mini->start_i;
-			color.x = utils_blend_color(0xCC0099, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
-			color.y = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
+			color = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
 			if (y >= 0 && y < data->map.row && x >= 0 && x < data->map.col && data->map.data[(int)y][(int)x] == '1')
-				utils_draw_point(data, j, i, color.x);
+				utils_draw_point(data, j, i, 0xCC0099);
 			else
-				utils_draw_point(data, j, i, color.y);
+				utils_draw_point(data, j, i, color);
 			j++;
 		}
 		i++;
