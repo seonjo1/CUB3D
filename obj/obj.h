@@ -16,6 +16,7 @@
 # include "../cub3d.h"
 
 void	obj_draw_minimap(t_data *data, t_mini *mini);
+void	obj_draw_aim(t_data *data);
 void	obj_mini_init(t_data *data);
 
 #endif
