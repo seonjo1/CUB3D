@@ -41,6 +41,23 @@ void	obj_mini_init(t_data *data)
 		data->mini.size += 1;
 }
 
+void	obj_draw_mini_player(t_data *data, int center, int w, int c)
+{
+	int	i;
+	int	j;
+
+	center = center - (w >> 1);
+	center = center - (w >> 1);
+	i = 0;
+	while (i < w)
+	{
+		j = 0;
+		while (j < w)
+			utils_draw_point(data, center + j++, center + i, c);
+		i++;
+	}
+}
+
 void	obj_draw_minimap(t_data *data, t_mini *mini)
 {
 	int			i;
@@ -59,8 +76,8 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 		{
 			x = (double)j / 6.0 + mini->start_j;
 			y = (double)i / 6.0 + mini->start_i;
-			color.x = utils_blend_color(0xCC0099, *(int *)(data->addr + i * data->line_length + j * (data->bpp / 8)), 0.5);
-			color.y = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp / 8)), 0.5);
+			color.x = utils_blend_color(0xCC0099, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
+			color.y = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
 			if (y >= 0 && y < data->map.row && x >= 0 && x < data->map.col && data->map.data[(int)y][(int)x] == '1')
 				utils_draw_point(data, j, i, color.x);
 			else
@@ -69,5 +86,5 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 		}
 		i++;
 	}
-	*(int *)(data->addr + (mini->size / 2) * data->line_length + (mini->size / 2) * (data->bpp / 8)) = 0xffffff;
+	obj_draw_mini_player(data, mini->size >> 1, 3, 0xFFFFFF);
 }
