@@ -28,7 +28,7 @@ BASE		:=	main \
 				evnt/evnt evnt/evnt_utils \
 				hand/hand \
 				obj/obj_minimap \
-				libft_s/libft_s libft_s/vec2_utils
+				libft_s/libft_s libft_s/vec2_utils libft_s/utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3D
