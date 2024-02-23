@@ -39,19 +39,20 @@ t_vec2	vec2_scala_mul(t_vec2 a, double scale)
 	return (c);
 }
 
-void	vec2_normalize(t_vec2 *vec, double scale)
+t_vec2	vec2_normalize(t_vec2 vec, double scale)
 {
 	double	len;
 
-	len = sqrt(vec->x * vec->x + vec->y * vec->y);
+	len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	if (len < 0.0001)
 	{
-		vec->x = 0;
-		vec->y = 0;
+		vec.x = 0;
+		vec.y = 0;
 		return ;
 	}
-	vec->x /= len;
-	vec->y /= len;
-	vec->x *= scale;
-	vec->y *= scale;
+	vec.x /= len;
+	vec.y /= len;
+	vec.x *= scale;
+	vec.y *= scale;
+	return (vec);
 }
