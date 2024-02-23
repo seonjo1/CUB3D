@@ -150,8 +150,10 @@ void	play_transition_by_key_event(t_player *player)
 	}
 }
 
-void	play_motion(t_player *player)
+void	play_motion(t_data *data, t_player *player)
 {
+	t_vec2	next_pos;
+
 	play_action_movement(player);
 	play_action_jump(player, player->state, RUN);
 	play_action_crouch(player, "W__", RUN);
@@ -162,8 +164,13 @@ void	play_motion(t_player *player)
 		player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
 		player->motion.x = player->motion.x * 0.85;
 		player->motion.y = player->motion.y * 0.85;
-		player->pos.x += player->motion.x;
-		player->pos.y += player->motion.y;
+		next_pos.x = player->pos.x + player->motion.x;
+		next_pos.y = player->pos.y + player->motion.y;
+		printf("p : [%d][%d]\n", (int)next_pos.y, (int)next_pos.y);
+		if (data->map.data[(int)(player->pos.y)][(int)(player->pos.x + player->motion.x)] != '1')
+			player->pos.x += player->motion.x;
+		if (data->map.data[(int)(player->pos.y + player->motion.y)][(int)(player->pos.x)] != '1')
+			player->pos.y += player->motion.y;
 		player->euler_dir.y += player->motion_dir.y;
 	}
 	play_action_recall(player, &(player->recall), RUN);
@@ -176,5 +183,5 @@ void	play_update(t_data *data)
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
 	// printf("ps:%s\n", data->player.state);
-	play_motion(&(data->player));
+	play_motion(data, &(data->player));
 }
