@@ -167,12 +167,13 @@ void	play_motion(t_data *data, t_player *player)
 		next_pos.x = player->pos.x + player->motion.x;
 		next_pos.y = player->pos.y + player->motion.y;
 		printf("p : [%d][%d]\n", (int)next_pos.y, (int)next_pos.y);
-		if (utils_is_in_map(next_pos.x, player->pos.y, &(data->map))
-			&& data->map.data[(int)(player->pos.y)][(int)next_pos.x] != '1')
-			player->pos.x = next_pos.x;
-		if (utils_is_in_map(player->pos.x, next_pos.y, &(data->map))
-			&& data->map.data[(int)(next_pos.y)][(int)(player->pos.x)] != '1')
-			player->pos.y = next_pos.y;
+		if (utils_is_in_map(next_pos.x, next_pos.y, &(data->map)))
+		{
+			if (data->map.data[(int)(player->pos.y)][(int)next_pos.x] != '1')
+				player->pos.x = next_pos.x;
+			if (data->map.data[(int)(next_pos.y)][(int)(player->pos.x)] != '1')
+				player->pos.y = next_pos.y;
+		}
 		player->euler_dir.y += player->motion_dir.y;
 	}
 	play_action_recall(player, &(player->recall), RUN);
