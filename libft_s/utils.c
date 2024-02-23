@@ -16,7 +16,7 @@ void	utils_draw_point(t_data *data, int x, int y, int c)
 {
 	if (!((x >= 0 && y >= 0) && (WIN_HEIGHT > y && WIN_WIDTH > x)))
 		return ;
-	*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = c;
+	*(int *)(data->addr + (y * data->line_length + x * (data->bpp >> 3))) = c;
 }
 
 int	utils_blend_color(int c1, int c2, float op) {
