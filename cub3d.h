@@ -183,11 +183,6 @@ typedef struct s_hand_res {
 }	t_hand_res;
 
 typedef struct s_mini {
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_length;
-	int		endian;
 	int		size;
 	double	start_i;
 	double	start_j;

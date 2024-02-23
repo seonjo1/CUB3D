@@ -17,30 +17,6 @@
 #include "hand/hand.h"
 #include "obj/obj.h"
 
-void	utils_draw_point(t_data *data, int x, int y, int color)
-{
-	if ((x >= 0 && y >= 0) && (WIN_HEIGHT > y && WIN_WIDTH > x))
-		*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = color;
-}
-
-void	draw_aim(t_data *data)
-{
-	t_intvec2	aim;
-	int			i;
-	const int	aim_size = 20;
-
-	aim.x = WIN_WIDTH / 2 - aim_size;
-	aim.y = WIN_HEIGHT / 2;
-	i = -1;
-	while (++i < aim_size * 2)
-		utils_draw_point(data, aim.x + i, aim.y, 0xFF00FF);
-	aim.x = WIN_WIDTH / 2;
-	aim.y = WIN_HEIGHT / 2 - aim_size;
-	i = -1;
-	while (++i < aim_size * 2)
-		utils_draw_point(data, aim.x, aim.y + i, 0xFF00FF);
-}
-
 int	main_loop(t_data *data)
 {
 	// clock_t start, end;
@@ -50,11 +26,10 @@ int	main_loop(t_data *data)
 	play_update(data);
 	hand = hand_update(data);
 	rc_raycast(data);
-	draw_aim(data);
+	obj_draw_aim(data);
 	obj_draw_minimap(data, &(data->mini));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, hand, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->mini.img, WIN_WIDTH - data->mini.size, WIN_HEIGHT - data->mini.size);
 	mlx_do_sync(data->mlx);
 	data->time++;
 	// end = clock();

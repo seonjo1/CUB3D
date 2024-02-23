@@ -28,7 +28,7 @@ BASE		:=	main \
 				evnt/evnt evnt/evnt_utils \
 				hand/hand \
 				obj/obj_minimap \
-				libft_s/libft_s libft_s/vec2_utils
+				libft_s/libft_s libft_s/vec2_utils libft_s/utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3D
@@ -87,6 +87,6 @@ t5 : all clean
 	./$(NAME) ./map/test_map5.cub
 
 norm :
-	norminette evnt gnl libft libft_s map  parse play rc main.c
+	norminette evnt gnl libft libft_s map parse play rc main.c obj
 
 .PHONY : all clean fclean re t
