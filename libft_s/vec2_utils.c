@@ -45,11 +45,7 @@ t_vec2	vec2_normalize(t_vec2 vec, double scale)
 
 	len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	if (len < 0.0001)
-	{
-		vec.x = 0;
-		vec.y = 0;
-		return ;
-	}
+		return (vec2_creat(0, 0));
 	vec.x /= len;
 	vec.y /= len;
 	vec.x *= scale;
