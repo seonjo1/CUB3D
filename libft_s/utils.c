@@ -20,13 +20,13 @@ void	utils_draw_point(t_data *data, int x, int y, int c)
 }
 
 int	utils_blend_color(int c1, int c2, float op) {
-    int r;
-    int g;
-    int b;
-    
+	int r;
+	int g;
+	int b;
+	
 	r = (int)(((c1 >> 16) & 0xFF) * op + ((c2 >> 16) & 0xFF) * (1 - op));
-    g = (int)(((c1 >> 8) & 0xFF) * op + ((c2 >> 8) & 0xFF) * (1 - op));
-    b = (int)((c1 & 0xFF) * op + (c2 & 0xFF) * (1 - op));
-    return ((r << 16) | (g << 8) | b);
+	g = (int)(((c1 >> 8) & 0xFF) * op + ((c2 >> 8) & 0xFF) * (1 - op));
+	b = (int)((c1 & 0xFF) * op + (c2 & 0xFF) * (1 - op));
+	return ((r << 16) | (g << 8) | b);
 }
 
