@@ -20,12 +20,6 @@ void	obj_mini_init(t_data *data)
 		data->mini.size = WIN_WIDTH / 5;
 	if (!(data->mini.size % 2))
 		data->mini.size += 1;
-	data->img = mlx_new_image(data->mlx, data->mini.size, data->mini.size);
-	if (!data->img)
-		exit(1);
-	data->addr = mlx_get_data_addr(data->img, &(data->bpp), &(data->line_length), &(data->endian));
-	if (!data->addr)
-		exit(1);
 }
 
 void	obj_draw_minimap(t_data *data, t_mini *mini)
