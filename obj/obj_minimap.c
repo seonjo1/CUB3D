@@ -19,15 +19,15 @@ void	obj_draw_aim(t_data *data)
 	int			i;
 	const int	aim_size = 20;
 
-	aim.x = WIN_WIDTH / 2 - aim_size;
-	aim.y = WIN_HEIGHT / 2;
+	aim.x = (WIN_WIDTH >> 1) - aim_size;
+	aim.y = (WIN_HEIGHT >> 1);
 	i = -1;
-	while (++i < aim_size * 2)
+	while (++i < (aim_size << 1))
 		utils_draw_point(data, aim.x + i, aim.y, 0xFF00FF);
-	aim.x = WIN_WIDTH / 2;
-	aim.y = WIN_HEIGHT / 2 - aim_size;
+	aim.x = (WIN_WIDTH >> 1);
+	aim.y = (WIN_HEIGHT >> 1) - aim_size;
 	i = -1;
-	while (++i < aim_size * 2)
+	while (++i < (aim_size << 1))
 		utils_draw_point(data, aim.x, aim.y + i, 0xFF00FF);
 }
 
@@ -39,6 +39,7 @@ void	obj_mini_init(t_data *data)
 		data->mini.size = WIN_WIDTH / 5;
 	if (!(data->mini.size % 2))
 		data->mini.size += 1;
+	data->mini.ratio = 10;
 }
 
 void	obj_draw_mini_player(t_data *data, int center, int h)
@@ -71,16 +72,16 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 	double		x;
 	double		y;
 
-	mini->start_i = data->player.pos.y - (data->mini.size >> 1) / 10.0;
-	mini->start_j = data->player.pos.x - (data->mini.size >> 1) / 10.0;
+	mini->start_i = data->player.pos.y - (data->mini.size >> 1) / mini->ratio;
+	mini->start_j = data->player.pos.x - (data->mini.size >> 1) / mini->ratio;
 	i = 0;
 	while (i < mini->size)
 	{
 		j = 0;
 		while (j < mini->size)
 		{
-			x = (double)j / 10.0 + mini->start_j - data->player.pos.x;
-			y = (double)i / 10.0 + mini->start_i - data->player.pos.y;
+			x = (double)j / mini->ratio + mini->start_j - data->player.pos.x;
+			y = (double)i / mini->ratio + mini->start_i - data->player.pos.y;
 			double rot_x = x * data->player.dir.x - y * data->player.dir.y;
 			double rot_y = x * data->player.dir.y + y * data->player.dir.x;
 			x = -rot_y + data->player.pos.x;
