@@ -39,6 +39,7 @@ int	main_loop(t_data *data)
 
 void	main_init(t_data *data)
 {	
+	ft_bzero(data, sizeof(data));
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(1);
