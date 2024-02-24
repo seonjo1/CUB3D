@@ -37,6 +37,8 @@ typedef enum s_keycode {
 	MOUSE_LEFT = 1,
 	MOUSE_RIGHT = 2,
 	MOUSE_OTHER = 3,
+	MOUSE_UP = 4,
+	MOUSE_DOWN = 5,
 	KEY_LEFT = 123,
 	KEY_UP = 126,
 	KEY_RIGHT = 124,
