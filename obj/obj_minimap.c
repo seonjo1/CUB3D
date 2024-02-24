@@ -52,12 +52,12 @@ void	obj_draw_mini_player(t_data *data, int center, int h)
 	while (level < 2)
 	{
 		x = h * sign[level];
-		while (x != 0)
+		while (x != -sign[level])
 		{
 			i = x * sign[level];
 			while (i >= -h + 2 * x * sign[level])
 				utils_draw_point(data, x + center, i-- + center, 0xffffff);
-			x += sign[level];
+			x -= sign[level];
 		}
 		level++;
 	}
