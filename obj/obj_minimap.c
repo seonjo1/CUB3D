@@ -34,9 +34,9 @@ void	obj_draw_aim(t_data *data)
 void	obj_mini_init(t_data *data)
 {
 	if (WIN_WIDTH > WIN_HEIGHT)
-		data->mini.size = WIN_HEIGHT / 5;
+		data->mini.size = WIN_HEIGHT / 4.5;
 	else
-		data->mini.size = WIN_WIDTH / 5;
+		data->mini.size = WIN_WIDTH / 4.5;
 	if (!(data->mini.size % 2))
 		data->mini.size += 1;
 	data->mini.ratio = 10;
@@ -44,10 +44,10 @@ void	obj_mini_init(t_data *data)
 
 void	obj_draw_mini_player(t_data *data, int center, int h)
 {
-	static int sign[2] = {-1, 1};
-	int	level;
-	int	x;
-	int	i;
+	static int	sign[2] = {-1, 1};
+	int			level;
+	int			x;
+	int			i;
 
 	level = 0;
 	while (level < 2)
@@ -71,6 +71,8 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 	int			color;
 	double		x;
 	double		y;
+	double		distance;
+	double		radius = mini->size / 2.0; // 원의 반지름 계산
 
 	mini->start_i = data->player.pos.y - (data->mini.size >> 1) / mini->ratio;
 	mini->start_j = data->player.pos.x - (data->mini.size >> 1) / mini->ratio;
@@ -86,14 +88,25 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 			double rot_y = x * data->player.dir.y + y * data->player.dir.x;
 			x = -rot_y + data->player.pos.x;
 			y = rot_x + data->player.pos.y;
-			color = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
-			if (y >= 0 && y < data->map.row && x >= 0 && x < data->map.col && data->map.data[(int)y][(int)x] == '1')
-				utils_draw_point(data, j, i, 0xCC0099);
-			else
+			// 중심으로부터의 거리 계산
+			distance = sqrt(pow(i - mini->size / 2.0, 2) + pow(j - mini->size / 2.0, 2));
+			if (distance <= radius) // 원형 내부에 있는지 확인
+			{
+				// 원의 경계 근처에 있는 점들을 흰색으로 그림
+				if (radius - 3 < distance && distance <= radius)
+					color = 0xFFFFFF; // 흰색
+				else
+				{
+					color = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
+					if (y >= 0 && y < data->map.row && x >= 0 && x < data->map.col && data->map.data[(int)y][(int)x] == '1')
+						color = 0xCC0099; // 벽은 다른 색으로
+				}
 				utils_draw_point(data, j, i, color);
+			}
 			j++;
 		}
 		i++;
 	}
 	obj_draw_mini_player(data, mini->size >> 1, 5);
 }
+
