@@ -150,6 +150,21 @@ void	play_transition_by_key_event(t_player *player)
 	}
 }
 
+char	play_check_collision(t_map *map, t_vec2 next_pos)
+{
+	for (double angle = 0; angle < 360; angle += 0.1)
+	{
+		double rad = angle * M_PI / 180.0;
+		double checkX = next_pos.x + 0.1 * cos(rad);
+		double checkY = next_pos.y + 0.1 * sin(rad);
+		if (!utils_is_in_map(checkX, checkY, map))
+			return (1);
+		if (map->data[(int)checkY][(int)checkX] == '1')
+			return (1);
+	}
+	return (0);
+}
+
 void	play_motion(t_data *data, t_player *player)
 {
 	t_vec2	next_pos;
@@ -166,14 +181,19 @@ void	play_motion(t_data *data, t_player *player)
 		player->motion.y = player->motion.y * 0.85;
 		next_pos.x = player->pos.x + player->motion.x;
 		next_pos.y = player->pos.y + player->motion.y;
-		printf("p : [%d][%d]\n", (int)next_pos.y, (int)next_pos.y);
-		if (utils_is_in_map(next_pos.x, next_pos.y, &(data->map)))
-		{
-			if (data->map.data[(int)(player->pos.y)][(int)next_pos.x] != '1')
-				player->pos.x = next_pos.x;
-			if (data->map.data[(int)(next_pos.y)][(int)(player->pos.x)] != '1')
-				player->pos.y = next_pos.y;
-		}
+		printf("1. next : [%f][%f]\n", next_pos.y, next_pos.x);
+		if (!play_check_collision(&(data->map), vec2_creat(next_pos.x, player->pos.y)))
+			player->pos.x = next_pos.x;
+		else
+			player->motion.x = 0;
+		if (!play_check_collision(&(data->map), vec2_creat(player->pos.x, next_pos.y)))
+			player->pos.y = next_pos.y;
+		else
+			player->motion.y = 0;
+		printf("2. pos: [%f][%f]\n", player->pos.y, player->pos.x);
+		// data = data + 1;
+		// player->pos.x = next_pos.x;
+		// player->pos.y = next_pos.y;
 		player->euler_dir.y += player->motion_dir.y;
 	}
 	play_action_recall(player, &(player->recall), RUN);
