@@ -186,6 +186,7 @@ typedef struct s_mini {
 	int		size;
 	double	start_i;
 	double	start_j;
+	double	ratio;
 }	t_mini;
 
 typedef struct s_data {
