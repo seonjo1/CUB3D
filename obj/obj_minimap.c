@@ -74,8 +74,12 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 		j = 0;
 		while (j < mini->size)
 		{
-			x = (double)j / 6.0 + mini->start_j;
-			y = (double)i / 6.0 + mini->start_i;
+			x = (double)j / 6.0 + mini->start_j - data->player.pos.x;
+			y = (double)i / 6.0 + mini->start_i - data->player.pos.y;
+			double rot_x = x * data->player.dir.x - y * data->player.dir.y;
+			double rot_y = x * data->player.dir.y + y * data->player.dir.x;
+			x = -rot_y + data->player.pos.x;
+			y = rot_x + data->player.pos.y;
 			color = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
 			if (y >= 0 && y < data->map.row && x >= 0 && x < data->map.col && data->map.data[(int)y][(int)x] == '1')
 				utils_draw_point(data, j, i, 0xCC0099);
