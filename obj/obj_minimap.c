@@ -41,20 +41,25 @@ void	obj_mini_init(t_data *data)
 		data->mini.size += 1;
 }
 
-void	obj_draw_mini_player(t_data *data, int center, int w, int c)
+void	obj_draw_mini_player(t_data *data, int center, int h)
 {
+	static int sign[2] = {-1, 1};
+	int	level;
+	int	x;
 	int	i;
-	int	j;
 
-	center = center - (w >> 1);
-	center = center - (w >> 1);
-	i = 0;
-	while (i < w)
+	level = 0;
+	while (level < 2)
 	{
-		j = 0;
-		while (j < w)
-			utils_draw_point(data, center + j++, center + i, c);
-		i++;
+		x = h * sign[level];
+		while (x != 0)
+		{
+			i = x * sign[level];
+			while (i >= -h + 2 * x * sign[level])
+				utils_draw_point(data, x + center, i-- + center, 0xffffff);
+			x += sign[level];
+		}
+		level++;
 	}
 }
 
@@ -66,16 +71,16 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 	double		x;
 	double		y;
 
-	mini->start_i = data->player.pos.y - (data->mini.size >> 1) / 6;
-	mini->start_j = data->player.pos.x - (data->mini.size >> 1) / 6;
+	mini->start_i = data->player.pos.y - (data->mini.size >> 1) / 10.0;
+	mini->start_j = data->player.pos.x - (data->mini.size >> 1) / 10.0;
 	i = 0;
 	while (i < mini->size)
 	{
 		j = 0;
 		while (j < mini->size)
 		{
-			x = (double)j / 6.0 + mini->start_j - data->player.pos.x;
-			y = (double)i / 6.0 + mini->start_i - data->player.pos.y;
+			x = (double)j / 10.0 + mini->start_j - data->player.pos.x;
+			y = (double)i / 10.0 + mini->start_i - data->player.pos.y;
 			double rot_x = x * data->player.dir.x - y * data->player.dir.y;
 			double rot_y = x * data->player.dir.y + y * data->player.dir.x;
 			x = -rot_y + data->player.pos.x;
@@ -89,5 +94,5 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 		}
 		i++;
 	}
-	obj_draw_mini_player(data, mini->size >> 1, 3, 0xFFFFFF);
+	obj_draw_mini_player(data, mini->size >> 1, 5);
 }
