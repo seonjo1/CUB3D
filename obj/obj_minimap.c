@@ -64,6 +64,30 @@ void	obj_draw_mini_player(t_data *data, int center, int h)
 	}
 }
 
+char	(*obj_n_arr(void))[24]
+{
+	static char	array[16][24] = {
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+	};
+
+	return (array);
+}
+
 void	obj_draw_minimap(t_data *data, t_mini *mini)
 {
 	int			i;
@@ -72,7 +96,7 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 	double		x;
 	double		y;
 	double		distance;
-	double		radius = mini->size / 2.0; // 원의 반지름 계산
+	double		radius = mini->size / 2.0;
 
 	mini->start_i = data->player.pos.y - (data->mini.size >> 1) / mini->ratio;
 	mini->start_j = data->player.pos.x - (data->mini.size >> 1) / mini->ratio;
@@ -88,18 +112,16 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 			double rot_y = x * data->player.dir.y + y * data->player.dir.x;
 			x = -rot_y + data->player.pos.x;
 			y = rot_x + data->player.pos.y;
-			// 중심으로부터의 거리 계산
 			distance = sqrt(pow(i - mini->size / 2.0, 2) + pow(j - mini->size / 2.0, 2));
-			if (distance <= radius) // 원형 내부에 있는지 확인
+			if (distance <= radius)
 			{
-				// 원의 경계 근처에 있는 점들을 흰색으로 그림
-				if (radius - 3 < distance && distance <= radius)
-					color = 0xFFFFFF; // 흰색
+				if (radius - 10 < distance && distance <= radius)
+					color = 0xAAAAAA;
 				else
 				{
 					color = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
 					if (y >= 0 && y < data->map.row && x >= 0 && x < data->map.col && data->map.data[(int)y][(int)x] == '1')
-						color = 0xCC0099; // 벽은 다른 색으로
+						color = 0xCC0099;
 				}
 				utils_draw_point(data, j, i, color);
 			}
