@@ -15,6 +15,7 @@ WFLAG		:= -Wall -Wextra -Werror #-fsanitize=address -g3
 MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
+BASSFLAG	:= -Lbass -lbass
 FT			:= ./libft/libft.a
 
 DIR			:= ./
@@ -42,7 +43,8 @@ NAME		:= cub3D
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
-	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $^ -o $@
+	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $@
+	install_name_tool -change @loader_path/libbass.dylib @loader_path/bass/libbass.dylib $(NAME)
 
 $(MLX) :
 	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi
