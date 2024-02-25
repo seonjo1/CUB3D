@@ -73,7 +73,7 @@ void	*hand_action_walk(t_player *player, void **arr, int delay)
 	return (arr[t]);
 }
 
-void	*hand_action_recall(void **arr,  t_player *player, int *magazine)
+void	*hand_action_recall(void **arr, t_player *player, int *magazine)
 {
 	int	t;
 
