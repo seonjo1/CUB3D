@@ -76,6 +76,8 @@ void	rc_shoot_ray(t_data *data, t_rc_data *rc_data)
 			rc_data->dis.y += rc_data->inc.y;
 			rc_data->map.y += rc_data->step.y;
 		}
+		if (!utils_is_in_map(rc_data->map.x, rc_data->map.y, &(data->map)))
+			break;
 		if (data->map.data[(int)rc_data->map.y][(int)rc_data->map.x] == '1')
 			break ;
 	}
