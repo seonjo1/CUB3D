@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "play.h"
+#include "../sound/sound.h"
 
 void	play_test_lst_print(t_player *player)
 {
@@ -67,7 +68,10 @@ void	play_action_recall(t_player *player, t_recall *re, char enter)
 	static int	save_freq = 0;
 
 	if (enter == ENTER && re->cooldown < 0)
+	{
 		play_recall_enter(player, re);
+		sound_play(player->s_res->recall);
+	}
 	else if (enter == RUN)
 	{
 		re->cooldown--;
