@@ -144,6 +144,15 @@ typedef struct s_recall {
 	int		cooldown;
 }	t_recall;
 
+typedef struct	s_sounds
+{
+	uint32_t	attack;
+	uint32_t	flash[3];
+	uint32_t	gun;
+	uint32_t	recall;
+	uint32_t	reload;
+}	t_sounds;
+
 typedef struct s_player {
 	t_vec3		pos;
 	double		fov;
@@ -160,6 +169,7 @@ typedef struct s_player {
 	int			flash_frame;
 	int			reload_frame;
 	long long	time;
+	t_sounds	*s_res;
 }	t_player;
 
 typedef struct s_map {
@@ -193,15 +203,6 @@ typedef struct s_mini {
 	double		start_j;
 	double		ratio;
 }	t_mini;
-
-typedef struct	s_sounds
-{
-	uint32_t	attack;
-	uint32_t	flash[3];
-	uint32_t	gun;
-	uint32_t	recall;
-	uint32_t	reload;
-}	t_sounds;
 
 typedef struct s_data {
 	void		*mlx;
