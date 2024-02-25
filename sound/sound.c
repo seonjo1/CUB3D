@@ -12,6 +12,22 @@
 
 #include "sound.h"
 
+void	sound_init(t_sounds *sounds)
+{
+	int	done;
+
+	done = 1;
+	done &= sound_load(sounds->attack, "./res/sound/attack.wav");
+	done &= sound_load(sounds->flash[0], "./res/sound/flash_0.wav");
+	done &= sound_load(sounds->flash[1], "./res/sound/flash_1.wav");
+	done &= sound_load(sounds->flash[2], "./res/sound/flash_0.wav");
+	done &= sound_load(sounds->gun, "./res/sound/gun.wav");
+	done &= sound_load(sounds->recall, "./res/sound/recall.wav");
+	done &= sound_load(sounds->reload, "./res/sound/reload.wav");
+	if (!done)
+		exit(1);
+}
+
 void	sound_clear(t_sounds *sounds)
 {
 	if (sounds->attack)
