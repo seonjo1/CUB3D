@@ -55,7 +55,7 @@ void	main_init(t_data *data)
 	if (!data->addr)
 		exit(1);
 	hand_init_xpm_imgs(data);
-	sound_init(&(data->s_res));
+	data->player.s_res = sound_init(&(data->s_res));
 	obj_mini_init(data);
 }
 
