@@ -53,7 +53,6 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	printf("here\n");
 	obj_mini_init(data);
 	hand_init_xpm_imgs(data);
 }
