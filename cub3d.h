@@ -232,13 +232,11 @@ typedef struct s_draw_data {
 
 typedef struct	s_sounds
 {
-	uint32_t	door;
-	uint32_t	hurt;
-	uint32_t	stomp;
-	uint32_t	portal;
-	uint32_t	heal;
-	uint32_t	ambient;
-	uint32_t	walk;
+	uint32_t	attack;
+	uint32_t	flash[3];
+	uint32_t	gun;
+	uint32_t	recall;
+	uint32_t	reload;
 }	t_sounds;
 
 #endif
