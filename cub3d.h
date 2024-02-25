@@ -185,10 +185,11 @@ typedef struct s_hand_res {
 }	t_hand_res;
 
 typedef struct s_mini {
-	int		size;
-	double	start_i;
-	double	start_j;
-	double	ratio;
+	int			size;
+	t_intvec2	pos;
+	double		start_i;
+	double		start_j;
+	double		ratio;
 }	t_mini;
 
 typedef struct s_data {
