@@ -17,13 +17,13 @@ void	sound_init(t_sounds *s_res)
 	int	done;
 
 	done = 1;
-	done &= sound_load(s_res->attack, "./res/sound/attack.wav");
-	done &= sound_load(s_res->flash[0], "./res/sound/flash_0.wav");
-	done &= sound_load(s_res->flash[1], "./res/sound/flash_1.wav");
-	done &= sound_load(s_res->flash[2], "./res/sound/flash_0.wav");
-	done &= sound_load(s_res->gun, "./res/sound/gun.wav");
-	done &= sound_load(s_res->recall, "./res/sound/recall.wav");
-	done &= sound_load(s_res->reload, "./res/sound/reload.wav");
+	done &= sound_load(&(s_res->attack), "./res/sound/attack.wav");
+	done &= sound_load(&(s_res->flash[0]), "./res/sound/flash_0.wav");
+	done &= sound_load(&(s_res->flash[1]), "./res/sound/flash_1.wav");
+	done &= sound_load(&(s_res->flash[2]), "./res/sound/flash_0.wav");
+	done &= sound_load(&(s_res->gun), "./res/sound/gun.wav");
+	done &= sound_load(&(s_res->recall), "./res/sound/recall.wav");
+	done &= sound_load(&(s_res->reload), "./res/sound/reload.wav");
 	if (!done)
 		exit(1);
 }
@@ -47,7 +47,7 @@ void	sound_clear(t_sounds *s_res)
 	BASS_Free();
 }
 
-char	sound_load(uint32_t *sound, char *path)
+char	sound_load(unsigned int *sound, char *path)
 {
 	static char	loaded;
 
@@ -58,7 +58,7 @@ char	sound_load(uint32_t *sound, char *path)
 	return (TRUE);
 }
 
-void	sound_play_alt(uint32_t sound, char play, char loop)
+void	sound_play_alt(unsigned int sound, char play, char loop)
 {
 	if (!sound)
 		return ;
@@ -70,7 +70,7 @@ void	sound_play_alt(uint32_t sound, char play, char loop)
 		BASS_ChannelPause(sound);
 }
 
-void	sound_play(uint32_t sound)
+void	sound_play(unsigned int sound)
 {
 	if (!sound)
 		return ;
