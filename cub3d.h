@@ -16,6 +16,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <time.h>
+# include <bass.h>
 # include "gnl/get_next_line.h"
 # include "libft/libft.h"
 # include "minilibx/mlx.h"
@@ -32,6 +33,7 @@
 # define FOV_BASE 1.15192
 # define RECALL_STORE_MAX 50
 # define RECALL_COOLDOWN 450
+# define BASS_SAMPLE_LOOP 4
 
 typedef enum s_keycode {
 	MOUSE_LEFT = 1,
