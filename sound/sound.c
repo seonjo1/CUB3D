@@ -79,4 +79,3 @@ void	sound_play(uint32_t s)
 	BASS_ChannelSetPosition(s, 0, 0);
 	BASS_ChannelPlay(s, 0);
 }
-
