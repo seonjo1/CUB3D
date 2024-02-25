@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "rc.h"
+#include "../libft_s/libft_s.h"
 
 void	rc_get_tex_x(t_data *data, t_rc_data *rc_data, t_draw_data *d_data, t_vec2 ray)
 {
