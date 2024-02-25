@@ -104,7 +104,6 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 			if (player->flash_frame == HN_FLASH)
 				player->state[2] = '_';
 			player->flash_frame++;
-			printf("player->flash_frame:%d\n", player->flash_frame);
 		}
 	}
 }
