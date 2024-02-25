@@ -14,5 +14,10 @@
 # define SOUND_H
 # include "../cub3d.h"
 
+void	sound_init(t_sounds *sounds);
+void	sound_clear(t_sounds *sounds);
+char	sound_load(uint32_t *s, char *path);
+void	sound_play_alt(uint32_t s, char play, char loop);
+void	sound_play(uint32_t s);
 
 #endif
