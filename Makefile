@@ -73,18 +73,23 @@ re : fclean all
 
 t1 : all clean
 	./$(NAME) ./map/test_map.cub
+	rm $(NAME)
 
 t2 : all clean
 	./$(NAME) ./map/test_map2.cub
+	rm $(NAME)
 
 t3 : all clean
 	./$(NAME) ./map/test_map3.cub
+	rm $(NAME)
 
 t4 : all clean
 	./$(NAME) ./map/test_map4.cub
+	rm $(NAME)
 
 t5 : all clean
 	./$(NAME) ./map/test_map5.cub
+	rm $(NAME)
 
 norm :
 	norminette evnt gnl libft libft_s map parse play rc main.c obj

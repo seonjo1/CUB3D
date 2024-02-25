@@ -30,3 +30,7 @@ int	utils_blend_color(int c1, int c2, float op) {
 	return ((r << 16) | (g << 8) | b);
 }
 
+char	utils_is_in_map(int x, int y, t_map *map)
+{
+	return (x >= 0 && y >= 0 && x < map->col && y < map->row);
+}

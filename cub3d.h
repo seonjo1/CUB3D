@@ -37,6 +37,8 @@ typedef enum s_keycode {
 	MOUSE_LEFT = 1,
 	MOUSE_RIGHT = 2,
 	MOUSE_OTHER = 3,
+	MOUSE_UP = 4,
+	MOUSE_DOWN = 5,
 	KEY_LEFT = 123,
 	KEY_UP = 126,
 	KEY_RIGHT = 124,
@@ -183,9 +185,11 @@ typedef struct s_hand_res {
 }	t_hand_res;
 
 typedef struct s_mini {
-	int		size;
-	double	start_i;
-	double	start_j;
+	int			size;
+	t_intvec2	pos;
+	double		start_i;
+	double		start_j;
+	double		ratio;
 }	t_mini;
 
 typedef struct s_data {

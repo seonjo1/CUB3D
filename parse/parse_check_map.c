@@ -18,8 +18,8 @@ static int	parse_init_player(char **data, int y, int x, t_player *player)
 	if (!(data[y][x] == 'W' || data[y][x] == 'N'
 		|| data[y][x] == 'S' || data[y][x] == 'E'))
 		return (0);
-	player->pos.x = x;
-	player->pos.y = y;
+	player->pos.x = x + 0.03;
+	player->pos.y = y + 0.03;
 	player->euler_dir.y += 90 * (data[y][x] == 'S');
 	player->euler_dir.y += 180 * (data[y][x] == 'W');
 	player->euler_dir.y += 270 * (data[y][x] == 'N');
