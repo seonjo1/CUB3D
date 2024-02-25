@@ -39,7 +39,7 @@ int	main_loop(t_data *data)
 
 void	main_init(t_data *data)
 {	
-	ft_bzero(data, sizeof(data));
+	ft_memset(data, 0, sizeof(t_data));
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(1);
@@ -53,6 +53,7 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
+	printf("here\n");
 	obj_mini_init(data);
 	hand_init_xpm_imgs(data);
 }
@@ -71,5 +72,6 @@ int	main(int argc, char **argv)
 	mlx_hook(data.mlx_win, 4, 0, &evnt_mousepress, &data);
 	mlx_hook(data.mlx_win, 5, 0, &evnt_mouserelease, &(data.player));
 	mlx_loop_hook(data.mlx, &main_loop, &data);
+	// main_loop(&data);
 	mlx_loop(data.mlx);
 }
