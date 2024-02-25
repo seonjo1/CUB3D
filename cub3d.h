@@ -230,6 +230,15 @@ typedef struct s_draw_data {
 	double	dist;
 }	t_draw_data;
 
-void	utils_draw_point(t_data *data, int x, int y, int color);
+typedef struct	s_sounds
+{
+	uint32_t	door;
+	uint32_t	hurt;
+	uint32_t	stomp;
+	uint32_t	portal;
+	uint32_t	heal;
+	uint32_t	ambient;
+	uint32_t	walk;
+}	t_sounds;
 
 #endif
