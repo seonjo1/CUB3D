@@ -34,15 +34,18 @@ void	obj_draw_aim(t_data *data)
 void	obj_mini_init(t_data *data)
 {
 	if (WIN_WIDTH > WIN_HEIGHT)
-		data->mini.size = WIN_HEIGHT / 4.5;
+		data->mini.size = WIN_HEIGHT / 4.25;
 	else
-		data->mini.size = WIN_WIDTH / 4.5;
+		data->mini.size = WIN_WIDTH / 4.25;
 	if (!(data->mini.size % 2))
 		data->mini.size += 1;
 	data->mini.ratio = 10;
+	data->mini.pos.x = WIN_WIDTH - data->mini.size - 20;
+	data->mini.pos.y = 20;
+	printf("init mini: (%d %d)\n", data->mini.pos.x, data->mini.pos.y);
 }
 
-void	obj_draw_mini_player(t_data *data, int center, int h)
+void	obj_draw_mini_player(t_data *data, int h)
 {
 	static int	sign[2] = {-1, 1};
 	int			level;
@@ -57,32 +60,32 @@ void	obj_draw_mini_player(t_data *data, int center, int h)
 		{
 			i = x * sign[level];
 			while (i >= -h + 2 * x * sign[level])
-				utils_draw_point(data, x + center, i-- + center, 0xffffff);
+				utils_draw_point(data, x + (data->mini.size >> 1) + data->mini.pos.x, i-- + (data->mini.size >> 1) + data->mini.pos.y, 0xffffff);
 			x -= sign[level];
 		}
 		level++;
 	}
 }
 
-char	(*obj_n_arr(void))[18]
+char	(*obj_n_arr(void))[16]
 {
-	static char	array[16][18] = {
-	{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-	{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+	static char	array[16][16] = {
+	{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+	{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
 	};
 
 	return (array);
@@ -90,7 +93,7 @@ char	(*obj_n_arr(void))[18]
 
 void	obj_draw_n(t_data *data, int x, int y)
 {
-	char	(*array_ptr)[18];
+	char	(*array_ptr)[16];
 	int		j;
 	int		i;
 
@@ -99,10 +102,10 @@ void	obj_draw_n(t_data *data, int x, int y)
 	while (i < 16)
 	{
 		j = 0;
-		while (j < 18)
+		while (j < 16)
 		{
 			if (array_ptr[i][j])
-				utils_draw_point(data, x + j - 9, y + i - 8, 0xff00ff);
+				utils_draw_point(data, x + j - 8 + data->mini.pos.x, y + i - 4 + data->mini.pos.y, 0xff00ff);
 			j++;
 		}
 		i++;
@@ -136,21 +139,22 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 			distance = sqrt(pow(i - mini->size / 2.0, 2) + pow(j - mini->size / 2.0, 2));
 			if (distance <= radius)
 			{
-				if (radius - 10 < distance && distance <= radius)
+				if (radius - 8 < distance && distance <= radius)
 					color = 0xAAAAAA;
 				else
 				{
-					color = utils_blend_color(0x000000, *(int *)(data->addr + i * data->line_length + j * (data->bpp >> 3)), 0.5);
+					color = utils_blend_color(0x000000, *(int *)(data->addr + (i + mini->pos.y - 1) * data->line_length + (j + mini->pos.x - 1) * (data->bpp >> 3)), 0.125);
 					if (y >= 0 && y < data->map.row && x >= 0 && x < data->map.col && data->map.data[(int)y][(int)x] == '1')
 						color = 0xCC0099;
 				}
-				utils_draw_point(data, j, i, color);
+				utils_draw_point(data, j + mini->pos.x, i + mini->pos.y, color);
+				// utils_draw_point(data, j, i, color);
 			}
 			j++;
 		}
 		i++;
 	}
-	obj_draw_mini_player(data, mini->size >> 1, 5);
+	obj_draw_mini_player(data, 5);
 	obj_draw_n(data, mini->size / 2.0, 0);
 }
 
