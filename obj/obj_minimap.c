@@ -34,15 +34,14 @@ void	obj_draw_aim(t_data *data)
 void	obj_mini_init(t_data *data)
 {
 	if (WIN_WIDTH > WIN_HEIGHT)
-		data->mini.size = WIN_HEIGHT / 4.25;
+		data->mini.size = WIN_HEIGHT / 4;
 	else
-		data->mini.size = WIN_WIDTH / 4.25;
+		data->mini.size = WIN_WIDTH / 4;
 	if (!(data->mini.size % 2))
 		data->mini.size += 1;
 	data->mini.ratio = 10;
 	data->mini.pos.x = WIN_WIDTH - data->mini.size - 20;
 	data->mini.pos.y = 20;
-	printf("init mini: (%d %d)\n", data->mini.pos.x, data->mini.pos.y);
 }
 
 void	obj_draw_mini_player(t_data *data, int h)
@@ -60,7 +59,7 @@ void	obj_draw_mini_player(t_data *data, int h)
 		{
 			i = x * sign[level];
 			while (i >= -h + 2 * x * sign[level])
-				utils_draw_point(data, x + (data->mini.size >> 1) + data->mini.pos.x, i-- + (data->mini.size >> 1) + data->mini.pos.y, 0xffffff);
+				utils_draw_point(data, x + (data->mini.size >> 1) + data->mini.pos.x, i-- + (data->mini.size >> 1) + data->mini.pos.y, 0xAAAAAA);
 			x -= sign[level];
 		}
 		level++;
@@ -108,6 +107,6 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 		}
 		i++;
 	}
-	obj_draw_mini_player(data, 5);
+	obj_draw_mini_player(data, ((int)mini->ratio >> 1));
 }
 
