@@ -181,19 +181,10 @@ void	play_motion(t_data *data, t_player *player)
 		player->motion.y = player->motion.y * 0.85;
 		next_pos.x = player->pos.x + player->motion.x;
 		next_pos.y = player->pos.y + player->motion.y;
-		printf("1. next : [%f][%f]\n", next_pos.y, next_pos.x);
 		if (!play_check_collision(&(data->map), vec2_creat(next_pos.x, player->pos.y)))
 			player->pos.x = next_pos.x;
-		// else if (player->state[2] == '_')
-		// 	player->motion.x = 0;
 		if (!play_check_collision(&(data->map), vec2_creat(player->pos.x, next_pos.y)))
 			player->pos.y = next_pos.y;
-		// else if (player->state[2] == '_')
-		// 	player->motion.y = 0;
-		printf("2. pos: [%f][%f]\n", player->pos.y, player->pos.x);
-		// data = data + 1;
-		// player->pos.x = next_pos.x;
-		// player->pos.y = next_pos.y;
 		player->euler_dir.y += player->motion_dir.y;
 	}
 	play_action_recall(player, &(player->recall), RUN);
