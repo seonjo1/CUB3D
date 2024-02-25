@@ -96,7 +96,21 @@ void	obj_draw_n(t_data *data, int x, int y)
 	char	(*array_ptr)[16];
 	int		j;
 	int		i;
+	double	distance;
 
+	i = 0;
+	while (i < 31)
+	{
+		j = 0;
+		while (j < 31)
+		{
+			distance = sqrt((j - 15) * (j - 15) + (i - 15) * (i - 15));	
+			if (distance < 15)
+				utils_draw_point(data, x + j - 15 + data->mini.pos.x, y + i - 11 + data->mini.pos.y, 0xAAAAAA);
+			j++;
+		}
+		i++;
+	}
 	array_ptr = obj_n_arr();
 	i = 0;
 	while (i < 16)
@@ -104,13 +118,14 @@ void	obj_draw_n(t_data *data, int x, int y)
 		j = 0;
 		while (j < 16)
 		{
-			if (array_ptr[i][j])
-				utils_draw_point(data, x + j - 8 + data->mini.pos.x, y + i - 4 + data->mini.pos.y, 0xff00ff);
+			if (array_ptr[i][j] && distance <= 20)
+				utils_draw_point(data, x + j - 8 + data->mini.pos.x, y + i - 4 + data->mini.pos.y, 0xCC0099);
 			j++;
 		}
 		i++;
 	}
 }
+
 
 void	obj_draw_minimap(t_data *data, t_mini *mini)
 {
@@ -155,6 +170,6 @@ void	obj_draw_minimap(t_data *data, t_mini *mini)
 		i++;
 	}
 	obj_draw_mini_player(data, 5);
-	obj_draw_n(data, mini->size / 2.0, 0);
+	obj_draw_n(data, -(mini->size >> 1) * data->player.dir.x + (mini->size >> 1), (mini->size >> 1) * data->player.dir.y + (mini->size >> 1));
 }
 
