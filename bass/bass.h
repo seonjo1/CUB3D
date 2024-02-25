@@ -23,5 +23,8 @@ bool		BASS_ChannelSetPosition(uint32_t handle, uint64_t pos,
 uint32_t	BASS_StreamCreateFile(bool mem, const void *file, uint64_t offset,
 				uint64_t length, uint32_t flags);
 bool		BASS_ChannelPause(uint32_t handle);
+uint32_t	BASS_SampleLoad(bool mem, const void *file, uint64_t offset, uint32_t length, uint32_t max, uint32_t flags);
+uint32_t	BASS_SampleGetChannel(uint32_t handle, uint32_t flags);
+bool		BASS_ChannelPlay(uint32_t handle, bool restart);
 
 #endif
