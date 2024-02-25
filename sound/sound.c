@@ -12,7 +12,7 @@
 
 #include "sound.h"
 
-void	sound_init(t_sounds *s_res)
+t_sounds	*sound_init(t_sounds *s_res)
 {
 	int	done;
 
@@ -26,6 +26,7 @@ void	sound_init(t_sounds *s_res)
 	done &= sound_load(&(s_res->reload), "./res/sound/reload.wav");
 	if (!done)
 		exit(1);
+	return (s_res);
 }
 
 void	sound_clear(t_sounds *s_res)
