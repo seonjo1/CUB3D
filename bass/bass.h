@@ -7,6 +7,9 @@
 
 #ifndef BASS_H
 # define BASS_H
+# include <stdbool.h>
+# include <stdlib.h>
+# include <stdint.h>
 
 bool		BASS_Free();
 bool		BASS_Init(int device, uint32_t freq, uint32_t flags, void *win,
