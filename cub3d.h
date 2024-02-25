@@ -194,6 +194,15 @@ typedef struct s_mini {
 	double		ratio;
 }	t_mini;
 
+typedef struct	s_sounds
+{
+	uint32_t	attack;
+	uint32_t	flash[3];
+	uint32_t	gun;
+	uint32_t	recall;
+	uint32_t	reload;
+}	t_sounds;
+
 typedef struct s_data {
 	void		*mlx;
 	void		*mlx_win;
@@ -209,6 +218,7 @@ typedef struct s_data {
 	t_tex		tex[4];
 	t_player	player;
 	t_hand_res	h_res;
+	t_sounds	s_res;
 	long long	time;
 }	t_data;
 
@@ -231,14 +241,5 @@ typedef struct s_draw_data {
 	double	wall_x;
 	double	dist;
 }	t_draw_data;
-
-typedef struct	s_sounds
-{
-	uint32_t	attack;
-	uint32_t	flash[3];
-	uint32_t	gun;
-	uint32_t	recall;
-	uint32_t	reload;
-}	t_sounds;
 
 #endif
