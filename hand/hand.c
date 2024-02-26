@@ -116,7 +116,7 @@ void	*hand_action_recall(void **arr, t_player *player, int *magazine)
 	hand_stop_shot(FALSE, 0);
 	if (player->recall.frame == 2)
 		sound_play(player->s_res->recall);
-	t = (player->recall.frame >> 1);
+	t =  HN_RECALL * player->recall.frame / (double) RECALL_STORE_MAX;
 	if (t == HN_RECALL - 1)
 		*magazine = MAX_MAG;
 	return (arr[t]);
