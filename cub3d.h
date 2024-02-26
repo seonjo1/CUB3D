@@ -152,6 +152,8 @@ typedef struct	s_sounds
 	uint32_t	gun;
 	uint32_t	recall;
 	uint32_t	reload;
+	uint32_t	walk;
+	uint32_t	run;
 }	t_sounds;
 
 typedef struct s_player {
