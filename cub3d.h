@@ -150,8 +150,6 @@ typedef struct s_rc_floor {
 	int 	tex_x;
 	int 	tex_y;
 	int		color;
-	int		camera_y;
-	double	camera_x;
 	double	floor_x;
 	double	floor_y;
 	t_vec2	ray;
