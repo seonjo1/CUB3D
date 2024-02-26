@@ -1,7 +1,7 @@
-NO ./texture/wall1.xpm
-SO ./texture/wall2.xpm
-WE ./texture/wall3.xpm
-EA ./texture/wall4.xpm
+NO ./texture/crystal.xpm
+SO ./texture/crystal_imac.xpm
+WE ./texture/crystal_box.xpm
+EA ./texture/crystal_sign.xpm
 F 0,0,0
 C 0,0,0
 
