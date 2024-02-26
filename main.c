@@ -14,55 +14,34 @@
 #include "evnt/evnt.h"
 #include "rc/rc.h"
 #include "play/play.h"
-
-void	utils_draw_point(t_data *data, int x, int y, int color)
-{
-	if ((x >= 0 && y >= 0) && (WIN_HEIGHT > y && WIN_WIDTH > x))
-		*(int *)(data->addr + (y * data->line_length + x * (data->bpp / 8))) = color;
-}
-
-void	draw_aim(t_data *data)
-{
-	t_intvec2	aim;
-	int			i;
-	const int	aim_size = 20;
-
-	aim.x = WIN_WIDTH / 2 - aim_size;
-	aim.y = WIN_HEIGHT / 2;
-	i = -1;
-	while (++i < aim_size * 2)
-		utils_draw_point(data, aim.x + i, aim.y, 0xFF00FF);
-	aim.x = WIN_WIDTH / 2;
-	aim.y = WIN_HEIGHT / 2 - aim_size;
-	i = -1;
-	while (++i < aim_size * 2)
-		utils_draw_point(data, aim.x, aim.y + i, 0xFF00FF);
-}
+#include "hand/hand.h"
+#include "obj/obj.h"
 
 int	main_loop(t_data *data)
 {
-	clock_t start, end;
+	// clock_t start, end;
+	void	*hand;
 
-	start = clock();
+	// start = clock();
 	play_update(data);
 	rc_draw_floor(data);
 	rc_draw_sky(data);
+	hand = hand_update(data);
 	rc_raycast(data);
-	draw_aim(data);
+	obj_draw_aim(data);
+	obj_draw_minimap(data, &(data->mini));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->hand, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, hand, 0, 0);
 	mlx_do_sync(data->mlx);
 	data->time++;
-	end = clock();
-	printf("+ %.5f\n", ((double) (end - start)) / CLOCKS_PER_SEC);
+	// end = clock();
+	// printf("+ %.5f\n", ((double) (end - start)) / CLOCKS_PER_SEC);
 	return (0);
 }
 
 void	main_init(t_data *data)
-{
-	int	img_width;
-	int	img_height;
-	
+{	
+	ft_memset(data, 0, sizeof(t_data));
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(1);
@@ -76,7 +55,8 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	data->hand = mlx_xpm_file_to_image(data->mlx, "map/hand.xpm", &img_width, &img_height);
+	obj_mini_init(data);
+	hand_init_xpm_imgs(data);
 }
 
 int	main(int argc, char **argv)
@@ -90,8 +70,9 @@ int	main(int argc, char **argv)
 	mlx_hook(data.mlx_win, 17, 0, &evnt_leave, 0);
 	mlx_hook(data.mlx_win, 2, 0, &evnt_keypress, &(data.player));
 	mlx_hook(data.mlx_win, 3, 0, &evnt_keyrelease, &(data.player));
-	mlx_hook(data.mlx_win, 4, 0, &evnt_mousepress, &(data.player));
+	mlx_hook(data.mlx_win, 4, 0, &evnt_mousepress, &data);
 	mlx_hook(data.mlx_win, 5, 0, &evnt_mouserelease, &(data.player));
 	mlx_loop_hook(data.mlx, &main_loop, &data);
+	// main_loop(&data);
 	mlx_loop(data.mlx);
 }

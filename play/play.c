@@ -109,9 +109,9 @@ void	play_transition_by_key_event(t_player *player)
 			play_action_crouch(player, "WC_", ENTER);
 		else if (kb & (1 << KB_JUMP))
 			play_action_jump(player, "WJ_", ENTER);
-		else if (kb & (1 << KB_FLASH))
+		else if (kb & (1 << KB_FLASH) && !(kb & (1 << KB_ATTACK)))
 			play_action_flash(player, "W_F", ENTER);
-		else if (kb & (1 << KB_RECALL))
+		else if (kb & (1 << KB_RECALL) && !(kb & (1 << KB_ATTACK)))
 			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "R__", 4))
@@ -122,9 +122,9 @@ void	play_transition_by_key_event(t_player *player)
 			play_action_crouch(player, "WC_", ENTER);
 		else if (kb & (1 << KB_JUMP))
 			play_action_jump(player, "RJ_", ENTER);
-		else if (kb & (1 << KB_FLASH))
+		else if (kb & (1 << KB_FLASH) && !(kb & (1 << KB_ATTACK)))
 			play_action_flash(player, "R_F", ENTER);
-		else if (kb & (1 << KB_RECALL))
+		else if (kb & (1 << KB_RECALL) && !(kb & (1 << KB_ATTACK)))
 			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "WC_", 4))
@@ -134,24 +134,41 @@ void	play_transition_by_key_event(t_player *player)
 	}
 	else if (!ft_strncmp(ps, "WJ_", 4))
 	{
-		if (kb & (1 << KB_FLASH))
+		if (kb & (1 << KB_FLASH) && !(kb & (1 << KB_ATTACK)))
 			play_action_flash(player, "WJF", ENTER);
-		else if (kb & (1 << KB_RECALL))
+		else if (kb & (1 << KB_RECALL) && !(kb & (1 << KB_ATTACK)))
 			play_action_recall(player, &(player->recall), ENTER);
 	}
 	else if (!ft_strncmp(ps, "RJ_", 4))
 	{
 		if (!(kb & (1 << KB_D_FORWARD)))
 			ft_strlcpy(ps, "WJ_", 4);
-		else if (kb & (1 << KB_FLASH))
+		else if (kb & (1 << KB_FLASH) && !(kb & (1 << KB_ATTACK)))
 			play_action_flash(player, "RJF", ENTER);
-		else if (kb & (1 << KB_RECALL))
+		else if (kb & (1 << KB_RECALL) && !(kb & (1 << KB_ATTACK)))
 			play_action_recall(player, &(player->recall), ENTER);
 	}
 }
 
-void	play_motion(t_player *player)
+char	play_check_collision(t_map *map, t_vec2 next_pos)
 {
+	for (double angle = 0; angle < 360; angle += 5)
+	{
+		double rad = angle * M_PI / 180.0;
+		double checkX = next_pos.x + 0.02 * cos(rad);
+		double checkY = next_pos.y + 0.02 * sin(rad);
+		if (!utils_is_in_map(checkX, checkY, map))
+			return (1);
+		if (map->data[(int)checkY][(int)checkX] == '1')
+			return (1);
+	}
+	return (0);
+}
+
+void	play_motion(t_data *data, t_player *player)
+{
+	t_vec2	next_pos;
+
 	play_action_movement(player);
 	play_action_jump(player, player->state, RUN);
 	play_action_crouch(player, "W__", RUN);
@@ -162,8 +179,12 @@ void	play_motion(t_player *player)
 		player->motion.y += player->move.y * player->dir.x + player->move.x * player->dir.y;
 		player->motion.x = player->motion.x * 0.85;
 		player->motion.y = player->motion.y * 0.85;
-		player->pos.x += player->motion.x;
-		player->pos.y += player->motion.y;
+		next_pos.x = player->pos.x + player->motion.x;
+		next_pos.y = player->pos.y + player->motion.y;
+		if (!play_check_collision(&(data->map), vec2_creat(next_pos.x, player->pos.y)))
+			player->pos.x = next_pos.x;
+		if (!play_check_collision(&(data->map), vec2_creat(player->pos.x, next_pos.y)))
+			player->pos.y = next_pos.y;
 		player->euler_dir.y += player->motion_dir.y;
 	}
 	play_action_recall(player, &(player->recall), RUN);
@@ -176,5 +197,5 @@ void	play_update(t_data *data)
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
 	// printf("ps:%s\n", data->player.state);
-	play_motion(&(data->player));
+	play_motion(data, &(data->player));
 }

@@ -18,7 +18,7 @@ void	play_action_movement(t_player *player)
 	char	*ps;
 
 	ps = player->state;
-	if (ps[0] == 'W')
+	if (ps[0] == 'W' && ps[2] == '_')
 	{
 		if (!(player->move.x || player->move.y) && ps[1] == '_')
 			player->motion.z = sin(player->time++ / (double)25.0) * 10;
@@ -27,12 +27,12 @@ void	play_action_movement(t_player *player)
 			player->motion.z = sin(player->time / (double)25.0) * 15;
 			player->time += 5;
 		}
-		vec2_normalize(&(player->move), 0.0085);
+		player->move = vec2_normalize(player->move, 0.0085);
 		play_target_update(&(player->fov), FOV_BASE, 0.015, 0.03);
 	}
-	else if (ps[0] == 'R')
+	else if (ps[0] == 'R' && ps[2] == '_')
 	{
-		vec2_normalize(&(player->move), 0.0085 * 1.5);
+		player->move = vec2_normalize(player->move, 0.0085 * 1.5);
 		if (ps[1] == '_')
 		{
 			player->motion.z = sin(player->time / (double)25.0) * 20;
@@ -72,7 +72,7 @@ void	play_action_crouch(t_player *player, char *transition, char enter)
 	else if (enter == RUN && player->state[1] == 'C')
 	{
 		play_target_update(&(player->pos.z), -150, 30, 40);
-		vec2_normalize(&(player->move), 0.0085 * 0.25);
+		player->move = vec2_normalize(player->move, 0.0085 * 0.25);
 	}
 	else if (enter == RUN && player->state[1] == 'c')
 	{
@@ -83,7 +83,6 @@ void	play_action_crouch(t_player *player, char *transition, char enter)
 
 void	play_action_flash(t_player *player, char *transition, char enter)
 {
-	static int			flash_time;
 	static t_vec2		flash_dir;
 
 	if (enter == ENTER)
@@ -93,8 +92,8 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 		flash_dir = player->move;
 		if (!(player->move.x || player->move.y))
 			flash_dir = vec2_creat(1, 0);
-		flash_time = 0;
-		vec2_normalize(&flash_dir, 0.0085 * 1250);
+		player->flash_frame = 0;
+		flash_dir = vec2_normalize(flash_dir, 0.0085 * 1450);
 	}
 	else if (enter == RUN)
 	{
@@ -102,9 +101,9 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 		{
 			flash_dir = vec2_scala_mul(flash_dir, 0.075);
 			player->move = flash_dir;
-			if (flash_time == 2)
+			if (player->flash_frame == HN_FLASH)
 				player->state[2] = '_';
-			flash_time++;
+			player->flash_frame++;
 		}
 	}
 }

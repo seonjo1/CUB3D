@@ -42,8 +42,8 @@ void	play_recall_doing(t_player *player, t_recall *re)
 	else
 	{
 		player->pos.z = 0;
-		player->move.x = 0;
-		player->move.y = 0;
+		player->motion.x = 0;
+		player->motion.y = 0;
 		if (re->frame == RECALL_STORE_MAX + 5)
 			ft_strlcpy(player->state, "W__", 4);
 	}

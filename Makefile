@@ -27,7 +27,9 @@ BASE		:=	main \
 				rc/rc_thread rc/rc_draw_sky \
 				play/play play/play_action play/play_recall \
 				evnt/evnt evnt/evnt_utils \
-				libft_s/libft_s libft_s/vec2_utils
+				hand/hand \
+				obj/obj_minimap \
+				libft_s/libft_s libft_s/vec2_utils libft_s/utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3D
@@ -72,20 +74,25 @@ re : fclean all
 
 t1 : all clean
 	./$(NAME) ./map/test_map.cub
+	rm $(NAME)
 
 t2 : all clean
 	./$(NAME) ./map/test_map2.cub
+	rm $(NAME)
 
 t3 : all clean
 	./$(NAME) ./map/test_map3.cub
+	rm $(NAME)
 
 t4 : all clean
 	./$(NAME) ./map/test_map4.cub
+	rm $(NAME)
 
 t5 : all clean
 	./$(NAME) ./map/test_map5.cub
+	rm $(NAME)
 
 norm :
-	norminette evnt gnl libft libft_s map  parse play rc main.c
+	norminette evnt gnl libft libft_s map parse play rc main.c obj
 
 .PHONY : all clean fclean re t

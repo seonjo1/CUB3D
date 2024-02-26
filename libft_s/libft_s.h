@@ -17,9 +17,14 @@
 void	*ft_calloc_s(size_t count, size_t size);
 char	**ft_split_s(const char *str, char c);
 char	*ft_strdup_s(const char *s1);
+char	*ft_itoa_s(int n);
+char	*ft_strjoin_s(char const *s1, char const *s2);
 t_vec2	vec2_creat(double x, double y);
 t_vec2	vec2_add(t_vec2 a, t_vec2 b);
 t_vec2	vec2_scala_mul(t_vec2 a, double b);
-void	vec2_normalize(t_vec2 *vec, double scale);
+t_vec2	vec2_normalize(t_vec2 vec, double scale);
+int		utils_blend_color(int a, int b, float op);
+void	utils_draw_point(t_data *data, int x, int y, int color);
+char	utils_is_in_map(int x, int y, t_map *map);
 
 #endif
