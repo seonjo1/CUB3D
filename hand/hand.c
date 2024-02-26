@@ -194,6 +194,9 @@ void	*hand_update(t_data *data)
 	else if (!ft_strncmp(ps, "R__", 4))
 		hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
 	else
+	{
+		hand_stop_shot(FALSE, 0);
 		hand = data->h_res.walk[0];
+	}
 	return (hand);
 }
