@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "hand.h"
+#include "../sound/sound.h"
 #include "../libft_s/libft_s.h"
 
 int	hand_reset_reload(int *kb, int *rf)
@@ -118,14 +119,14 @@ void	*hand_action_attack(void **arr,  t_player *player)
 	static int	t = 0;
 
 	hand_reset_reload(&(player->keybinds), &(player->reload_frame));
+	if (t == 0)
+		sound_play(player->s_res->attack);
 	if (++t == (HN_ATTACK << 1))
 	{
 		player->keybinds = (player->keybinds & ~(1 << KB_ATTACK));
 		t = 0;
-		printf("attack:%d\n", HN_ATTACK - 1);
 		return (arr[HN_ATTACK - 1]);
 	}
-	printf("attack:%d\n", (t - 1) >> 1);
 	return (arr[(t - 1) >> 1]);
 }
 
