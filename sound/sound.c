@@ -70,9 +70,14 @@ char sound_load(unsigned int *sample, char *path) {
 // 		BASS_ChannelPause(sound);
 // }
 
-void sound_play(unsigned int sample) {
+int sound_play(unsigned int sample) {
 	unsigned int channel;
 	
 	channel = BASS_SampleGetChannel(sample, FALSE);
 	BASS_ChannelPlay(channel, FALSE);
+	return (channel);
+}
+
+void sound_stop(unsigned int channel) {
+	BASS_ChannelStop(channel);
 }
