@@ -183,7 +183,7 @@ void	*hand_update(t_data *data)
 		hand = hand_action_recall(data->h_res.recall, &(data->player), &magazine);
 	else if (data->player.keybinds & (1 << KB_ATTACK))
 		hand = hand_action_attack(data->h_res.attack, &(data->player));
-	else if (data->player.keybinds & (1 << KB_RELOAD) && magazine != MAX_MAG)
+	else if ((data->player.keybinds & (1 << KB_RELOAD) && magazine != MAX_MAG) || magazine == 0)
 		hand = hand_action_reload(data->h_res.reload, &(data->player), &magazine);
 	else if (ps[2] == 'F')
 		hand = hand_action_flash(data->h_res.flash, &(data->player));
