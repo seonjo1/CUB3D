@@ -14,10 +14,20 @@
 #include "../sound/sound.h"
 #include "../libft_s/libft_s.h"
 
-int	hand_reset_reload(int *kb, int *rf)
+int	hand_reset_reload(int *kb, int *rf, char set, unsigned int c)
 {
-	(*rf) = 0;
-	(*kb) = (*kb & ~(1 << KB_RELOAD));
+	static unsigned int	channel = 0;
+
+	if (set == TRUE)
+		channel = c;
+	else
+	{
+		if (channel)
+			sound_stop(channel);
+		channel = 0;
+		(*rf) = 0;
+		(*kb) = (*kb & ~(1 << KB_RELOAD));
+	}
 	return (0);
 }
 
@@ -78,7 +88,7 @@ void	*hand_action_recall(void **arr, t_player *player, int *magazine)
 {
 	int	t;
 
-	hand_reset_reload(&(player->keybinds), &(player->reload_frame));
+	hand_reset_reload(&(player->keybinds), &(player->reload_frame), FALSE, 0);
 	if (player->recall.frame == 2)
 		sound_play(player->s_res->recall);
 	if (player->recall.frame >= HN_RECALL << 1)
@@ -96,11 +106,6 @@ void	*hand_action_flash(void **arr, t_player *player)
 	int	t;
 
 	t = player->flash_frame - 1;
-	if (t == 0)
-	{
-		printf("i:%d\n", (int)(player->dir.x * 100) % 3);
-		sound_play(player->s_res->flash[(int)(player->dir.x * 100) % 3]);
-	}
 	if (player->flash_frame >= HN_FLASH)
 		t = HN_FLASH - 1;
 	return (arr[t]);
@@ -125,7 +130,7 @@ void	*hand_action_attack(void **arr,  t_player *player)
 {
 	static int	t = 0;
 
-	hand_reset_reload(&(player->keybinds), &(player->reload_frame));
+	hand_reset_reload(&(player->keybinds), &(player->reload_frame), FALSE, 0);
 	if (t == 0)
 		sound_play(player->s_res->attack);
 	if (++t == (HN_ATTACK << 1))
@@ -140,7 +145,7 @@ void	*hand_action_attack(void **arr,  t_player *player)
 void	*hand_action_reload(void **arr, t_player *player, int *magazine)
 {
 	if (player->reload_frame == 7)
-		sound_play(player->s_res->reload);
+		hand_reset_reload(0, 0, TRUE, sound_play(player->s_res->reload));
 	player->reload_frame++;
 	if (player->reload_frame >= (HN_RELOAD << 1))
 	{
