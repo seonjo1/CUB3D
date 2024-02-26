@@ -104,13 +104,9 @@ void	*hand_action_recall(void **arr, t_player *player, int *magazine)
 	hand_stop_shot(FALSE, 0);
 	if (player->recall.frame == 2)
 		sound_play(player->s_res->recall);
-	if (player->recall.frame >= HN_RECALL << 1)
-	{
-		t = HN_RECALL - 1;
+	t = (player->recall.frame >> 1);
+	if (t == HN_RECALL - 1)
 		*magazine = MAX_MAG;
-	}
-	else
-		t = (player->recall.frame >> 1);
 	return (arr[t]);
 }
 
@@ -130,10 +126,10 @@ void	*hand_action_shot(void **arr, t_data *data, int *magazine)
 	static long long	time = 0;
 	static int			t = 0;
 
-	if (data->time - 1 != time)
-		hand_stop_shot(TRUE, sound_play(data->s_res.gun));
 	if (*magazine > 0)
 	{
+		if (data->time - 1 != time)
+			hand_stop_shot(TRUE, sound_play(data->s_res.gun));
 		time = data->time;
 		(*magazine)--;
 		if (++t == ((HN_SHOT - 1) << 1))
@@ -187,7 +183,7 @@ void	*hand_update(t_data *data)
 		hand = hand_action_recall(data->h_res.recall, &(data->player), &magazine);
 	else if (data->player.keybinds & (1 << KB_ATTACK))
 		hand = hand_action_attack(data->h_res.attack, &(data->player));
-	else if (data->player.keybinds & (1 << KB_RELOAD) && magazine != 50)
+	else if (data->player.keybinds & (1 << KB_RELOAD) && magazine != MAX_MAG)
 		hand = hand_action_reload(data->h_res.reload, &(data->player), &magazine);
 	else if (ps[2] == 'F')
 		hand = hand_action_flash(data->h_res.flash, &(data->player));
