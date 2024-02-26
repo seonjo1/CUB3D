@@ -22,11 +22,11 @@ void	play_action_movement(t_player *player)
 	if (ps[0] == 'W' && ps[2] == '_')
 	{
 		if (!(player->move.x || player->move.y) && ps[1] == '_')
-			player->motion.z = sin(player->time++ / (double)25.0) * 10;
+			player->motion.z = sin(player->time++ / (double)25.0) * 5;
 		else if (ps[1] == '_')
 		{
-			player->motion.z = sin(player->time / (double)25.0) * 15;
-			player->time += 5;
+			player->motion.z = sin(player->time / (double)25.0) * 10;
+			player->time += 6;
 		}
 		player->move = vec2_normalize(player->move, 0.0085);
 		play_target_update(&(player->fov), FOV_BASE, 0.015, 0.03);
