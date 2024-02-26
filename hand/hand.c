@@ -79,6 +79,8 @@ void	*hand_action_recall(void **arr, t_player *player, int *magazine)
 	int	t;
 
 	hand_reset_reload(&(player->keybinds), &(player->reload_frame));
+	if (player->recall.frame == 2)
+		sound_play(player->s_res->recall);
 	if (player->recall.frame >= HN_RECALL << 1)
 	{
 		t = HN_RECALL - 1;
@@ -94,6 +96,11 @@ void	*hand_action_flash(void **arr, t_player *player)
 	int	t;
 
 	t = player->flash_frame - 1;
+	if (t == 0)
+	{
+		printf("i:%d\n", (int)(player->dir.x * 100) % 3);
+		sound_play(player->s_res->flash[(int)(player->dir.x * 100) % 3]);
+	}
 	if (player->flash_frame >= HN_FLASH)
 		t = HN_FLASH - 1;
 	return (arr[t]);
@@ -130,16 +137,18 @@ void	*hand_action_attack(void **arr,  t_player *player)
 	return (arr[(t - 1) >> 1]);
 }
 
-void	*hand_action_reload(void **arr, int *kb, int *rf, int *magazine)
+void	*hand_action_reload(void **arr, t_player *player, int *magazine)
 {
-	(*rf)++;
-	if (*rf >= (HN_RELOAD << 1))
+	if (player->reload_frame == 7)
+		sound_play(player->s_res->reload);
+	player->reload_frame++;
+	if (player->reload_frame >= (HN_RELOAD << 1))
 	{
-		(*rf) = 0;
+		player->reload_frame = 0;
 		*magazine = 50;
-		(*kb) = (*kb & ~(1 << KB_RELOAD));
+		player->keybinds = player->keybinds & ~(1 << KB_RELOAD);
 	}
-	return (arr[(*rf) >> 1]);
+	return (arr[player->reload_frame >> 1]);
 }
 
 void	*hand_update(t_data *data)
@@ -154,7 +163,7 @@ void	*hand_update(t_data *data)
 	else if (data->player.keybinds & (1 << KB_ATTACK))
 		hand = hand_action_attack(data->h_res.attack, &(data->player));
 	else if (data->player.keybinds & (1 << KB_RELOAD) && magazine != 50)
-		hand = hand_action_reload(data->h_res.reload, &(data->player.keybinds), &(data->player.reload_frame), &magazine);
+		hand = hand_action_reload(data->h_res.reload, &(data->player), &magazine);
 	else if (ps[2] == 'F')
 		hand = hand_action_flash(data->h_res.flash, &(data->player));
 	else if (data->player.keybinds & (1 << KB_M_LEFT))
