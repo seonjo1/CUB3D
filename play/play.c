@@ -152,15 +152,22 @@ void	play_transition_by_key_event(t_player *player)
 
 char	play_check_collision(t_map *map, t_vec2 next_pos)
 {
-	for (double angle = 0; angle < 360; angle += 5)
+	double	rad;
+	double	checkX;
+	double	checkY;
+	double	angle;
+
+	angle = 0;
+	while (angle < 360)
 	{
-		double rad = angle * M_PI / 180.0;
-		double checkX = next_pos.x + 0.02 * cos(rad);
-		double checkY = next_pos.y + 0.02 * sin(rad);
+		rad = angle * M_PI / 180.0;
+		checkX = next_pos.x + 0.02 * cos(rad);
+		checkY = next_pos.y + 0.02 * sin(rad);
 		if (!utils_is_in_map(checkX, checkY, map))
 			return (1);
 		if (map->data[(int)checkY][(int)checkX] == '1')
 			return (1);
+		angle += 5;
 	}
 	return (0);
 }

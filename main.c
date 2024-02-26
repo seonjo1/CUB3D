@@ -16,6 +16,7 @@
 #include "play/play.h"
 #include "hand/hand.h"
 #include "obj/obj.h"
+#include "sound/sound.h"
 
 int	main_loop(t_data *data)
 {
@@ -55,8 +56,9 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	obj_mini_init(data);
 	hand_init_xpm_imgs(data);
+	data->player.s_res = sound_init(&(data->s_res));
+	obj_mini_init(data);
 }
 
 int	main(int argc, char **argv)

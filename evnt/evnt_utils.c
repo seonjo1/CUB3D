@@ -32,7 +32,7 @@ static void	evnt_forward_set(int *kb, long long time, char press)
 	else if (press == TRUE)
 	{
 		(*kb) |= (1 << KB_FORWARD);
-		if (press_gap < 30 && time - last_release < 15)
+		if (press_gap < 50 && time - last_release < 30)
 			(*kb) |= (1 << KB_D_FORWARD);
 		else if (first_press == 0)
 			first_press = time;

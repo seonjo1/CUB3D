@@ -15,6 +15,7 @@ WFLAG		:= -Wall -Wextra -Werror -O3 #-fsanitize=address -g3
 MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
+BASSFLAG	:= -Lbass -lbass
 FT			:= ./libft/libft.a
 
 DIR			:= ./
@@ -27,7 +28,7 @@ BASE		:=	main \
 				rc/rc_thread rc/rc_draw_sky \
 				play/play play/play_action play/play_recall \
 				evnt/evnt evnt/evnt_utils \
-				hand/hand \
+				hand/hand sound/sound \
 				obj/obj_minimap \
 				libft_s/libft_s libft_s/vec2_utils libft_s/utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
@@ -43,7 +44,8 @@ NAME		:= cub3D
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
-	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $^ -o $@
+	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $@
+	install_name_tool -change @loader_path/libbass.dylib @loader_path/bass/libbass.dylib $(NAME)
 
 $(MLX) :
 	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi

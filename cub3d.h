@@ -16,6 +16,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <time.h>
+# include "bass/bass.h"
 # include <pthread.h>
 # include "gnl/get_next_line.h"
 # include "libft/libft.h"
@@ -33,6 +34,8 @@
 # define FOV_BASE 1.41
 # define RECALL_STORE_MAX 50
 # define RECALL_COOLDOWN 450
+# define BASS_SAMPLE_LOOP 4
+# define MAX_MAG 70
 
 typedef enum s_keycode {
 	MOUSE_LEFT = 1,
@@ -146,6 +149,17 @@ typedef struct s_recall {
 	int		cooldown;
 }	t_recall;
 
+typedef struct	s_sounds
+{
+	uint32_t	attack;
+	uint32_t	flash[3];
+	uint32_t	gun;
+	uint32_t	recall;
+	uint32_t	reload;
+	uint32_t	walk;
+	uint32_t	run;
+}	t_sounds;
+
 typedef struct s_rc_floor {
 	int 	tex_x;
 	int 	tex_y;
@@ -171,6 +185,7 @@ typedef struct s_player {
 	int			flash_frame;
 	int			reload_frame;
 	long long	time;
+	t_sounds	*s_res;
 }	t_player;
 
 typedef struct s_map {
@@ -235,6 +250,7 @@ typedef struct s_data {
 	t_sky		sky;
 	t_player	player;
 	t_hand_res	h_res;
+	t_sounds	s_res;
 	long long	time;
 }	t_data;
 
@@ -257,7 +273,5 @@ typedef struct s_draw_data {
 	double	wall_x;
 	double	dist;
 }	t_draw_data;
-
-void	utils_draw_point(t_data *data, int x, int y, int color);
 
 #endif
