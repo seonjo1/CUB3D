@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/14 17:40:41 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/26 19:00:36 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 	rc_get_distance(data, &rc_data, &d_data, ray);
 	rc_get_tex_x(data, &rc_data, &d_data, ray);
 	d_data.tex_h = (int)(WIN_HEIGHT / d_data.dist) * FOV_BASE / data->player.fov;
-	d_data.start = -d_data.tex_h / 2 + WIN_HEIGHT / 2 + data->player.pos.z / d_data.dist \
-		+ data->player.motion.z;
-	d_data.end = d_data.tex_h / 2 + WIN_HEIGHT / 2 + data->player.pos.z / d_data.dist \
-		+ data->player.motion.z;
+	d_data.start = -d_data.tex_h / 2 + WIN_HEIGHT / 2;
+	d_data.end = d_data.tex_h / 2 + WIN_HEIGHT / 2;
 	d_data.offset = d_data.start;
 	if (d_data.start < 0)
 		d_data.start = 0;
@@ -54,29 +52,24 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 		d_data.end = WIN_HEIGHT - 1;
 	i = 0;
 	while (i < d_data.start)
-		utils_draw_point(data, x, i++, data->c_color);
+		utils_draw_point(data, x, i++, 0XFF000000);
 	while (i < d_data.end)
 	{
 		d_data.color = data->tex[d_data.type].data[((i - d_data.offset) * data->tex[d_data.type].height) / d_data.tex_h][d_data.tex_x];
 		utils_draw_point(data, x, i++, d_data.color);
 	}
-	while (i < WIN_HEIGHT)
-		utils_draw_point(data, x, i++, data->f_color);
+	// while (i < WIN_HEIGHT)
+	// 	utils_draw_point(data, x, i++, data->f_color);
 }
 
 void	rc_raycast(t_data *data)
 {
-	int		x;
-	double	camera_x;
-	t_vec2	ray;
+	int	i;
 
-	x = 0;
-	while (x < WIN_WIDTH)
-	{
-		camera_x = 2 * x / (double) WIN_WIDTH - 1;
-		ray.x = data->player.dir.x + data->player.plane.x * camera_x;
-		ray.y = data->player.dir.y + data->player.plane.y * camera_x;
-		rc_draw_col(data, ray, x);
-		x++;
-	}
+	pthread_create(&(data->t_id[0]), NULL, (void *)rc_thread0, (void *)data);
+	pthread_create(&(data->t_id[1]), NULL, (void *)rc_thread1, (void *)data);
+	pthread_create(&(data->t_id[2]), NULL, (void *)rc_thread2, (void *)data);
+	i = 0;
+	while (i < 3)
+		pthread_join(data->t_id[i++], NULL);
 }

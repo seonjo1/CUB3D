@@ -2,6 +2,8 @@ NO ./texture/crystal.xpm
 SO ./texture/crystal_imac.xpm
 WE ./texture/crystal_box.xpm
 EA ./texture/crystal_sign.xpm
+CT ./texture/skybox.xpm
+FT ./texture/stone.xpm
 F 0,0,0
 C 0,0,0
 

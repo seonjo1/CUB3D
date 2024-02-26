@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/19 13:51:02 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:30:17 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 
 int	main_loop(t_data *data)
 {
-	// clock_t start, end;
+	clock_t start, end;
 	void	*hand;
 
-	// start = clock();
+	start = clock();
 	play_update(data);
+	rc_draw_floor(data);
+	rc_draw_sky(data);
 	hand = hand_update(data);
 	rc_raycast(data);
 	obj_draw_aim(data);
@@ -33,8 +35,8 @@ int	main_loop(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->mlx_win, hand, 0, 0);
 	mlx_do_sync(data->mlx);
 	data->time++;
-	// end = clock();
-	// printf("+ %.5f\n", ((double) (end - start)) / CLOCKS_PER_SEC);
+	end = clock();
+	printf("+ %.5f\n", ((double) (end - start)) / CLOCKS_PER_SEC);
 	return (0);
 }
 
