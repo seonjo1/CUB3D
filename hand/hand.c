@@ -81,12 +81,24 @@ void	hand_init_xpm_imgs(t_data *data)
 
 void	*hand_action_walk(t_player *player, void **arr, int delay)
 {
+	static int	chennel[2] = {0, 0};
 	static int	cnt = 0;
 	static int	t = 0;
 
+	if (chennel[0] == 0)
+	{
+		chennel[0] = sound_play_loop(player->s_res->walk);
+		chennel[1] = sound_play_loop(player->s_res->run);
+	}
 	hand_stop_shot(FALSE, 0);
-	if (!(player->move.x || player->move.y))
+	sound_pause(chennel[0]);
+	sound_pause(chennel[1]);
+	if (!(player->move.x || player->move.y) || delay == 0)
 		return (arr[t]);
+	else if (delay == 2)
+		sound_resume(chennel[0]);
+	else if (delay == 1)
+		sound_resume(chennel[1]);
 	if (++cnt > delay)
 	{
 		cnt = 0;
@@ -190,12 +202,13 @@ void	*hand_update(t_data *data)
 	else if (data->player.keybinds & (1 << KB_M_LEFT))
 		hand = hand_action_shot(data->h_res.shot, data, &magazine);
 	else if (!ft_strncmp(ps, "W__", 4))
-		hand = hand_action_walk(&(data->player), data->h_res.walk, 3);
+		hand = hand_action_walk(&(data->player), data->h_res.walk, 2);
 	else if (!ft_strncmp(ps, "R__", 4))
 		hand = hand_action_walk(&(data->player), data->h_res.walk, 1);
 	else
 	{
 		hand_stop_shot(FALSE, 0);
+		hand_action_walk(&(data->player), data->h_res.walk, 0);
 		hand = data->h_res.walk[0];
 	}
 	return (hand);
