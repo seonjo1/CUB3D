@@ -18,6 +18,7 @@ t_sounds	*sound_init(t_sounds *sounds);
 void		sound_clear(t_sounds *sounds);
 char		sound_load(unsigned int *s, char *path);
 void		sound_play_alt(unsigned int s, char play, char loop);
-void		sound_play(unsigned int s);
+int			sound_play(unsigned int s);
+void		sound_stop(unsigned int channel);
 
 #endif
