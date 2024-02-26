@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/19 13:51:02 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:30:17 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main_loop(t_data *data)
 
 	// start = clock();
 	play_update(data);
+	rc_draw_floor(data);
+	rc_draw_sky(data);
 	hand = hand_update(data);
 	rc_raycast(data);
 	obj_draw_aim(data);

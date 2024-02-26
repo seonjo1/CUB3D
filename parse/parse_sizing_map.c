@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:10:41 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/10 17:43:55 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/16 17:41:13 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	parse_sizing_map(t_map *map, char *file)
 	if (fd == -1)
 		parse_error("unable to open file");
 	element = 0;
-	while (element < 6)
+	while (element < 8)
 		element += parse_count_element(gnl(fd), fd);
 	while (parse_sizing_line(map, gnl(fd), fd))
 		;

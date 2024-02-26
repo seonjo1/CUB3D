@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/19 14:17:05 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/26 19:13:50 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <time.h>
+# include <pthread.h>
 # include "gnl/get_next_line.h"
 # include "libft/libft.h"
 # include "minilibx/mlx.h"
@@ -29,7 +30,7 @@
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define WALL_HEIGHT 1080
-# define FOV_BASE 1.15192
+# define FOV_BASE 1.41
 # define RECALL_STORE_MAX 50
 # define RECALL_COOLDOWN 450
 
@@ -86,14 +87,17 @@ typedef enum s_parse_code {
 	PC_NO = 8,
 	PC_F = 16,
 	PC_C = 32,
-	PC_END = 63
+	PC_FT = 64,
+	PC_CT = 128,
+	PC_END = 255
 }	t_parse_code;
 
 typedef enum s_tex_code {
 	TC_EA = 0,
 	TC_WE = 1,
 	TC_SO = 2,
-	TC_NO = 3
+	TC_NO = 3,
+	TC_F = 4
 }	t_tex_code;
 
 typedef enum e_h_state {
@@ -142,6 +146,17 @@ typedef struct s_recall {
 	int		cooldown;
 }	t_recall;
 
+typedef struct s_rc_floor {
+	int 	tex_x;
+	int 	tex_y;
+	int		color;
+	int		camera_y;
+	double	camera_x;
+	double	floor_x;
+	double	floor_y;
+	t_vec2	ray;
+}	t_rc_floor;
+
 typedef struct s_player {
 	t_vec3		pos;
 	double		fov;
@@ -174,6 +189,18 @@ typedef struct s_tex {
 	int		gap;
 }	t_tex;
 
+typedef struct s_sky {
+	char	*file;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+	int		gap;
+}	t_sky;
+
 typedef struct s_hand_res {
 	void	*flash[HN_FLASH];
 	void	*attack[HN_ATTACK];
@@ -202,9 +229,12 @@ typedef struct s_data {
 	int			endian;
 	int			c_color;
 	int			f_color;
+	int			i;
+	pthread_t	t_id[3];
 	t_mini		mini;
 	t_map		map;
-	t_tex		tex[4];
+	t_tex		tex[5];
+	t_sky		sky;
 	t_player	player;
 	t_hand_res	h_res;
 	long long	time;
