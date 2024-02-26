@@ -24,6 +24,8 @@ t_sounds	*sound_init(t_sounds *s_res)
 	done &= sound_load(&(s_res->gun), "./res/sound/gun.wav");
 	done &= sound_load(&(s_res->recall), "./res/sound/recall.wav");
 	done &= sound_load(&(s_res->reload), "./res/sound/reload.wav");
+	done &= sound_load(&(s_res->walk), "./res/sound/stone.wav");
+	done &= sound_load(&(s_res->run), "./res/sound/run.wav");
 	if (!done)
 		exit(1);
 	return (s_res);
@@ -48,29 +50,29 @@ void	sound_clear(t_sounds *s_res)
 	BASS_Free();
 }
 
-char sound_load(unsigned int *sample, char *path) {
-    static char loaded;
+char sound_load(unsigned int *sample, char *path)
+{
+	static char loaded;
 
-    loaded |= BASS_Init(-1, 48000, 0, 0, 0);
-    if (!loaded || *sample)
-        return FALSE;
-    *sample = BASS_SampleLoad(FALSE, path, 0, 0, 3, 0);
-    return (*sample != 0);
+	loaded |= BASS_Init(-1, 48000, 0, 0, 0);
+	if (!loaded || *sample)
+		return FALSE;
+	*sample = BASS_SampleLoad(FALSE, path, 0, 0, 3, 0);
+	return (*sample != 0);
 }
 
-// void	sound_play_alt(unsigned int sound, char play, char loop)
-// {
-// 	if (!sound)
-// 		return ;
-// 	if (loop)
-// 		BASS_ChannelFlags(sound, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);
-// 	if (play)
-// 		BASS_ChannelPlay(sound, 0);
-// 	else
-// 		BASS_ChannelPause(sound);
-// }
+int	sound_play_loop(unsigned int sample)
+{
+	unsigned int channel;
+	
+	channel = BASS_SampleGetChannel(sample, FALSE);
+	BASS_ChannelFlags(channel, BASS_SAMPLE_LOOP, BASS_SAMPLE_LOOP);
+	BASS_ChannelPlay(channel, FALSE);
+	return (channel);
+}
 
-int sound_play(unsigned int sample) {
+int	sound_play(unsigned int sample)
+{
 	unsigned int channel;
 	
 	channel = BASS_SampleGetChannel(sample, FALSE);
@@ -78,6 +80,17 @@ int sound_play(unsigned int sample) {
 	return (channel);
 }
 
-void sound_stop(unsigned int channel) {
+void 	sound_stop(unsigned int channel)
+{
 	BASS_ChannelStop(channel);
+}
+
+void	sound_pause(unsigned int channel)
+{
+	BASS_ChannelPause(channel);
+}
+
+void	sound_resume(unsigned int channel)
+{
+	BASS_ChannelPlay(channel, FALSE);
 }
