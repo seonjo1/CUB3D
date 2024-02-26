@@ -30,11 +30,11 @@
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define WALL_HEIGHT 1080
-# define FOV_BASE 1.15192
+# define FOV_BASE 1.41
 # define RECALL_STORE_MAX 50
 # define RECALL_COOLDOWN 450
 # define BASS_SAMPLE_LOOP 4
-# define MAX_MAG 35
+# define MAX_MAG 40
 
 typedef enum s_keycode {
 	MOUSE_LEFT = 1,
