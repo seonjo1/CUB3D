@@ -204,6 +204,7 @@ void	play_motion(t_data *data, t_player *player)
 			player->pos.y = next_pos.y;
 		player->euler_dir.y += player->motion_dir.y;
 		player->euler_dir.x = fmin(521, player->euler_dir.x + player->motion_dir.x);
+		player->euler_dir.x = fmax(-700, player->euler_dir.x + player->motion_dir.x);
 	}
 	play_action_recall(player, &(player->recall), RUN);
 }
@@ -215,5 +216,6 @@ void	play_update(t_data *data)
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
 	// printf("ps:%s\n", data->player.state);
+	// printf("pitch:%f\n", data->player.euler_dir.x);
 	play_motion(data, &(data->player));
 }
