@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:47:57 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/26 20:17:07 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:41:11 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	parse_open_sky_tex(t_data *data, int fd)
 		&(tex->line_length), &(tex->endian));
 	tex->gap = tmp.line_length / 4 - tex->width;
 	parse_copy_sky_tex(tex, tmp.addr, tex->line_length / 4, WIN_HEIGHT);
-	tex->width = WIN_WIDTH * 3;
+	tex->width = WIN_WIDTH * 3.13;
 	tex->height = WIN_HEIGHT;
 	mlx_destroy_image(data->mlx, tmp.img);
 }
