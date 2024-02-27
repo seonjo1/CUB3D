@@ -42,6 +42,12 @@ void	play_dir_update(t_data *data)
 		data->player.motion_dir.y = -0.02;
 	else
 		data->player.motion_dir.y *= 0.795;
+	if (!(kb & (1 << KB_ROTATE_UP)) && kb & (1 << KB_ROTATE_DOWN))
+		data->player.motion_dir.x = 0.02;
+	else if (!(kb & (1 << KB_ROTATE_DOWN)) && kb & (1 << KB_ROTATE_UP))
+		data->player.motion_dir.x = -0.02;
+	else
+		data->player.motion_dir.x *= 0.795;
 }
 
 void	play_dir_plane_set(t_player *player)
@@ -193,6 +199,7 @@ void	play_motion(t_data *data, t_player *player)
 		if (!play_check_collision(&(data->map), vec2_creat(player->pos.x, next_pos.y)))
 			player->pos.y = next_pos.y;
 		player->euler_dir.y += player->motion_dir.y;
+		player->euler_dir.x += player->motion_dir.x;
 	}
 	play_action_recall(player, &(player->recall), RUN);
 }
@@ -204,5 +211,6 @@ void	play_update(t_data *data)
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
 	// printf("ps:%s\n", data->player.state);
+	printf("pitch:%f\n", data->player.euler_dir.x);
 	play_motion(data, &(data->player));
 }
