@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/26 19:13:50 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:17:48 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,6 @@ typedef struct s_data {
 	int			endian;
 	int			c_color;
 	int			f_color;
-	int			i;
 	pthread_t	t_id[3];
 	t_mini		mini;
 	t_map		map;
