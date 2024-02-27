@@ -22,10 +22,10 @@ void	play_action_movement(t_player *player)
 	if (ps[0] == 'W' && ps[2] == '_')
 	{
 		if (!(player->move.x || player->move.y) && ps[1] == '_')
-			player->motion.z = sin(player->time++ / (double)25.0) * 5;
+			player->euler_dir.x += sin(player->time++ / (double)25.0) * 0.5;
 		else if (ps[1] == '_')
 		{
-			player->motion.z = sin(player->time / (double)25.0) * 10;
+			player->euler_dir.x += sin(player->time / (double)25.0);
 			player->time += 6;
 		}
 		player->move = vec2_normalize(player->move, 0.0085);
@@ -36,7 +36,7 @@ void	play_action_movement(t_player *player)
 		player->move = vec2_normalize(player->move, 0.0085 * 1.5);
 		if (ps[1] == '_')
 		{
-			player->motion.z = sin(player->time / (double)25.0) * 20;
+			player->euler_dir.x += sin(player->time / (double)25.0) * 2;
 			player->time += 7;
 		}
 		play_target_update(&(player->fov), FOV_BASE * 1.01, 0.015, 0.03);
@@ -72,12 +72,12 @@ void	play_action_crouch(t_player *player, char *transition, char enter)
 		ft_strlcpy(player->state, transition, 4);
 	else if (enter == RUN && player->state[1] == 'C')
 	{
-		play_target_update(&(player->pos.z), -150, 30, 40);
+		play_target_update(&(player->pos.z), 50, 30, 40);
 		player->move = vec2_normalize(player->move, 0.0085 * 0.25);
 	}
 	else if (enter == RUN && player->state[1] == 'c')
 	{
-		if (play_target_update(&(player->pos.z), 0, 30, 40))
+		if (play_target_update(&(player->pos.z), Z_BASE, 30, 40))
 			ft_strlcpy(player->state, "W__", 4);
 	}
 }
