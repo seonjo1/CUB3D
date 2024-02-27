@@ -39,7 +39,7 @@ void	play_action_movement(t_player *player)
 			player->motion.z = sin(player->time / (double)25.0) * 20;
 			player->time += 7;
 		}
-		play_target_update(&(player->fov), FOV_BASE * 1.1, 0.015, 0.03);
+		play_target_update(&(player->fov), FOV_BASE * 1.01, 0.015, 0.03);
 	}
 }
 
@@ -48,7 +48,7 @@ void	play_action_jump(t_player *player, char *transition, char enter)
 	if (enter == ENTER)
 	{
 		ft_strlcpy(player->state, transition, 4);
-		player->motion_dir.z = 45;
+		player->motion_dir.z = 40;
 	}
 	else if (enter == RUN)
 	{
@@ -57,10 +57,10 @@ void	play_action_jump(t_player *player, char *transition, char enter)
 			play_target_update(&(player->motion.z), 0, 2, 4);
 			player->pos.z += player->motion_dir.z;
 			player->motion_dir.z -= 2.5;
-			if (player->motion_dir.z < -45)
+			if (player->motion_dir.z < -40)
 			{
 				player->state[1] = '_';
-				player->pos.z = 0;
+				player->pos.z = Z_BASE;
 			}
 		}
 	}
