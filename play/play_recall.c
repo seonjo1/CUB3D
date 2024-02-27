@@ -37,16 +37,16 @@ void	play_recall_doing(t_player *player, t_recall *re)
 	if (re->frame < RECALL_STORE_MAX)
 	{
 		if (re->frame < RECALL_STORE_MAX * 3 / 4)
-			player->fov += 0.015;
+			player->fov += 0.01;
 		else
-			player->fov -= 0.045;
+			player->fov -= 0.03;
 		player->pos = re->pos[re->idx];
 		player->euler_dir = re->euler_dir[re->idx];
 	}
 	else
 	{
 		player->fov = FOV_BASE;
-		player->pos.z = 0;
+		player->pos.z = Z_BASE;
 		player->motion.x = 0;
 		player->motion.y = 0;
 		if (re->frame == RECALL_STORE_MAX + 5)
