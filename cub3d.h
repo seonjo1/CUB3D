@@ -35,7 +35,7 @@
 # define RECALL_STORE_MAX 80
 # define RECALL_COOLDOWN 450
 # define BASS_SAMPLE_LOOP 4
-# define MAX_MAG 70
+# define MAX_MAG 60
 
 typedef enum s_keycode {
 	MOUSE_LEFT = 1,
