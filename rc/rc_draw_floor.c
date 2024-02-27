@@ -27,7 +27,7 @@ void	rc_floor_draw_pixel(t_data *data, t_intvec2 xy, double cx, int cy)
 		f_data.tex_x = (int)((ceil(f_data.floor_x) - f_data.floor_x) * data->tex[TC_F].width);
 		f_data.tex_y = (int)((ceil(f_data.floor_y) - f_data.floor_y) * data->tex[TC_F].height);
 		f_data.color = data->tex[TC_F].data[f_data.tex_y][f_data.tex_x];
-		utils_draw_point(data, xy.x, xy.y + (WIN_HEIGHT >> 1), f_data.color);
+		utils_draw_point(data, xy.x, xy.y + data->player.euler_dir.x + (WIN_HEIGHT >> 1), f_data.color);
 	}
 }
 
@@ -81,7 +81,7 @@ void	rc_floor_thread2(t_data *data)
 
 	camera_y = WIN_HEIGHT * FOV_BASE / data->player.fov;
 	xy.y =  WIN_HEIGHT / 3;
-	while (xy.y < WIN_HEIGHT / 2)
+	while (xy.y < WIN_HEIGHT / 2 - data->player.euler_dir.x)
 	{
 		xy.x = 0;
 		while (xy.x < WIN_WIDTH)
