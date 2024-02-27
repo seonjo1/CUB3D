@@ -19,8 +19,8 @@ void	rc_floor_draw_pixel(t_data *data, t_intvec2 xy, double cx, int cy)
 
 	f_data.ray.x = data->player.dir.x + data->player.plane.x * cx;
 	f_data.ray.y = data->player.dir.y + data->player.plane.y * cx;
-	f_data.floor_x = data->player.pos.x + f_data.ray.x * (cy >> 1) / xy.y;
-	f_data.floor_y = data->player.pos.y + f_data.ray.y * (cy >> 1) / xy.y;
+	f_data.floor_x = data->player.pos.x + f_data.ray.x * ((cy >> 1) + data->player.pos.z) / xy.y;
+	f_data.floor_y = data->player.pos.y + f_data.ray.y * ((cy >> 1) + data->player.pos.z) / xy.y;
 	if (f_data.floor_x >= 0 && f_data.floor_y >= 0
 		&& f_data.floor_x < data->map.col && f_data.floor_y < data->map.row)
 	{
