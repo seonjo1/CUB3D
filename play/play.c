@@ -43,9 +43,9 @@ void	play_dir_update(t_data *data)
 	else
 		data->player.motion_dir.y *= 0.795;
 	if (!(kb & (1 << KB_ROTATE_UP)) && kb & (1 << KB_ROTATE_DOWN))
-		data->player.motion_dir.x = 0.02;
+		data->player.motion_dir.x = 8;
 	else if (!(kb & (1 << KB_ROTATE_DOWN)) && kb & (1 << KB_ROTATE_UP))
-		data->player.motion_dir.x = -0.02;
+		data->player.motion_dir.x = -8;
 	else
 		data->player.motion_dir.x *= 0.795;
 }
