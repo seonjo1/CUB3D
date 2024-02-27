@@ -172,7 +172,7 @@ void	*hand_action_attack(void **arr, t_player *player)
 void	*hand_action_reload(void **arr, t_player *player, int *magazine)
 {
 	hand_stop_shot(FALSE, 0);
-	if (player->reload_frame == 7)
+	if (player->reload_frame == 4)
 		hand_reset_reload(0, 0, TRUE, sound_play(player->s_res->reload));
 	player->reload_frame++;
 	if (player->reload_frame >= (HN_RELOAD << 1))
