@@ -1,4 +1,4 @@
-   /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   evnt.c                                             :+:      :+:    :+:   */
@@ -23,7 +23,6 @@ int	evnt_mousepress(int keycode, int x, int y, t_data *data)
 {
 	int	*kb;
 
-	printf("keycode:%d\n", keycode);
 	kb = &(data->player.keybinds);
 	if (keycode == MOUSE_RIGHT)
 		evnt_x_set(&(data->player.keybinds), 1, KB_FLASH, 0);
