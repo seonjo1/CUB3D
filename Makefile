@@ -6,7 +6,7 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/02/26 18:05:14 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/28 20:59:04 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,23 @@ BASE		:=	main \
 				parse/parse parse/parse_check_map parse/parse_make_map \
 				parse/parse_sizing_map parse/parse_utils \
 				parse/parse_tex parse/parse_tex_color parse/parse_tex_file \
+				rc/rc_get_distance rc/rc_raycast \
+				play/play play/play_action play/play_recall play/play_dir \
+				play/play_state \
+				evnt/evnt evnt/evnt_utils evnt/evnt_kb_set \
+				hand/hand hand/hand_action hand/hand_shot \
+				sound/sound sound/sound_utils \
+				obj/obj_minimap
+SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
+OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
+NAME		:= cub3D
+
+BON_DIR		:= ./bon/
+BON_BASE	:= 	main \
+				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
+				parse/parse parse/parse_check_map parse/parse_make_map \
+				parse/parse_sizing_map parse/parse_utils \
+				parse/parse_tex parse/parse_tex_color parse/parse_tex_file \
 				rc/rc_get_distance rc/rc_raycast rc/rc_draw_floor \
 				rc/rc_thread rc/rc_draw_sky \
 				play/play play/play_action play/play_recall play/play_dir \
@@ -33,12 +50,6 @@ BASE		:=	main \
 				sound/sound sound/sound_utils \
 				obj/obj_minimap \
 				libft_s/libft_s libft_s/vec2_utils libft_s/utils
-SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
-OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
-NAME		:= cub3D
-
-BON_DIR		:= ./bon/
-BON_BASE	:= $(BASE)
 BON_SRC		:= $(addprefix $(BON_DIR), $(addsuffix .c, $(BON_BASE)))
 BON_OBJ		:= $(addprefix $(BON_DIR), $(addsuffix .o, $(BON_BASE)))
 BON_NAME	:= cub3D
