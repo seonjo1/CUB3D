@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 15:20:20 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/14 16:37:59 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:27:47 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	rc_init_map_and_inc(t_data *data, t_rc_data *rc_data, t_vec2 ray)
 	if (ray.y == 0)
 		rc_data->inc.y = INFINITY;
 	else
-		rc_data->inc.y = double_abs(1 / ray.y);	
+		rc_data->inc.y = double_abs(1 / ray.y);
 }
 
 void	rc_init_dis_and_step(t_data *data, t_rc_data *rc_data, t_vec2 ray)
@@ -77,13 +77,14 @@ void	rc_shoot_ray(t_data *data, t_rc_data *rc_data)
 			rc_data->map.y += rc_data->step.y;
 		}
 		if (!utils_is_in_map(rc_data->map.x, rc_data->map.y, &(data->map)))
-			break;
+			break ;
 		if (data->map.data[(int)rc_data->map.y][(int)rc_data->map.x] == '1')
 			break ;
 	}
 }
 
-void	rc_get_distance(t_data *data, t_rc_data *rc_data, t_draw_data *d_data, t_vec2 ray)
+void	rc_get_distance(t_data *data, t_rc_data *rc_data, t_draw_data *d_data, \
+	t_vec2 ray)
 {
 	rc_init_map_and_inc(data, rc_data, ray);
 	rc_init_dis_and_step(data, rc_data, ray);
@@ -95,4 +96,3 @@ void	rc_get_distance(t_data *data, t_rc_data *rc_data, t_draw_data *d_data, t_ve
 		d_data->dist = (rc_data->map.y - data->player.pos.y + \
 			(1 - rc_data->step.y) / 2) / ray.y;
 }
-
