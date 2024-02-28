@@ -6,14 +6,14 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:47:57 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 17:07:17 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 18:09:42 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "../libft_s/libft_s.h"
 
-void	parse_copy_tex_data(t_tex *tex, char *addr)
+void	parse_copy_tex_data(t_data *data, t_data *tmp, t_tex *tex, char *addr)
 {
 	int	i;
 	int	j;
@@ -29,6 +29,7 @@ void	parse_copy_tex_data(t_tex *tex, char *addr)
 		}
 		i++;
 	}
+	mlx_destroy_image(data->mlx, tmp->img);
 }
 
 void	parse_copy_sky_tex(t_sky *tex, char *addr, int width, int height)
@@ -63,11 +64,15 @@ void	parse_open_sky_tex(t_data *data, int fd)
 		parse_error("invalid texture file");
 	tmp.addr = mlx_get_data_addr(tmp.img, &(tmp.bpp), \
 		&(tmp.line_length), &(tmp.endian));
+	if (!tmp.addr && parse_close(fd))
+		exit(1);
 	tex->img = mlx_new_image(data->mlx, WIN_WIDTH * 3.14, WIN_HEIGHT);
 	if (!(tex->img) && parse_close(fd))
 		exit(1);
 	tex->addr = mlx_get_data_addr(tex->img, &(tex->bpp), \
 		&(tex->line_length), &(tex->endian));
+	if (!(tex->addr) && parse_close(fd))
+		exit(1);
 	tex->gap = tmp.line_length / 4 - tex->width;
 	parse_copy_sky_tex(tex, tmp.addr, tex->line_length / 4, WIN_HEIGHT);
 	tex->width = WIN_WIDTH * 3.13;
@@ -82,8 +87,8 @@ void	parse_open_tex_file(t_data *data, int fd)
 	t_tex	*tex;
 	t_data	tmp;
 
-	i = 0;
-	while (i < 5)
+	i = -1;
+	while (++i < 5)
 	{
 		tex = &(data->tex[i]);
 		tmp.img = mlx_xpm_file_to_image(data->mlx, tex->file, \
@@ -92,14 +97,14 @@ void	parse_open_tex_file(t_data *data, int fd)
 			parse_error("invalid texture file");
 		tmp.addr = mlx_get_data_addr(tmp.img, &(tmp.bpp), \
 			&(tmp.line_length), &(tmp.endian));
-		tex->data = malloc(sizeof(int *) * tex->height);
+		if (!tmp.addr && parse_close(fd))
+			exit(1);
+		tex->data = ft_calloc_s(sizeof(int *), tex->height);
 		j = 0;
 		while (j < tex->height)
-			tex->data[j++] = malloc(sizeof(int) * tex->width);
+			tex->data[j++] = ft_calloc_s(sizeof(int), tex->width);
 		tex->gap = tmp.line_length / 4 - tex->width;
-		parse_copy_tex_data(tex, tmp.addr);
-		mlx_destroy_image(data->mlx, tmp.img);
-		i++;
+		parse_copy_tex_data(data, &tmp, tex, tmp.addr);
 	}
 	parse_open_sky_tex(data, fd);
 }
