@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 20:53:43 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 20:56:01 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,16 +166,6 @@ typedef struct s_sounds
 	uint32_t	run;
 }	t_sounds;
 
-typedef struct s_rc_floor
-{
-	int		tex_x;
-	int		tex_y;
-	int		color;
-	double	floor_x;
-	double	floor_y;
-	t_vec2	ray;
-}	t_rc_floor;
-
 typedef struct s_player
 {
 	t_vec3		pos;
@@ -211,19 +201,6 @@ typedef struct s_tex
 	int		height;
 	int		gap;
 }	t_tex;
-
-typedef struct s_sky
-{
-	char	*file;
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-	int		gap;
-}	t_sky;
 
 typedef struct s_hand_res
 {
@@ -263,11 +240,9 @@ typedef struct s_data
 	int			endian;
 	int			c_color;
 	int			f_color;
-	pthread_t	t_id[3];
 	t_mini		mini;
 	t_map		map;
 	t_tex		tex[4];
-	t_sky		sky;
 	t_player	player;
 	t_hand_res	h_res;
 	t_sounds	s_res;
