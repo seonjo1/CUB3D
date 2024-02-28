@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/27 14:17:48 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:21:06 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ typedef enum s_parse_code {
 	PC_WE = 2,
 	PC_SO = 4,
 	PC_NO = 8,
-	PC_F = 16,
-	PC_C = 32,
-	PC_FT = 64,
-	PC_CT = 128,
-	PC_END = 255
+	// PC_F = 16,
+	// PC_C = 32,
+	PC_FT = 16,
+	PC_CT = 32,
+	PC_END = 63
 }	t_parse_code;
 
 typedef enum s_tex_code {

@@ -6,14 +6,15 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/26 19:00:36 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:39:02 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rc.h"
 #include "../libft_s/libft_s.h"
 
-void	rc_get_tex_x(t_data *data, t_rc_data *rc_data, t_draw_data *d_data, t_vec2 ray)
+void	rc_get_tex_x(t_data *data, t_rc_data *rc_data, t_draw_data *d_data, \
+	t_vec2 ray)
 {
 	if (rc_data->side && ray.x > 0)
 		d_data->type = TC_EA;
@@ -31,7 +32,22 @@ void	rc_get_tex_x(t_data *data, t_rc_data *rc_data, t_draw_data *d_data, t_vec2 
 		d_data->wall_x = d_data->wall_x - floor(d_data->wall_x);
 	else
 		d_data->wall_x = ceil(d_data->wall_x) - d_data->wall_x;
-	d_data->tex_x =	d_data->wall_x * (double)data->tex[d_data->type].width;
+	d_data->tex_x = d_data->wall_x * (double)data->tex[d_data->type].width;
+}
+
+void	rc_measure_height(t_data *data, t_draw_data *d_data)
+{
+	d_data->tex_h = (int)(WIN_HEIGHT / d_data->dist) * \
+		FOV_BASE / data->player.fov;
+	d_data->start = -d_data->tex_h / 2 + WIN_HEIGHT / 2 \
+		+ data->player.pos.z / d_data->dist + data->player.euler_dir.x;
+	d_data->end = d_data->tex_h / 2 + WIN_HEIGHT / 2 \
+		+ data->player.pos.z / d_data->dist + data->player.euler_dir.x;
+	d_data->offset = d_data->start;
+	if (d_data->start < 0)
+		d_data->start = 0;
+	if (d_data->end >= WIN_HEIGHT)
+		d_data->end = WIN_HEIGHT - 1;
 }
 
 void	rc_draw_col(t_data *data, t_vec2 ray, int x)
@@ -42,22 +58,14 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 
 	rc_get_distance(data, &rc_data, &d_data, ray);
 	rc_get_tex_x(data, &rc_data, &d_data, ray);
-	d_data.tex_h = (int)(WIN_HEIGHT / d_data.dist) * FOV_BASE / data->player.fov;
-	d_data.start = -d_data.tex_h / 2 + WIN_HEIGHT / 2 \
-		+ data->player.pos.z / d_data.dist + data->player.euler_dir.x;
-	d_data.end = d_data.tex_h / 2 + WIN_HEIGHT / 2 \
-		+ data->player.pos.z / d_data.dist + data->player.euler_dir.x;
-	d_data.offset = d_data.start;
-	if (d_data.start < 0)
-		d_data.start = 0;
-	if (d_data.end >= WIN_HEIGHT)
-		d_data.end = WIN_HEIGHT - 1;
+	rc_measure_height(data, &d_data);
 	i = 0;
 	while (i < d_data.start)
 		utils_draw_point(data, x, i++, 0XFF000000);
 	while (i < d_data.end)
 	{
-		d_data.color = data->tex[d_data.type].data[((i - d_data.offset) * data->tex[d_data.type].height) / d_data.tex_h][d_data.tex_x];
+		d_data.color = data->tex[d_data.type].data[((i - d_data.offset) \
+			* data->tex[d_data.type].height) / d_data.tex_h][d_data.tex_x];
 		utils_draw_point(data, x, i++, d_data.color);
 	}
 	// while (i < WIN_HEIGHT)
