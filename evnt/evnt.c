@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+   /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   evnt.c                                             :+:      :+:    :+:   */
@@ -50,7 +50,6 @@ int	evnt_mouserelease(int keycode, int x, int y, t_player *player)
 
 int	evnt_keypress(int keycode, t_player *player)
 {
-	// printf("keycode: %d %p\n", keycode, &(player->keybinds));
 	if (keycode == KEY_ESC)
 		exit(0);
 	else
