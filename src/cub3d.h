@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 20:44:23 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 20:53:43 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <fcntl.h>
 # include <math.h>
 # include <time.h>
-# include <pthread.h>
 # include "../bass/bass.h"
 # include "gnl/get_next_line.h"
 # include "../libft/libft.h"
