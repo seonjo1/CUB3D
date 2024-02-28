@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 20:44:23 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 20:56:01 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
+<<<<<<< HEAD
+=======
+# include <time.h>
+>>>>>>> 7ada9136aa2de32efb495f85375db4449447b915
 # include "../bass/bass.h"
 # include "gnl/get_next_line.h"
 # include "../libft/libft.h"
@@ -165,16 +169,6 @@ typedef struct s_sounds
 	uint32_t	run;
 }	t_sounds;
 
-typedef struct s_rc_floor
-{
-	int		tex_x;
-	int		tex_y;
-	int		color;
-	double	floor_x;
-	double	floor_y;
-	t_vec2	ray;
-}	t_rc_floor;
-
 typedef struct s_player
 {
 	t_vec3		pos;
@@ -211,19 +205,6 @@ typedef struct s_tex
 	int		gap;
 }	t_tex;
 
-typedef struct s_sky
-{
-	char	*file;
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-	int		gap;
-}	t_sky;
-
 typedef struct s_mini
 {
 	int			size;
@@ -254,7 +235,6 @@ typedef struct s_data
 	t_mini		mini;
 	t_map		map;
 	t_tex		tex[4];
-	t_sky		sky;
 	t_player	player;
 	t_sounds	s_res;
 	long long	time;

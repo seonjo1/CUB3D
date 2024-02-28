@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 17:25:06 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 20:49:13 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 int	main_loop(t_data *data)
 {
 	play_update(data);
-	rc_draw_floor(data);
-	rc_draw_sky(data);
 	rc_raycast(data);
 	obj_draw_aim(data);
 	obj_draw_minimap(data, &(data->mini));
