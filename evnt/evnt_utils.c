@@ -12,7 +12,7 @@
 
 #include "evnt.h"
 
-static void	evnt_toggle_mouse_cursor(int *kb)
+void	evnt_toggle_mouse_cursor(int *kb)
 {
 	(*kb) ^= (1 << KB_1);
 	if (*kb & (1 << KB_1))
@@ -21,7 +21,7 @@ static void	evnt_toggle_mouse_cursor(int *kb)
 		mlx_mouse_show();
 }
 
-static void	evnt_forward_set(int *kb, long long time, char press)
+void	evnt_forward_set(int *kb, long long time, char press)
 {
 	static long long	press_gap = 0;
 	static long long	first_press = 0;
