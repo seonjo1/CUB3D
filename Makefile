@@ -10,15 +10,15 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC			:= cc
-WFLAG		:= -Wall -Wextra -Werror -O3 #-fsanitize=address -g3
-MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
-FTFLAG		:= -Llibft -lft
-MLX			:= ./libmlx.dylib
-BASSFLAG	:= -Lbass -lbass
-FT			:= ./libft/libft.a
+CC			:=	cc
+WFLAG		:=	-Wall -Wextra -Werror -O3 #-fsanitize=address -g3
+MLXFLAG		:=	-L./ -lmlx -framework OpenGL -framework Appkit -lz
+FTFLAG		:=	-Llibft -lft
+MLX			:=	./libmlx.dylib
+BASSFLAG	:=	-Lbass -lbass
+FT			:=	./libft/libft.a
 
-DIR			:= ./src/
+DIR			:=	./src/
 BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
 				parse/parse parse/parse_check_map parse/parse_make_map \
@@ -29,26 +29,24 @@ BASE		:=	main \
 				play/play play/play_action play/play_recall play/play_dir \
 				play/play_state \
 				evnt/evnt evnt/evnt_utils evnt/evnt_kb_set \
-				hand/hand hand/hand_action hand/hand_shot \
 				sound/sound sound/sound_utils \
 				obj/obj_minimap \
 				libft_s/libft_s libft_s/vec2_utils libft_s/utils
-SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
-OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
-NAME		:= cub3D
+SRC			:=	$(addprefix $(DIR), $(addsuffix .c, $(BASE)))
+OBJ			:=	$(addprefix $(DIR), $(addsuffix .o, $(BASE)))
+NAME		:=	cub3D
 
-BON_DIR		:= ./bon/
-BON_BASE	:= $(BASE)
-BON_SRC		:= $(addprefix $(BON_DIR), $(addsuffix .c, $(BON_BASE)))
-BON_OBJ		:= $(addprefix $(BON_DIR), $(addsuffix .o, $(BON_BASE)))
-BON_NAME	:= cub3D
+BON_DIR		:=	./bon/
+BON_BASE	:=	$(BASE) \
+				hand/hand hand/hand_action hand/hand_shot
+BON_SRC		:=	$(addprefix $(BON_DIR), $(addsuffix .c, $(BON_BASE)))
+BON_OBJ		:=	$(addprefix $(BON_DIR), $(addsuffix .o, $(BON_BASE)))
+BON_NAME	:=	cub3D
 
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
 	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $@
-	install_name_tool -change @loader_path/libbass.dylib @loader_path/bass/libbass.dylib $(NAME)
-
 
 bonus : $(BON_OBJ) $(MLX) $(FT)
 	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $(BON_NAME)

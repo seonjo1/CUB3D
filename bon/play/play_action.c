@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "play.h"
-#include "../sound/sound.h"
 #include "../libft_s/libft_s.h"
 
 void	play_action_walk_run(t_player *player)
@@ -79,32 +78,5 @@ void	play_action_crouch(t_player *player, char *transition, char enter)
 	{
 		if (play_target_update(&(player->pos.z), Z_BASE, 30, 40))
 			ft_strlcpy(player->state, "W__", 4);
-	}
-}
-
-void	play_action_flash(t_player *player, char *transition, char enter)
-{
-	static t_vec2		flash_dir;
-
-	if (enter == ENTER)
-	{
-		player->keybinds = (player->keybinds & ~(1 << KB_FLASH));
-		ft_strlcpy(player->state, transition, 4);
-		flash_dir = player->move;
-		player->motion.x = 0;
-		player->motion.y = 0;
-		if (!(player->move.x || player->move.y))
-			flash_dir = vec2_creat(1, 0);
-		player->flash_frame = 0;
-		flash_dir = vec2_normalize(flash_dir, 0.0085 * 110);
-		sound_play(player->s_res->flash[abs((int)(player->dir.x * 100)) % 3]);
-	}
-	else if (enter == RUN && player->state[2] == 'F')
-	{
-		player->move = flash_dir;
-		flash_dir = vec2_scala_mul(flash_dir, 0.075);
-		if (player->flash_frame == HN_FLASH)
-			player->state[2] = '_';
-		player->flash_frame++;
 	}
 }

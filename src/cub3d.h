@@ -15,8 +15,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
-# include <time.h>
-# include <pthread.h>
 # include "../bass/bass.h"
 # include "gnl/get_next_line.h"
 # include "../libft/libft.h"
@@ -226,17 +224,6 @@ typedef struct s_sky
 	int		gap;
 }	t_sky;
 
-typedef struct s_hand_res
-{
-	void	*flash[HN_FLASH];
-	void	*attack[HN_ATTACK];
-	void	*pulse[HN_PULSE];
-	void	*recall[HN_RECALL];
-	void	*reload[HN_RELOAD];
-	void	*shot[HN_SHOT];
-	void	*walk[HN_WALK];
-}	t_hand_res;
-
 typedef struct s_mini
 {
 	int			size;
@@ -264,13 +251,11 @@ typedef struct s_data
 	int			endian;
 	int			c_color;
 	int			f_color;
-	pthread_t	t_id[3];
 	t_mini		mini;
 	t_map		map;
 	t_tex		tex[4];
 	t_sky		sky;
 	t_player	player;
-	t_hand_res	h_res;
 	t_sounds	s_res;
 	long long	time;
 }	t_data;

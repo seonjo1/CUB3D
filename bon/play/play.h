@@ -18,8 +18,6 @@ void	play_update(t_data *data);
 void	play_action_walk_run(t_player *player);
 void	play_action_jump(t_player *player, char *transition, char enter);
 void	play_action_crouch(t_player *player, char *transition, char enter);
-void	play_action_flash(t_player *player, char *transition, char enter);
-void	play_action_recall(t_player *player, t_recall *re, char enter);
 int		play_target_update(double *target, double goal, double d, double o);
 void	play_motion_dir_set(t_data *data);
 void	play_motion_dir_get_mouse(t_data *data);

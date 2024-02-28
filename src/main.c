@@ -14,29 +14,19 @@
 #include "evnt/evnt.h"
 #include "rc/rc.h"
 #include "play/play.h"
-#include "hand/hand.h"
 #include "obj/obj.h"
-#include "sound/sound.h"
 
 int	main_loop(t_data *data)
 {
-	clock_t	start;
-	clock_t	end;
-	void	*hand;
-
-	start = clock();
 	play_update(data);
 	rc_draw_floor(data);
 	rc_draw_sky(data);
-	hand = hand_update(data);
 	rc_raycast(data);
 	obj_draw_aim(data);
 	obj_draw_minimap(data, &(data->mini));
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, hand, 0, 0);
 	mlx_do_sync(data->mlx);
 	data->time++;
-	end = clock();
 	return (0);
 }
 
@@ -56,8 +46,6 @@ void	main_init(t_data *data)
 			&(data->line_length), &(data->endian));
 	if (!data->addr)
 		exit(1);
-	hand_init_xpm_imgs(data);
-	data->player.s_res = sound_init(&(data->s_res));
 	obj_mini_init(data);
 }
 
