@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:47:57 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/27 14:41:11 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:07:17 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	parse_copy_sky_tex(t_sky *tex, char *addr, int width, int height)
 		while (j < width)
 		{
 			*((int *)(tex->addr) + width * i + j) = \
-				*((int *)addr + (tex->width + tex->gap) * (i * tex->height / height) + (tex->width * j) / width);
+				*((int *)addr + (tex->width + tex->gap) * \
+					(i * tex->height / height) + (tex->width * j) / width);
 			j++;
 		}
 		i++;
@@ -54,7 +55,7 @@ void	parse_open_sky_tex(t_data *data, int fd)
 {
 	t_sky	*tex;
 	t_data	tmp;
-	
+
 	tex = &(data->sky);
 	tmp.img = mlx_xpm_file_to_image(data->mlx, tex->file, \
 		&(tex->width), &(tex->height));
@@ -73,7 +74,6 @@ void	parse_open_sky_tex(t_data *data, int fd)
 	tex->height = WIN_HEIGHT;
 	mlx_destroy_image(data->mlx, tmp.img);
 }
-
 
 void	parse_open_tex_file(t_data *data, int fd)
 {
