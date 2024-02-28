@@ -97,6 +97,6 @@ t5 : all clean
 	rm $(NAME)
 
 norm :
-	norminette evnt gnl libft libft_s map parse play rc main.c obj
+	norminette evnt gnl libft libft_s map parse play rc main.c obj sound hand cub3d.h
 
 .PHONY : all clean fclean re t
