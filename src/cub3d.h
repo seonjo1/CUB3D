@@ -91,6 +91,8 @@ typedef enum s_parse_code
 	PC_WE = 2,
 	PC_SO = 4,
 	PC_NO = 8,
+	// PC_F = 16,
+	// PC_C = 32,
 	PC_FT = 16,
 	PC_CT = 32,
 	PC_END = 63

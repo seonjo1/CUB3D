@@ -18,7 +18,7 @@ MLX			:= ./libmlx.dylib
 BASSFLAG	:= -Lbass -lbass
 FT			:= ./libft/libft.a
 
-DIR			:= ./bon/
+DIR			:= ./src/
 BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
 				parse/parse parse/parse_check_map parse/parse_make_map \
@@ -37,11 +37,11 @@ SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3D
 
-BON_DIR	:= ./bon/
+BON_DIR		:= ./bon/
 BON_BASE	:= $(BASE)
-BON_SRC	:= $(addprefix $(BON_DIR), $(addsuffix _bonus.c, $(BON_BASE)))
-BON_OBJ	:= $(addprefix $(BON_DIR), $(addsuffix _bonus.o, $(BON_BASE)))
-BON_NAME	:= minishell
+BON_SRC		:= $(addprefix $(BON_DIR), $(addsuffix .c, $(BON_BASE)))
+BON_OBJ		:= $(addprefix $(BON_DIR), $(addsuffix .o, $(BON_BASE)))
+BON_NAME	:= cub3D
 
 all : $(NAME)
 
@@ -49,17 +49,17 @@ $(NAME): $(OBJ) $(MLX) $(FT)
 	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $@
 	install_name_tool -change @loader_path/libbass.dylib @loader_path/bass/libbass.dylib $(NAME)
 
+
+bonus : $(BON_OBJ) $(MLX) $(FT)
+	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $(BON_NAME)
+	install_name_tool -change @loader_path/libbass.dylib @loader_path/bass/libbass.dylib $(BON_NAME)
+	@touch bonus
+
 $(MLX) :
 	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi
 
 $(FT) :
 	@if [ ! -f $(FT) ]; then make -j -C ./libft; fi
-
-# bonus : $(BON_OBJ)
-# 	@make lib
-# 	@make mlx
-# 	$(CC) -I$(dir $<) $(LIBFT) $(READLINE) $^ -o $(BON_NAME)
-# 	@touch bonus
 
 %.o : %.c
 	$(CC) $(WFLAG) -I$(dir $<) -c $< -o $@

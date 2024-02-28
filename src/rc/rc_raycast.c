@@ -68,6 +68,8 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 			* data->tex[d_data.type].height) / d_data.tex_h][d_data.tex_x];
 		utils_draw_point(data, x, i++, d_data.color);
 	}
+	// while (i < WIN_HEIGHT)
+	// 	utils_draw_point(data, x, i++, data->f_color);
 }
 
 void	rc_raycast(t_data *data)
