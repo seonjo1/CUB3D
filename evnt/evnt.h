@@ -21,5 +21,10 @@ int		evnt_mouserelease(int keycode, int x, int y, t_player *player);
 int		evnt_leave(int keycode, int tmp);
 void	evnt_keybinds_set(int *kb, int keycode, long time, char press);
 void	evnt_x_set(int *kb, char press, int t_kb, int num);
+void	evnt_toggle_mouse_cursor(int *kb);
+void	evnt_forward_set(int *kb, long long time, char press);
+void	evnt_attack_set(int *kb, char press);
+void	evnt_reload_set(int *kb, char press);
+void	evnt_x_set(int *kb, char press, int t_kb, int num);
 
 #endif
