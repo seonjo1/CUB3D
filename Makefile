@@ -26,7 +26,8 @@ BASE		:=	main \
 				parse/parse_tex parse/parse_tex_color parse/parse_tex_file \
 				rc/rc_get_distance rc/rc_raycast rc/rc_draw_floor \
 				rc/rc_thread rc/rc_draw_sky \
-				play/play play/play_action play/play_recall \
+				play/play play/play_action play/play_recall play/play_dir \
+				play/play_state \
 				evnt/evnt evnt/evnt_utils evnt/evnt_kb_set \
 				hand/hand hand/hand_action hand/hand_shot \
 				sound/sound \
