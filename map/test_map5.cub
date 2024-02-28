@@ -1,9 +1,9 @@
-NO ./texture/crystal.xpm
-SO ./texture/crystal_imac.xpm
-WE ./texture/crystal_box.xpm
-EA ./texture/crystal_sign.xpm
+NO ./texture/nether6.xpm
+SO ./texture/nether8.xpm
+WE ./texture/nether10.xpm
+EA ./texture/nether9.xpm
 CT ./texture/skybox.xpm
-FT ./texture/stone.xpm
+FT ./texture/floor1.xpm
 F 0,0,0
 C 0,0,0
 
