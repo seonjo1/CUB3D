@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 17:51:49 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 20:44:23 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ typedef enum s_parse_code
 	PC_WE = 2,
 	PC_SO = 4,
 	PC_NO = 8,
-	// PC_F = 16,
-	// PC_C = 32,
-	PC_FT = 16,
-	PC_CT = 32,
+	PC_F = 16,
+	PC_C = 32,
 	PC_END = 63
 }	t_parse_code;
 
@@ -103,8 +101,7 @@ typedef enum s_tex_code
 	TC_EA = 0,
 	TC_WE = 1,
 	TC_SO = 2,
-	TC_NO = 3,
-	TC_F = 4
+	TC_NO = 3
 }	t_tex_code;
 
 typedef enum e_h_state
@@ -270,7 +267,7 @@ typedef struct s_data
 	pthread_t	t_id[3];
 	t_mini		mini;
 	t_map		map;
-	t_tex		tex[5];
+	t_tex		tex[4];
 	t_sky		sky;
 	t_player	player;
 	t_hand_res	h_res;
