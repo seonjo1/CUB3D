@@ -16,12 +16,11 @@
 # include <fcntl.h>
 # include <math.h>
 # include <time.h>
-# include "bass/bass.h"
 # include <pthread.h>
+# include "bass/bass.h"
 # include "gnl/get_next_line.h"
-# include "libft/libft.h"
-# include "minilibx/mlx.h"
-# include "math.h"
+# include "../libft/libft.h"
+# include "../minilibx/mlx.h"
 
 # define TRUE 1
 # define FALSE 0
