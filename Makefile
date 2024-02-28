@@ -25,10 +25,10 @@ BASE		:=	main \
 				parse/parse_sizing_map parse/parse_utils \
 				parse/parse_tex parse/parse_tex_color parse/parse_tex_file \
 				rc/rc_get_distance rc/rc_raycast \
-				play/play play/play_action play/play_recall play/play_dir \
+				play/play play/play_action play/play_dir \
 				play/play_state \
 				evnt/evnt evnt/evnt_utils evnt/evnt_kb_set \
-				sound/sound sound/sound_utils \
+				libft_s/libft_s libft_s/vec2_utils libft_s/utils \
 				obj/obj_minimap
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
@@ -39,8 +39,7 @@ BON_BASE	:= 	$(BASE) \
 				rc/rc_draw_floor rc/rc_thread rc/rc_draw_sky \
 				play/play_recall\
 				hand/hand hand/hand_action hand/hand_shot \
-				sound/sound sound/sound_utils \
-				libft_s/libft_s libft_s/vec2_utils libft_s/utils
+				sound/sound sound/sound_utils
 BON_SRC		:= $(addprefix $(BON_DIR), $(addsuffix .c, $(BON_BASE)))
 BON_OBJ		:= $(addprefix $(BON_DIR), $(addsuffix .o, $(BON_BASE)))
 BON_NAME	:= cub3D
@@ -48,7 +47,7 @@ BON_NAME	:= cub3D
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
-	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $@
+	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $^ -o $@
 
 bonus : $(BON_OBJ) $(MLX) $(FT)
 	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $(BON_NAME)
