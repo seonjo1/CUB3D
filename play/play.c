@@ -171,8 +171,8 @@ char	play_check_collision(t_map *map, t_vec2 next_pos)
 	while (angle < 360)
 	{
 		rad = angle * M_PI / 180.0;
-		checkX = next_pos.x + 0.02 * cos(rad);
-		checkY = next_pos.y + 0.02 * sin(rad);
+		checkX = next_pos.x + 0.04 * cos(rad);
+		checkY = next_pos.y + 0.04 * sin(rad);
 		if (!utils_is_in_map(checkX, checkY, map))
 			return (1);
 		if (map->data[(int)checkY][(int)checkX] == '1')
@@ -215,6 +215,7 @@ void	play_update(t_data *data)
 	play_dir_update(data);
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
+	printf("pos.x:%f\n", data->player.pos.x);
 	// printf("ps:%s\n", data->player.state);
 	// printf("pitch:%f\n", data->player.euler_dir.x);
 	play_motion(data, &(data->player));
