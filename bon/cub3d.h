@@ -17,7 +17,7 @@
 # include <math.h>
 # include <time.h>
 # include <pthread.h>
-# include "bass/bass.h"
+# include "../bass/bass.h"
 # include "gnl/get_next_line.h"
 # include "../libft/libft.h"
 # include "../minilibx/mlx.h"

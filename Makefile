@@ -18,7 +18,7 @@ MLX			:= ./libmlx.dylib
 BASSFLAG	:= -Lbass -lbass
 FT			:= ./libft/libft.a
 
-DIR			:= ./
+DIR			:= ./bon/
 BASE		:=	main \
 				gnl/gnl	gnl/get_next_line gnl/get_next_line_utils \
 				parse/parse parse/parse_check_map parse/parse_make_map \
@@ -37,11 +37,11 @@ SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
 OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3D
 
-# BON_DIR	:= ./bon/
-# BON_BASE	:= $(BASE)
-# BON_SRC	:= $(addprefix $(BON_DIR), $(addsuffix _bonus.c, $(BON_BASE)))
-# BON_OBJ	:= $(addprefix $(BON_DIR), $(addsuffix _bonus.o, $(BON_BASE)))
-# BON_NAME	:= minishell
+BON_DIR	:= ./bon/
+BON_BASE	:= $(BASE)
+BON_SRC	:= $(addprefix $(BON_DIR), $(addsuffix _bonus.c, $(BON_BASE)))
+BON_OBJ	:= $(addprefix $(BON_DIR), $(addsuffix _bonus.o, $(BON_BASE)))
+BON_NAME	:= minishell
 
 all : $(NAME)
 
