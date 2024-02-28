@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			:=	cc
-WFLAG		:=	-Wall -Wextra -Werror -O3 #-fsanitize=address -g3
+WFLAG		:=	-Wall -Wextra -Werror -O3
 MLXFLAG		:=	-L./ -lmlx -framework OpenGL -framework Appkit -lz
 FTFLAG		:=	-Llibft -lft
 MLX			:=	./libmlx.dylib
@@ -35,7 +35,7 @@ OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3D
 
 BON_DIR		:= ./bon/
-BON_BASE	:= 	$(BASE) \
+BON_BASE	:= 	$(filter-out parse_tex_color, $(BASE)) \
 				rc/rc_draw_floor rc/rc_thread rc/rc_draw_sky \
 				play/play_recall\
 				hand/hand hand/hand_action hand/hand_shot \
@@ -75,27 +75,4 @@ fclean : clean
 
 re : fclean all
 
-t1 : all clean
-	./$(NAME) ./map/test_map.cub
-	rm $(NAME)
-
-t2 : all clean
-	./$(NAME) ./map/test_map2.cub
-	rm $(NAME)
-
-t3 : all clean
-	./$(NAME) ./map/test_map3.cub
-	rm $(NAME)
-
-t4 : all clean
-	./$(NAME) ./map/test_map4.cub
-	rm $(NAME)
-
-t5 : all clean
-	./$(NAME) ./map/test_map5.cub
-	rm $(NAME)
-
-norm :
-	norminette evnt gnl libft libft_s map parse play rc main.c obj sound hand cub3d.h
-
-.PHONY : all clean fclean re t
+.PHONY : all clean fclean re
