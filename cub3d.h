@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 17:21:06 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:51:49 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,14 @@ typedef struct s_hand_res {
 
 typedef struct s_mini {
 	int			size;
+	int			color;
 	t_intvec2	pos;
+	double		x;
+	double		y;
+	double		distance;
+	double		radius;
+	double		rot_x;
+	double		rot_y;
 	double		start_i;
 	double		start_j;
 	double		ratio;
