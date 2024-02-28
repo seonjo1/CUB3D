@@ -4,8 +4,8 @@ WE ./texture/nether2.xpm
 EA ./texture/nether3.xpm
 CT ./texture/merge_sky.xpm
 FT ./texture/floor.xpm
-F 0,0,0
-C 0,0,0
+
+
 
 1111111111111111111111111111111
 1000000000000000000000000000001
