@@ -28,7 +28,8 @@ BASE		:=	main \
 				rc/rc_thread rc/rc_draw_sky \
 				play/play play/play_action play/play_recall \
 				evnt/evnt evnt/evnt_utils evnt/evnt_kb_set \
-				hand/hand sound/sound \
+				hand/hand hand/hand_action hand/hand_shot \
+				sound/sound \
 				obj/obj_minimap \
 				libft_s/libft_s libft_s/vec2_utils libft_s/utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
