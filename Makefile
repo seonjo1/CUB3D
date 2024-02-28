@@ -6,7 +6,7 @@
 #    By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/01 21:01:14 by michang           #+#    #+#              #
-#    Updated: 2024/02/28 20:59:04 by seonjo           ###   ########.fr        #
+#    Updated: 2024/02/28 22:08:00 by seonjo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,13 +35,13 @@ OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3D
 
 BON_DIR		:= ./bon/
-BON_BASE	:= 	$(filter-out parse_tex_color, $(BASE)) \
+BON_BASE	:= 	$(filter-out parse/parse_tex_color, $(BASE)) \
 				rc/rc_draw_floor rc/rc_thread rc/rc_draw_sky \
 				play/play_recall\
 				hand/hand hand/hand_action hand/hand_shot \
 				sound/sound sound/sound_utils
-BON_SRC		:= $(addprefix $(BON_DIR), $(addsuffix .c, $(BON_BASE)))
-BON_OBJ		:= $(addprefix $(BON_DIR), $(addsuffix .o, $(BON_BASE)))
+BON_SRC		:= $(addprefix $(BON_DIR), $(addsuffix _bonus.c, $(BON_BASE)))
+BON_OBJ		:= $(addprefix $(BON_DIR), $(addsuffix _bonus.o, $(BON_BASE)))
 BON_NAME	:= cub3D
 
 all : $(NAME)
