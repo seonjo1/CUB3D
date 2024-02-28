@@ -27,7 +27,7 @@ BASE		:=	main \
 				rc/rc_get_distance rc/rc_raycast rc/rc_draw_floor \
 				rc/rc_thread rc/rc_draw_sky \
 				play/play play/play_action play/play_recall \
-				evnt/evnt evnt/evnt_utils \
+				evnt/evnt evnt/evnt_utils evnt/evnt_kb_set \
 				hand/hand sound/sound \
 				obj/obj_minimap \
 				libft_s/libft_s libft_s/vec2_utils libft_s/utils
