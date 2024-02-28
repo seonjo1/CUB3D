@@ -72,7 +72,6 @@ void	hand_init_xpm_imgs(t_data *data)
 {
 	hand_init_each(data, data->h_res.flash, HN_FLASH, "res/flash/flash_");
 	hand_init_each(data, data->h_res.attack, HN_ATTACK, "res/attack/attack_");
-	hand_init_each(data, data->h_res.pulse, HN_PULSE, "res/pulse/pulse_");
 	hand_init_each(data, data->h_res.recall, HN_RECALL, "res/recall/recall_");
 	hand_init_each(data, data->h_res.reload, HN_RELOAD, "res/reload/reload_");
 	hand_init_each(data, data->h_res.shot, HN_SHOT, "res/shot/shot_");
@@ -116,7 +115,7 @@ void	*hand_action_recall(void **arr, t_player *player, int *magazine)
 	hand_stop_shot(FALSE, 0);
 	if (player->recall.frame == 2)
 		sound_play(player->s_res->recall);
-	t = (player->recall.frame >> 1);
+	t =  HN_RECALL * player->recall.frame / (double) RECALL_STORE_MAX;
 	if (t == HN_RECALL - 1)
 		*magazine = MAX_MAG;
 	return (arr[t]);
@@ -172,7 +171,7 @@ void	*hand_action_attack(void **arr, t_player *player)
 void	*hand_action_reload(void **arr, t_player *player, int *magazine)
 {
 	hand_stop_shot(FALSE, 0);
-	if (player->reload_frame == 7)
+	if (player->reload_frame == 4)
 		hand_reset_reload(0, 0, TRUE, sound_play(player->s_res->reload));
 	player->reload_frame++;
 	if (player->reload_frame >= (HN_RELOAD << 1))

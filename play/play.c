@@ -31,6 +31,10 @@ void	play_dir_update(t_data *data)
 				data->player.motion_dir.y = (mouse_pos.x - (WIN_WIDTH >> 1)) / 314.0;
 			else
 				data->player.motion_dir.y *= 0.795;
+			if (mouse_pos.y - (WIN_HEIGHT >> 1) != 0)
+				data->player.motion_dir.x = -(mouse_pos.y - (WIN_HEIGHT >> 1)) * 1.5;
+			else
+				data->player.motion_dir.x *= 0.795;
 			delay = data->player.time;
 		}
 	}
@@ -42,6 +46,12 @@ void	play_dir_update(t_data *data)
 		data->player.motion_dir.y = -0.02;
 	else
 		data->player.motion_dir.y *= 0.795;
+	if (!(kb & (1 << KB_ROTATE_UP)) && kb & (1 << KB_ROTATE_DOWN))
+		data->player.motion_dir.x = 8;
+	else if (!(kb & (1 << KB_ROTATE_DOWN)) && kb & (1 << KB_ROTATE_UP))
+		data->player.motion_dir.x = -8;
+	else
+		data->player.motion_dir.x *= 0.795;
 }
 
 void	play_dir_plane_set(t_player *player)
@@ -161,8 +171,8 @@ char	play_check_collision(t_map *map, t_vec2 next_pos)
 	while (angle < 360)
 	{
 		rad = angle * M_PI / 180.0;
-		checkX = next_pos.x + 0.02 * cos(rad);
-		checkY = next_pos.y + 0.02 * sin(rad);
+		checkX = next_pos.x + 0.04 * cos(rad);
+		checkY = next_pos.y + 0.04 * sin(rad);
 		if (!utils_is_in_map(checkX, checkY, map))
 			return (1);
 		if (map->data[(int)checkY][(int)checkX] == '1')
@@ -193,6 +203,8 @@ void	play_motion(t_data *data, t_player *player)
 		if (!play_check_collision(&(data->map), vec2_creat(player->pos.x, next_pos.y)))
 			player->pos.y = next_pos.y;
 		player->euler_dir.y += player->motion_dir.y;
+		player->euler_dir.x = fmin(521, player->euler_dir.x + player->motion_dir.x);
+		player->euler_dir.x = fmax(-700, player->euler_dir.x + player->motion_dir.x);
 	}
 	play_action_recall(player, &(player->recall), RUN);
 }
@@ -203,6 +215,8 @@ void	play_update(t_data *data)
 	play_dir_update(data);
 	play_dir_plane_set(&(data->player));
 	play_move_update(&(data->player));
+	printf("pos.x:%f\n", data->player.pos.x);
 	// printf("ps:%s\n", data->player.state);
+	// printf("pitch:%f\n", data->player.euler_dir.x);
 	play_motion(data, &(data->player));
 }

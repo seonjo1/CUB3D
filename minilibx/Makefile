@@ -14,7 +14,7 @@ CFLAGS=-O3
 NAME= libmlx.dylib
 
 INC=-I.
-#OPTI=-Ounchecked
+OPTI=-O
 
 all: $(NAME)
 

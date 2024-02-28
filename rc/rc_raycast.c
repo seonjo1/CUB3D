@@ -43,8 +43,10 @@ void	rc_draw_col(t_data *data, t_vec2 ray, int x)
 	rc_get_distance(data, &rc_data, &d_data, ray);
 	rc_get_tex_x(data, &rc_data, &d_data, ray);
 	d_data.tex_h = (int)(WIN_HEIGHT / d_data.dist) * FOV_BASE / data->player.fov;
-	d_data.start = -d_data.tex_h / 2 + WIN_HEIGHT / 2;
-	d_data.end = d_data.tex_h / 2 + WIN_HEIGHT / 2;
+	d_data.start = -d_data.tex_h / 2 + WIN_HEIGHT / 2 \
+		+ data->player.pos.z / d_data.dist + data->player.euler_dir.x;
+	d_data.end = d_data.tex_h / 2 + WIN_HEIGHT / 2 \
+		+ data->player.pos.z / d_data.dist + data->player.euler_dir.x;
 	d_data.offset = d_data.start;
 	if (d_data.start < 0)
 		d_data.start = 0;

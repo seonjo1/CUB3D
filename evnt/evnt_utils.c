@@ -104,6 +104,10 @@ void	evnt_keybinds_set(int *kb, int keycode, long long time, char press)
 		(*kb) = (*kb & ~(1 << KB_ROTATE_LEFT)) | (press << KB_ROTATE_LEFT);
 	else if (keycode == KEY_RIGHT)
 		(*kb) = (*kb & ~(1 << KB_ROTATE_RIGHT)) | (press << KB_ROTATE_RIGHT);
+	else if (keycode == KEY_UP)
+		(*kb) = (*kb & ~(1 << KB_ROTATE_UP)) | (press << KB_ROTATE_UP);
+	else if (keycode == KEY_DOWN)
+		(*kb) = (*kb & ~(1 << KB_ROTATE_DOWN)) | (press << KB_ROTATE_DOWN);
 	else if (keycode == KEY_SPACE)
 		(*kb) = (*kb & ~(1 << KB_JUMP)) | (press << KB_JUMP);
 	else if (keycode == KEY_CTRL)

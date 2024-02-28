@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/26 19:13:50 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:17:48 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@
 # define WIN_HEIGHT 1080
 # define WALL_HEIGHT 1080
 # define FOV_BASE 1.41
-# define RECALL_STORE_MAX 50
+# define RECALL_STORE_MAX 80
 # define RECALL_COOLDOWN 450
 # define BASS_SAMPLE_LOOP 4
-# define MAX_MAG 70
+# define MAX_MAG 60
+# define Z_BASE 200
 
 typedef enum s_keycode {
 	MOUSE_LEFT = 1,
@@ -242,7 +243,6 @@ typedef struct s_data {
 	int			endian;
 	int			c_color;
 	int			f_color;
-	int			i;
 	pthread_t	t_id[3];
 	t_mini		mini;
 	t_map		map;

@@ -34,12 +34,12 @@ void	obj_draw_aim(t_data *data)
 void	obj_mini_init(t_data *data)
 {
 	if (WIN_WIDTH > WIN_HEIGHT)
-		data->mini.size = WIN_HEIGHT / 4;
+		data->mini.size = WIN_HEIGHT / 3;
 	else
-		data->mini.size = WIN_WIDTH / 4;
+		data->mini.size = WIN_WIDTH / 3;
 	if (!(data->mini.size % 2))
 		data->mini.size += 1;
-	data->mini.ratio = 10;
+	data->mini.ratio = 20;
 	data->mini.pos.x = WIN_WIDTH - data->mini.size - 20;
 	data->mini.pos.y = 20;
 }

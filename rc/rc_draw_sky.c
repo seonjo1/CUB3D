@@ -18,7 +18,7 @@ void	rc_draw_sky(t_data *data)
 	double	mod;
 	double	start;
 	double	tex_len;
-	
+
 	yaw = data->player.euler_dir.y;
 	if (yaw < 0)
 	{
@@ -31,7 +31,10 @@ void	rc_draw_sky(t_data *data)
 	start = (yaw * data->sky.width) / (M_PI * 2) - tex_len / 2;
 	if (start < 0)
 		start += data->sky.width;
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->sky.img, -start, -WIN_HEIGHT / 2);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->sky.img, -start, \
+		-WIN_HEIGHT / 2 + data->player.euler_dir.x);
 	if (data->sky.width - start < WIN_WIDTH)
-		mlx_put_image_to_window(data->mlx, data->mlx_win, data->sky.img, (int)(data->sky.width - start), - WIN_HEIGHT / 2);
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->sky.img, \
+			(int)(data->sky.width - start), -WIN_HEIGHT / 2 \
+			+ data->player.euler_dir.x);
 }
