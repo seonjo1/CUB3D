@@ -35,7 +35,8 @@ OBJ			:= $(addprefix $(DIR), $(addsuffix .o, $(BASE)))
 NAME		:= cub3D
 
 BON_DIR		:= ./bon/
-BON_BASE	:= 	rc/rc_draw_floor rc/rc_thread rc/rc_draw_sky \
+BON_BASE	:= 	$(BASE) \
+				rc/rc_draw_floor rc/rc_thread rc/rc_draw_sky \
 				play/play_recall\
 				hand/hand hand/hand_action hand/hand_shot \
 				sound/sound sound/sound_utils \

@@ -91,6 +91,8 @@ void	play_update(t_data *data)
 	play_action_walk_run(&(data->player));
 	play_action_jump(&(data->player), data->player.state, RUN);
 	play_action_crouch(&(data->player), "W__", RUN);
+	play_action_flash(&(data->player), "___", RUN);
+	play_action_recall(&(data->player), &(data->player.recall), RUN);
 	play_pos_update(data, &(data->player));
 	play_dir_plane_set(&(data->player));
 }
