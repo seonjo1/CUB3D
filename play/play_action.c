@@ -14,7 +14,7 @@
 #include "../sound/sound.h"
 #include "../libft_s/libft_s.h"
 
-void	play_action_movement(t_player *player)
+void	play_action_walk_run(t_player *player)
 {
 	char	*ps;
 
@@ -99,15 +99,12 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 		flash_dir = vec2_normalize(flash_dir, 0.0085 * 110);
 		sound_play(player->s_res->flash[abs((int)(player->dir.x * 100)) % 3]);
 	}
-	else if (enter == RUN)
+	else if (enter == RUN && player->state[2] == 'F')
 	{
-		if (player->state[2] == 'F')
-		{
-			player->move = flash_dir;
-			flash_dir = vec2_scala_mul(flash_dir, 0.075);
-			if (player->flash_frame == HN_FLASH)
-				player->state[2] = '_';
-			player->flash_frame++;
-		}
+		player->move = flash_dir;
+		flash_dir = vec2_scala_mul(flash_dir, 0.075);
+		if (player->flash_frame == HN_FLASH)
+			player->state[2] = '_';
+		player->flash_frame++;
 	}
 }

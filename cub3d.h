@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:32:31 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/27 14:17:48 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:51:49 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@
 # define MAX_MAG 60
 # define Z_BASE 200
 
-typedef enum s_keycode {
+typedef enum s_keycode
+{
 	MOUSE_LEFT = 1,
 	MOUSE_RIGHT = 2,
 	MOUSE_OTHER = 3,
@@ -63,7 +64,8 @@ typedef enum s_keycode {
 	KEY_ESC = 53
 }	t_keycode;
 
-typedef enum s_keybinds {
+typedef enum s_keybinds
+{
 	KB_FORWARD,
 	KB_D_FORWARD,
 	KB_BACKWARD,
@@ -84,19 +86,21 @@ typedef enum s_keybinds {
 	KB_M_RIGHT
 }	t_keybinds;
 
-typedef enum s_parse_code {
+typedef enum s_parse_code
+{
 	PC_EA = 1,
 	PC_WE = 2,
 	PC_SO = 4,
 	PC_NO = 8,
-	PC_F = 16,
-	PC_C = 32,
-	PC_FT = 64,
-	PC_CT = 128,
-	PC_END = 255
+	// PC_F = 16,
+	// PC_C = 32,
+	PC_FT = 16,
+	PC_CT = 32,
+	PC_END = 63
 }	t_parse_code;
 
-typedef enum s_tex_code {
+typedef enum s_tex_code
+{
 	TC_EA = 0,
 	TC_WE = 1,
 	TC_SO = 2,
@@ -104,7 +108,8 @@ typedef enum s_tex_code {
 	TC_F = 4
 }	t_tex_code;
 
-typedef enum e_h_state {
+typedef enum e_h_state
+{
 	HS_FLASH = 'f',
 	HS_ATTACK = 'a',
 	HS_PULSE = 'p',
@@ -116,7 +121,8 @@ typedef enum e_h_state {
 	HS_NONE = 'n'
 }	t_h_state;
 
-typedef enum e_hand_res_num {
+typedef enum e_hand_res_num
+{
 	HN_FLASH = 4,
 	HN_ATTACK = 16,
 	HN_PULSE = 15,
@@ -126,23 +132,27 @@ typedef enum e_hand_res_num {
 	HN_WALK = 32,
 }	t_hand_res_num;
 
-typedef struct s_vec2 {
+typedef struct s_vec2
+{
 	double	x;
 	double	y;
 }	t_vec2;
 
-typedef struct s_vec3 {
+typedef struct s_vec3
+{
 	double	x;
 	double	y;
 	double	z;
 }	t_vec3;
 
-typedef struct s_intvec2 {
+typedef struct s_intvec2
+{
 	int	x;
 	int	y;
 }	t_intvec2;
 
-typedef struct s_recall {
+typedef struct s_recall
+{
 	t_vec3	pos[RECALL_STORE_MAX];
 	t_vec2	euler_dir[RECALL_STORE_MAX];
 	int		idx;
@@ -150,7 +160,7 @@ typedef struct s_recall {
 	int		cooldown;
 }	t_recall;
 
-typedef struct	s_sounds
+typedef struct s_sounds
 {
 	uint32_t	attack;
 	uint32_t	flash[3];
@@ -161,16 +171,18 @@ typedef struct	s_sounds
 	uint32_t	run;
 }	t_sounds;
 
-typedef struct s_rc_floor {
-	int 	tex_x;
-	int 	tex_y;
+typedef struct s_rc_floor
+{
+	int		tex_x;
+	int		tex_y;
 	int		color;
 	double	floor_x;
 	double	floor_y;
 	t_vec2	ray;
 }	t_rc_floor;
 
-typedef struct s_player {
+typedef struct s_player
+{
 	t_vec3		pos;
 	double		fov;
 	t_vec2		move;
@@ -189,13 +201,15 @@ typedef struct s_player {
 	t_sounds	*s_res;
 }	t_player;
 
-typedef struct s_map {
+typedef struct s_map
+{
 	char	**data;
 	int		row;
 	int		col;
 }	t_map;
 
-typedef struct s_tex {
+typedef struct s_tex
+{
 	char	*file;
 	int		**data;
 	int		width;
@@ -203,7 +217,8 @@ typedef struct s_tex {
 	int		gap;
 }	t_tex;
 
-typedef struct s_sky {
+typedef struct s_sky
+{
 	char	*file;
 	void	*img;
 	char	*addr;
@@ -215,7 +230,8 @@ typedef struct s_sky {
 	int		gap;
 }	t_sky;
 
-typedef struct s_hand_res {
+typedef struct s_hand_res
+{
 	void	*flash[HN_FLASH];
 	void	*attack[HN_ATTACK];
 	void	*pulse[HN_PULSE];
@@ -225,15 +241,24 @@ typedef struct s_hand_res {
 	void	*walk[HN_WALK];
 }	t_hand_res;
 
-typedef struct s_mini {
+typedef struct s_mini
+{
 	int			size;
+	int			color;
 	t_intvec2	pos;
+	double		x;
+	double		y;
+	double		distance;
+	double		radius;
+	double		rot_x;
+	double		rot_y;
 	double		start_i;
 	double		start_j;
 	double		ratio;
 }	t_mini;
 
-typedef struct s_data {
+typedef struct s_data
+{
 	void		*mlx;
 	void		*mlx_win;
 	void		*img;
@@ -254,7 +279,8 @@ typedef struct s_data {
 	long long	time;
 }	t_data;
 
-typedef struct s_rc_data {
+typedef struct s_rc_data
+{
 	int		side;
 	t_vec2	map;
 	t_vec2	dis;
@@ -262,7 +288,8 @@ typedef struct s_rc_data {
 	t_vec2	step;
 }	t_rc_data;
 
-typedef struct s_draw_data {
+typedef struct s_draw_data
+{
 	int		type;
 	int		start;
 	int		end;

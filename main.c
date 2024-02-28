@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 18:09:14 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/18 16:30:17 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:25:06 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 
 int	main_loop(t_data *data)
 {
-	clock_t start, end;
+	clock_t	start;
+	clock_t	end;
 	void	*hand;
 
 	start = clock();
@@ -36,7 +37,6 @@ int	main_loop(t_data *data)
 	mlx_do_sync(data->mlx);
 	data->time++;
 	end = clock();
-	printf("+ %.5f\n", ((double) (end - start)) / CLOCKS_PER_SEC);
 	return (0);
 }
 
@@ -67,14 +67,11 @@ int	main(int argc, char **argv)
 
 	main_init(&data);
 	parse_map(&data, argc, argv);
-	printf("player init! : pos.x:%f, pos.y:%f, dir.x:%f, dir.y:%f\n", \
-		data.player.pos.x, data.player.pos.y, data.player.dir.x, data.player.dir.y);
 	mlx_hook(data.mlx_win, 17, 0, &evnt_leave, 0);
 	mlx_hook(data.mlx_win, 2, 0, &evnt_keypress, &(data.player));
 	mlx_hook(data.mlx_win, 3, 0, &evnt_keyrelease, &(data.player));
 	mlx_hook(data.mlx_win, 4, 0, &evnt_mousepress, &data);
 	mlx_hook(data.mlx_win, 5, 0, &evnt_mouserelease, &(data.player));
 	mlx_loop_hook(data.mlx, &main_loop, &data);
-	// main_loop(&data);
 	mlx_loop(data.mlx);
 }

@@ -12,26 +12,6 @@
 
 #include "play.h"
 
-void	play_test_lst_print(t_player *player)
-{
-	t_vec3	*pos;
-	t_vec2	*euler_dir;
-	int		idx;
-
-	pos = player->recall.pos;
-	euler_dir = player->recall.euler_dir;
-	idx = player->recall.idx;
-	for (int i = 0; i < RECALL_STORE_MAX; i++)
-	{
-		if (i != 0)
-			printf(" ==> ");
-		printf("(id:%d, x:%.3f, y:%.3f", (idx + i) % RECALL_STORE_MAX, \
-			pos[(idx + i) % RECALL_STORE_MAX].x, pos[(idx + i) % RECALL_STORE_MAX].y);
-		printf(", yaw: %.3f)", euler_dir[(idx + i) % RECALL_STORE_MAX].y);
-	}
-	printf("\n\n");
-}
-
 void	play_recall_doing(t_player *player, t_recall *re)
 {
 	if (re->frame < RECALL_STORE_MAX)
@@ -58,21 +38,17 @@ void	play_recall_doing(t_player *player, t_recall *re)
 		re->idx = RECALL_STORE_MAX - 1;
 }
 
-void	play_recall_enter(t_player *player, t_recall *re)
-{
-	player->keybinds = (player->keybinds & ~(1 << KB_RECALL));
-	ft_strlcpy(player->state, "__R", 4);
-	re->frame = 0;
-	re->cooldown = RECALL_COOLDOWN;
-	play_test_lst_print(player);
-}
-
 void	play_action_recall(t_player *player, t_recall *re, char enter)
 {
 	static int	save_freq = 0;
 
 	if (enter == ENTER && re->cooldown < 0)
-		play_recall_enter(player, re);
+	{
+		player->keybinds = (player->keybinds & ~(1 << KB_RECALL));
+		ft_strlcpy(player->state, "__R", 4);
+		re->frame = 0;
+		re->cooldown = RECALL_COOLDOWN;
+	}
 	else if (enter == RUN)
 	{
 		re->cooldown--;
