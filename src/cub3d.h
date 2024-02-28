@@ -15,10 +15,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
-<<<<<<< HEAD
-=======
-# include <time.h>
->>>>>>> 7ada9136aa2de32efb495f85375db4449447b915
 # include "../bass/bass.h"
 # include "gnl/get_next_line.h"
 # include "../libft/libft.h"
