@@ -12,7 +12,7 @@
 
 #include "evnt.h"
 
-static void	evnt_keybinds_set_skill(int *kb, int keycode, long time, char press)
+static void	evnt_keybinds_set_skill(int *kb, int keycode, char press)
 {
 	if (keycode == KEY_SHIFT)
 		evnt_x_set(kb, press, KB_FLASH, 0);
@@ -26,7 +26,7 @@ static void	evnt_keybinds_set_skill(int *kb, int keycode, long time, char press)
 		evnt_reload_set(kb, press);
 }
 
-void	evnt_keybinds_set1(int *kb, int keycode, long time, char press)
+void	evnt_keybinds_set(int *kb, int keycode, long time, char press)
 {
 	if (keycode == KEY_W)
 		evnt_forward_set(kb, time, press);
@@ -49,5 +49,5 @@ void	evnt_keybinds_set1(int *kb, int keycode, long time, char press)
 	else if (keycode == KEY_CTRL)
 		(*kb) = (*kb & ~(1 << KB_CROUCH)) | (press << KB_CROUCH);
 	else
-		evnt_keybinds_set_skill(kb, keycode, time, press);
+		evnt_keybinds_set_skill(kb, keycode, press);
 }
