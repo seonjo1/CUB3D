@@ -72,7 +72,6 @@ void	hand_init_xpm_imgs(t_data *data)
 {
 	hand_init_each(data, data->h_res.flash, HN_FLASH, "res/flash/flash_");
 	hand_init_each(data, data->h_res.attack, HN_ATTACK, "res/attack/attack_");
-	hand_init_each(data, data->h_res.pulse, HN_PULSE, "res/pulse/pulse_");
 	hand_init_each(data, data->h_res.recall, HN_RECALL, "res/recall/recall_");
 	hand_init_each(data, data->h_res.reload, HN_RELOAD, "res/reload/reload_");
 	hand_init_each(data, data->h_res.shot, HN_SHOT, "res/shot/shot_");
