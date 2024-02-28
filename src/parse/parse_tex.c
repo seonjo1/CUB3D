@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 20:57:08 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 20:44:17 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/28 21:35:38 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	parse_texture(t_data *data, int fd)
 		arr = ft_split_s(line, ' ');
 		parse_identifier_check(data, arr, fd, &element);
 		i = 0;
-		while (!arr[i])
+		while (arr[i])
 			free(arr[i++]);
 		free(arr);
 		free(line);
