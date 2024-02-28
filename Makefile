@@ -30,7 +30,7 @@ BASE		:=	main \
 				play/play_state \
 				evnt/evnt evnt/evnt_utils evnt/evnt_kb_set \
 				hand/hand hand/hand_action hand/hand_shot \
-				sound/sound \
+				sound/sound sound/sound_utils \
 				obj/obj_minimap \
 				libft_s/libft_s libft_s/vec2_utils libft_s/utils
 SRC			:= $(addprefix $(DIR), $(addsuffix .c, $(BASE)))
