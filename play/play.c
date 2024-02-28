@@ -62,6 +62,10 @@ void	play_pos_update(t_data *data, t_player *player)
 {
 	t_vec2	n_pos;
 
+	player->euler_dir.y += player->motion_dir.y;
+	player->euler_dir.x = fmin(540, \
+		player->euler_dir.x + player->motion_dir.x);
+	player->euler_dir.x = fmax(-700, player->euler_dir.x);
 	if (data->player.state[0] == '_')
 		return ;
 	player->motion.x += player->move.x * player->dir.x \
@@ -76,11 +80,6 @@ void	play_pos_update(t_data *data, t_player *player)
 		player->pos.x = n_pos.x;
 	if (!play_check_collision(&(data->map), vec2_creat(player->pos.x, n_pos.y)))
 		player->pos.y = n_pos.y;
-	player->euler_dir.y += player->motion_dir.y;
-	player->euler_dir.x = fmin(521, \
-		player->euler_dir.x + player->motion_dir.x);
-	player->euler_dir.x = fmax(-700, \
-		player->euler_dir.x + player->motion_dir.x);
 }
 
 void	play_update(t_data *data)
