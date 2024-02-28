@@ -91,18 +91,20 @@ void	play_action_flash(t_player *player, char *transition, char enter)
 		player->keybinds = (player->keybinds & ~(1 << KB_FLASH));
 		ft_strlcpy(player->state, transition, 4);
 		flash_dir = player->move;
+		player->motion.x = 0;
+		player->motion.y = 0;
 		if (!(player->move.x || player->move.y))
 			flash_dir = vec2_creat(1, 0);
 		player->flash_frame = 0;
-		flash_dir = vec2_normalize(flash_dir, 0.0085 * 1450);
+		flash_dir = vec2_normalize(flash_dir, 0.0085 * 110);
 		sound_play(player->s_res->flash[abs((int)(player->dir.x * 100)) % 3]);
 	}
 	else if (enter == RUN)
 	{
 		if (player->state[2] == 'F')
 		{
-			flash_dir = vec2_scala_mul(flash_dir, 0.075);
 			player->move = flash_dir;
+			flash_dir = vec2_scala_mul(flash_dir, 0.075);
 			if (player->flash_frame == HN_FLASH)
 				player->state[2] = '_';
 			player->flash_frame++;
