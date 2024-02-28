@@ -12,7 +12,7 @@
 
 CC			:= cc
 WFLAG		:= -Wall -Wextra -Werror -O3 #-fsanitize=address -g3
-MLXFLAG		:= -L./ -lmlx -framework OpenGL -framework Appkit -lz
+MLXFLAG		:= -L./ -lmlx -framework Metal -framework Metalkit -lz
 FTFLAG		:= -Llibft -lft
 MLX			:= ./libmlx.dylib
 BASSFLAG	:= -Lbass -lbass

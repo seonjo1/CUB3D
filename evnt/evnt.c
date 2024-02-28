@@ -14,7 +14,7 @@
 
 int	evnt_leave(int keycode, int tmp)
 {
-	keycode = tmp;
+	keycode = keycode + tmp;
 	exit(0);
 	return (0);
 }
