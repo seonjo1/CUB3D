@@ -11,8 +11,8 @@
 # **************************************************************************** #
 
 CC			:=	cc
-WFLAG		:=	-Wall -Wextra -Werror -O3
-MLXFLAG		:=	-L./ -lmlx -framework OpenGL -framework Appkit -lz
+WFLAG		:=	-Wall -Wextra -Werror
+MLXFLAG		:=	-L./ -lmlx -framework Metal -framework Metalkit -lz
 FTFLAG		:=	-Llibft -lft
 MLX			:=	./libmlx.dylib
 BASSFLAG	:=	-Lbass -lbass
@@ -47,12 +47,14 @@ BON_NAME	:= cub3D
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
-	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $^ -o $@
+	@$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $^ -o $@
+	@echo "\033[32;1m\n🧊 [SUCCESS] Mandatory part compiled successfully! ✨\033[m"
 
 bonus : $(BON_OBJ) $(MLX) $(FT)
-	$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $(BON_NAME)
-	install_name_tool -change @loader_path/libbass.dylib @loader_path/bass/libbass.dylib $(BON_NAME)
+	@$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $(BON_NAME)
+	@install_name_tool -change @loader_path/libbass.dylib @loader_path/bass/libbass.dylib $(BON_NAME)
 	@touch bonus
+	@echo "\033[32;1m\n🧊 [SUCCESS] Bonus part compiled successfully! ✨\033[m"
 
 $(MLX) :
 	@if [ ! -f $(MLX) ]; then make -C ./minilibx; fi
@@ -61,17 +63,16 @@ $(FT) :
 	@if [ ! -f $(FT) ]; then make -j -C ./libft; fi
 
 %.o : %.c
-	$(CC) $(WFLAG) -I$(dir $<) -c $< -o $@
+	@$(CC) $(WFLAG) -I$(dir $<) -O3 -c $< -o $@
+	@echo "\033[34;1m🎲 [OK] $@ is compiled\033[m"
 
 clean :
-	@make clean -C ./libft
-	@make clean -C ./minilibx
-	rm -f $(OBJ) $(BON_OBJ) bonus
+	@rm -f $(OBJ) $(BON_OBJ) bonus
+	@echo "\033[35;1m🧹 [CLEAN] Object files have been removed!\033[m"
 
 fclean : clean
-	# @make fclean -C ./libft
-	# @make fclean -C ./minilibx
-	rm -f $(NAME) $(BON_NAME)
+	@rm -f $(NAME) $(BON_NAME)
+	@echo "\033[35;1m🧹 [FCLEAN] Executable files have been fully removed!\033[m"
 
 re : fclean all
 

@@ -26,7 +26,7 @@ $(NAME) : $(OBJECTS)
 	@echo "\033[32;1m"libft.a is created"\033[m"
 
 %.o : %.c
-	@$(CC) $(CFLAGS) -c $(INC) $<
+	@$(CC) $(CFLAGS) -O3 -c $(INC) $<
 
 clean :
 	@$(RMF) $(OBJECTS) $(OBJECTS2) bonus

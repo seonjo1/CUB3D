@@ -21,6 +21,7 @@ all: $(NAME)
 $(NAME): $(MODULE_OBJ) $(OBJ) $(C_OBJ)
 	swiftc $(OPTI) $(INC) -o $(NAME) -emit-library $(OBJ) $(C_OBJ) -lz
 	mv $(NAME) ../$(NAME)
+	@echo "\033[32;1mlibmlx is created\033[m"
 
 %.o: %.swift
 	swiftc $(OPTI) $(INC) -parse-as-library -c $< -o $@
