@@ -39,6 +39,7 @@ t_sounds	*sound_init(t_sounds *s_res)
 	done &= sound_load(&(s_res->reload), "./res/sound/reload.wav");
 	done &= sound_load(&(s_res->walk), "./res/sound/stone.wav");
 	done &= sound_load(&(s_res->run), "./res/sound/run.wav");
+	done &= sound_load(&(s_res->landing), "./res/sound/landing.wav");
 	if (!done)
 		exit(1);
 	return (s_res);
