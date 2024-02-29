@@ -47,10 +47,12 @@ BON_NAME	:= cub3D
 all : $(NAME)
 
 $(NAME): $(OBJ) $(MLX) $(FT)
+	@rm -f $(BON_OBJ)
 	@$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $^ -o $@
 	@echo "\033[32;1m\n🧊 [SUCCESS] Mandatory part compiled successfully! ✨\033[m"
 
 bonus : $(BON_OBJ) $(MLX) $(FT)
+	@rm -f $(OBJ)
 	@$(CC) $(WFLAG) $(MLXFLAG) $(FTFLAG) $(BASSFLAG) $^ -o $(BON_NAME)
 	@install_name_tool -change @loader_path/libbass.dylib @loader_path/bass/libbass.dylib $(BON_NAME)
 	@touch bonus
