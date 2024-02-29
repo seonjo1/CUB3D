@@ -6,7 +6,7 @@
 /*   By: seonjo <seonjo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:58:46 by seonjo            #+#    #+#             */
-/*   Updated: 2024/02/28 22:04:17 by seonjo           ###   ########.fr       */
+/*   Updated: 2024/02/29 15:34:52 by seonjo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	rc_measure_height(t_data *data, t_draw_data *d_data)
 	if (d_data->start < 0)
 		d_data->start = 0;
 	if (d_data->end >= WIN_HEIGHT)
-		d_data->end = WIN_HEIGHT - 1;
+		d_data->end = WIN_HEIGHT;
 }
 
 void	rc_draw_col(t_data *data, t_vec2 ray, int x)
