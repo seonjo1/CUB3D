@@ -165,6 +165,7 @@ typedef struct s_sounds
 	uint32_t	reload;
 	uint32_t	walk;
 	uint32_t	run;
+	uint32_t	landing;
 }	t_sounds;
 
 typedef struct s_rc_floor
