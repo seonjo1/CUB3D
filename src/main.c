@@ -28,7 +28,7 @@ int	main_loop(t_data *data)
 	return (0);
 }
 
-void	main_init(t_data *data)
+void	main_init(t_data *data, int argc, char **argv)
 {	
 	ft_memset(data, 0, sizeof(t_data));
 	data->mlx = mlx_init();
@@ -45,14 +45,14 @@ void	main_init(t_data *data)
 	if (!data->addr)
 		exit(1);
 	obj_mini_init(data);
+	parse_map(data, argc, argv);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data		data;
 
-	main_init(&data);
-	parse_map(&data, argc, argv);
+	main_init(&data, argc, argv);
 	mlx_hook(data.mlx_win, 17, 0, &evnt_leave, 0);
 	mlx_hook(data.mlx_win, 2, 0, &evnt_keypress, &(data.player));
 	mlx_hook(data.mlx_win, 3, 0, &evnt_keyrelease, &(data.player));
@@ -60,4 +60,5 @@ int	main(int argc, char **argv)
 	mlx_hook(data.mlx_win, 5, 0, &evnt_mouserelease, &(data.player));
 	mlx_loop_hook(data.mlx, &main_loop, &data);
 	mlx_loop(data.mlx);
+	exit(0);
 }

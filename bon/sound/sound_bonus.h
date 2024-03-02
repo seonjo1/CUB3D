@@ -15,7 +15,6 @@
 # include "../cub3d_bonus.h"
 
 t_sounds	*sound_init(t_sounds *sounds);
-void		sound_clear(t_sounds *sounds);
 char		sound_load(unsigned int *s, char *path);
 int			sound_play_loop(unsigned int sample);
 int			sound_play(unsigned int s);

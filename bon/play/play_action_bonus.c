@@ -61,6 +61,7 @@ void	play_action_jump(t_player *player, char *transition, char enter)
 			{
 				player->state[1] = '_';
 				player->pos.z = Z_BASE;
+				sound_play(player->s_res->landing);
 			}
 		}
 	}
