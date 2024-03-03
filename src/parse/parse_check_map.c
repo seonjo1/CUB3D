@@ -71,14 +71,12 @@ void	parse_check_wall(t_map *map)
 {
 	int		i;
 	int		j;
-	int		flag;
 	char	**check;
 
 	check = ft_calloc_s(map->row, sizeof(char *));
 	i = 0;
 	while (i < map->row)
 		check[i++] = ft_calloc_s(map->col, sizeof(char));
-	flag = 0;
 	i = -1;
 	while (++i < map->row)
 	{
