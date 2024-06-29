@@ -70,7 +70,7 @@ https://youtu.be/1z1isaN8vTw?feature=shared
 - 벽 충돌 구현
 - 미니맵 구현
 - 레이 캐스팅으로 벽 구현
-- 바닥에 텍스처 적용
+- 벽과 바닥에 텍스처 적용
 - skybox 구현
 
 # build
